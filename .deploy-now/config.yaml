@@ -42,10 +42,7 @@ deploy:
       - APP_ENV=prod APP_DEBUG=0 php bin/console cache:clear
       - php bin/console assets:install
       - APP_ENV=prod APP_DEBUG=0 php bin/console cache:warmup
-      - php bin/console doctrine:database:drop --if-exists --force --env=test
-      - php bin/console doctrine:database:create --if-not-exists --env=test
-      - php bin/console doctrine:schema:update --env=test --force || echo "No migrations found or schema update failed"
-      - php bin/console doctrine:migrations:migrate --env=test || echo "No migrations found or migration failed"
+      - APP_ENV=prod APP_DEBUG=0 php bin/console doctrine:schema:update --env=prod --force || echo "No migrations found or schema update failed"
       - APP_ENV=prod APP_DEBUG=0 php bin/console sonata:user:create cru cru@rath-ulrich.de uccessio
       - APP_ENV=prod APP_DEBUG=0 php bin/console sonata:user:promote cru --super-admin
 

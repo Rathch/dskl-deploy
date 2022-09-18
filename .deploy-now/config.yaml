@@ -43,8 +43,8 @@ deploy:
       - php bin/console assets:install
       - APP_ENV=prod APP_DEBUG=0 php bin/console cache:warmup
       - php bin/console doctrine:schema:update --force
-      - php bin/console sonata:user:create zeitgeist zeitgeist@rath-ulrich.de 12345678
-      - php bin/console sonata:user:promote zeitgeist --super-admin
+      #- php bin/console sonata:user:create zeitgeist zeitgeist@rath-ulrich.de 12345678
+      #- php bin/console sonata:user:promote zeitgeist --super-admin
 
 
 # uncomment the following lines to configure cron jobs

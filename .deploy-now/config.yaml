@@ -42,7 +42,7 @@ deploy:
       - APP_ENV=prod APP_DEBUG=0 php bin/console cache:clear
       - php bin/console assets:install
       - APP_ENV=prod APP_DEBUG=0 php bin/console cache:warmup
-      - APP_ENV=prod APP_DEBUG=0 php bin/console doctrine:migrations:migrate
+      - APP_ENV=prod APP_DEBUG=0 php bin/console doctrine:migrations:migrate --yes
       - APP_ENV=prod APP_DEBUG=0 php bin/console sonata:user:create cru cru@rath-ulrich.de uccessio
       - APP_ENV=prod APP_DEBUG=0 php bin/console sonata:user:promote cru --super-admin
 

@@ -22,3 +22,39 @@ services:
 
     # add more service definitions when explicit configuration is needed
     # please note that last definitions always *replace* previous ones
+    tseho.doctrine_assigned_identity.listener:
+        class: Tseho\DoctrineAssignedIdentity\EventListener\AssignedIdentityListener
+        public: false
+        tags:
+            - { name: doctrine.event_listener, event: prePersist }
+
+
+    admin.api_user:
+        class: App\Admin\ApiUserAdmin
+        tags:
+            - { name: sonata.admin, model_class: App\Entity\ApiUser, controller: App\Controller\ApiUserAdminController, manager_type: orm, group: sonata_user, label: ApiUser }
+
+    admin.team:
+        class: App\Admin\TeamAdmin
+        tags:
+            - { name: sonata.admin, model_class: App\Entity\Team, controller: ~, manager_type: orm, group: admin, label: Team }
+
+    admin.encounter:
+        class: App\Admin\EncounterAdmin
+        tags:
+            - { name: sonata.admin, model_class: App\Entity\Encounter, controller: App\Controller\EncounterAdminController, manager_type: orm, group: admin, label: Encounter }
+
+    admin.play_day:
+        class: App\Admin\PlayDayAdmin
+        tags:
+            - { name: sonata.admin, model_class: App\Entity\PlayDay, controller: App\Controller\PlayDayAdminController, manager_type: orm, group: admin, label: PlayDay }
+
+    admin.league:
+        class: App\Admin\LeagueAdmin
+        tags:
+            - { name: sonata.admin, model_class: App\Entity\League, controller: App\Controller\LeagueAdminController, manager_type: orm, group: admin, label: League }
+
+    admin.league_statistic:
+        class: App\Admin\LeagueStatisticAdmin
+        tags:
+            - { name: sonata.admin, model_class: App\Entity\LeagueStatistic, controller: ~, manager_type: orm, group: admin, label: LeagueStatistic }

@@ -1,0 +1,7 @@
+sonata_user:
+  class:
+    user: App\Entity\SonataUserUser
+  resetting:
+    email:
+      address: admin@rath-ulrich.de
+      sender_name: Sonata Admin

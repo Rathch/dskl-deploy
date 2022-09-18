@@ -6,6 +6,8 @@ security:
     # https://symfony.com/doc/current/security.html#loading-the-user-the-user-provider
     providers:
         users_in_memory: { memory: null }
+        sonata_user_bundle:
+            id: sonata.user.security.user_provider
     firewalls:
         admin:
             lazy: true
@@ -38,9 +40,26 @@ security:
 
     # Easy way to control access for large sections of your site
     # Note: Only the *first* access control that matches will be used
+    role_hierarchy:
+        ROLE_ADMIN: [ ROLE_USER, ROLE_SONATA_ADMIN ]
+        ROLE_API: [ ROLE_USER ]
+        ROLE_SUPER_ADMIN: [ ROLE_ADMIN, ROLE_ALLOWED_TO_SWITCH ]
+
     access_control:
-        # - { path: ^/admin, roles: ROLE_ADMIN }
-        # - { path: ^/profile, roles: ROLE_USER }
+        # Admin login page needs to be accessed without credential
+        - { path: ^/admin/login$, role: PUBLIC_ACCESS }
+        - { path: ^/admin/logout$, role: PUBLIC_ACCESS }
+        - { path: ^/admin/login_check$, role: PUBLIC_ACCESS }
+        - { path: ^/admin/request$, role: PUBLIC_ACCESS }
+        - { path: ^/admin/check-email$, role: PUBLIC_ACCESS }
+        - { path: ^/admin/reset/.*$, role: PUBLIC_ACCESS }
+        - { path: ^/api, roles: ROLE_API }
+        - { path: ^/admin/app/apiuser, roles: ROLE_SUPER_ADMIN }
+
+        # Secured part of the site
+        # This config requires being logged for the whole site and having the admin role for the admin part.
+        # Change these rules to adapt them to your needs
+        - { path: ^/admin/, role: ROLE_ADMIN }
 
 when@test:
     security:

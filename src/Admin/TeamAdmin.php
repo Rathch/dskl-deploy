@@ -7,6 +7,7 @@ namespace App\Admin;
 use Sonata\AdminBundle\Admin\AbstractAdmin;
 use Sonata\AdminBundle\Datagrid\DatagridMapper;
 use Sonata\AdminBundle\Datagrid\ListMapper;
+use Sonata\AdminBundle\FieldDescription\FieldDescriptionInterface;
 use Sonata\AdminBundle\Form\FormMapper;
 use Sonata\AdminBundle\Show\ShowMapper;
 
@@ -26,6 +27,7 @@ final class TeamAdmin extends AbstractAdmin
             ->add('tactics')
             ->add('spirit')
             ->add('power')
+            ->add('active')
             ;
     }
 
@@ -42,6 +44,7 @@ final class TeamAdmin extends AbstractAdmin
             ->add('tactics')
             ->add('spirit')
             ->add('power')
+            ->add('active',FieldDescriptionInterface::TYPE_BOOLEAN)
             ->add(ListMapper::NAME_ACTIONS, null, [
                 'actions' => [
                     'show' => [],
@@ -62,6 +65,7 @@ final class TeamAdmin extends AbstractAdmin
             ->add('defensive')
             ->add('tactics')
             ->add('spirit')
+            ->add('active')
             ;
     }
 
@@ -78,6 +82,7 @@ final class TeamAdmin extends AbstractAdmin
             ->add('tactics')
             ->add('spirit')
             ->add('power')
+            ->add('active')
             ;
     }
 }

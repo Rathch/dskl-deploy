@@ -23,23 +23,25 @@ final class PlayDayAdmin extends AbstractAdmin
     protected function configureDatagridFilters(DatagridMapper $filter): void
     {
         $filter
-            ->add('id')
-            ->add('date')
+            ->add('id',null,["label"=>"id"])
+            ->add('date',null,["label"=>"date"])
             ;
     }
 
     protected function configureListFields(ListMapper $list): void
     {
         $list
-            ->add('id')
+            ->add('id',null,["label"=>"id"])
             /*->add('league',FieldDescriptionInterface::TYPE_MANY_TO_ONE,[
                 "associated_property"=>"id"
             ])*/
             ->add('league',FieldDescriptionInterface::TYPE_MANY_TO_ONE,[
                 "associated_property"=>"id",
+                "label"=>"league"
             ])
-            ->add('date')
+            ->add('date',null,["label"=>"date"])
             ->add('encounters',FieldDescriptionInterface::TYPE_ONE_TO_MANY,[
+                "label"=>"encounters",
                 "associated_property"=>"id",
                 'template' => 'CRUD/Association/list_encounter_one_to_many.html.twig'
             ])
@@ -57,6 +59,7 @@ final class PlayDayAdmin extends AbstractAdmin
         $form
             ->with('Playday', ['class' => 'col-md-12'])
                 ->add('date', DateType::class, [
+                    "label"=>"date",
                     "widget"=>"choice",
                     'years' => range(2080,2099),
                     'format' => 'd MMMM yyyy',
@@ -65,6 +68,7 @@ final class PlayDayAdmin extends AbstractAdmin
             ->with('Encounters', ['class' => 'col-md-12'])
                 ->add('encounters',CollectionType::class,
                     [
+                        "label"=>"encounters",
                         "btn_catalogue"=>false,
                         "btn_add"=>false,
                         'type_options' => [
@@ -84,8 +88,8 @@ final class PlayDayAdmin extends AbstractAdmin
     protected function configureShowFields(ShowMapper $show): void
     {
         $show
-            ->add('id')
-            ->add('date')
+            ->add('id',null,["label"=>"id"])
+            ->add('date',null,["label"=>"date"])
             ;
     }
 }

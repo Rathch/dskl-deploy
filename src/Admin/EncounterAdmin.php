@@ -18,10 +18,10 @@ use Sonata\AdminBundle\FieldDescription\FieldDescriptionInterface;
 use Sonata\AdminBundle\Form\FormMapper;
 use Sonata\AdminBundle\Form\Type\ModelType;
 use Sonata\AdminBundle\Show\ShowMapper;
+use Symfony\Component\Form\Extension\Core\Type\TextareaType;
 
 final class EncounterAdmin extends AbstractAdmin
 {
-    private $generateEncounterService;
     private $generateTeamStatisticService;
 
 
@@ -38,9 +38,8 @@ final class EncounterAdmin extends AbstractAdmin
     protected function configureDatagridFilters(DatagridMapper $filter): void
     {
         $filter
-            ->add('id')
-
-            ->add('report')
+            ->add('id', null, ["label" => "id"])
+            ->add('report', null, ["label" => "report"])
             ;
     }
 
@@ -48,14 +47,14 @@ final class EncounterAdmin extends AbstractAdmin
     {
         $list
             ->add('id')
-            ->add('team1',FieldDescriptionInterface::TYPE_MANY_TO_ONE,["associated_property"=>"name",])
-            ->add('pointsTeam1',FieldDescriptionInterface::TYPE_INTEGER)
-            ->add('team2',FieldDescriptionInterface::TYPE_MANY_TO_ONE,["associated_property"=>"name",])
-            ->add('pointsTeam2')
-            ->add('report',FieldDescriptionInterface::TYPE_HTML)
+            ->add('team1',FieldDescriptionInterface::TYPE_MANY_TO_ONE,["associated_property"=>"name","label" => "team1"])
+            ->add('pointsTeam1',FieldDescriptionInterface::TYPE_INTEGER,["label" => "pointsTeam1"])
+            ->add('team2',FieldDescriptionInterface::TYPE_MANY_TO_ONE,["associated_property"=>"name","label" => "Team 2"])
+            ->add('pointsTeam2',FieldDescriptionInterface::TYPE_INTEGER,["label" => "pointsTeam2"])
+            ->add('report',FieldDescriptionInterface::TYPE_HTML,["label" => "report"])
             ->add(ListMapper::NAME_ACTIONS, null, [
                 'actions' => [
-                    'show' => [],
+                    'show' => false,
                     'edit' => [],
                     'delete' => [],
                 ],
@@ -70,7 +69,8 @@ final class EncounterAdmin extends AbstractAdmin
                     [
                         'class' => PlayDay::class,
                         'property'=>'id',
-                        'disabled'=> true
+                        'disabled'=> true,
+                        "label" => "playday"
                     ]
                 )
             ->end()
@@ -80,15 +80,16 @@ final class EncounterAdmin extends AbstractAdmin
                         'class' => Team::class,
                         'property'=>'name',
                         'disabled'=>true,
-                        'btn_add'=>false
+                        'btn_add'=>false,
+                        "label" => "Team 1"
                     ]
                 )
-                ->add('chanceTeam1')
-                ->add('injuryTeam1Leicht')
-                ->add('injuryTeam1Schwer')
-                ->add('injuryTeam1Kritisch')
-                ->add('injuryTeam1Tot')
-                ->add('pointsTeam1')
+                ->add('chanceTeam1', null, ["label" => "chanceTeam1"])
+                ->add('injuryTeam1Leicht', null, ["label" => "injuryTeam1Leicht"])
+                ->add('injuryTeam1Schwer', null, ["label" => "injuryTeam1Schwer"])
+                ->add('injuryTeam1Kritisch', null, ["label" => "injuryTeam1Kritisch"])
+                ->add('injuryTeam1Tot', null, ["label" => "injuryTeam1Tot"])
+                ->add('pointsTeam1', null, ["label" => "pointsTeam1"])
             ->end()
             ->with('Team 2', ['class' => 'col-md-6'])
                 ->add('team2',ModelType::class,
@@ -96,36 +97,26 @@ final class EncounterAdmin extends AbstractAdmin
                         'class' => Team::class,
                         'property'=>'name',
                         'disabled'=>true,
-                        'btn_add'=>false
+                        'btn_add'=>false,
+                        "label" => "Team 2"
                     ]
                 )
-                ->add('chanceTeam2')
-                ->add('injuryTeam2Leicht')
-                ->add('injuryTeam2Schwer')
-                ->add('injuryTeam2Kritisch')
-                ->add('injuryTeam2Tot')
-                ->add('pointsTeam2')
+                ->add('chanceTeam2', null, ["label" => "chanceTeam2"])
+                ->add('injuryTeam2Leicht', null, ["label" => "injuryTeam2Leicht"])
+                ->add('injuryTeam2Schwer', null, ["label" => "injuryTeam2Schwer"])
+                ->add('injuryTeam2Kritisch', null, ["label" => "injuryTeam2Kritisch"])
+                ->add('injuryTeam2Tot', null, ["label" => "injuryTeam2Tot"])
+                ->add('pointsTeam2', null, ["label" => "pointsTeam2"])
             ->end()
             ->with("", ['class' => 'col-md-12'])
-                ->add('report',CKEditorType::class, [
-                    'config' => array('toolbar' => "basic")
+                ->add('report',TextareaType::class, [
+                    "label" => "report"
                 ])
             ->end()
 
             ;
     }
 
-    protected function configureShowFields(ShowMapper $show): void
-    {
-        $show
-            ->add('id')
-            ->add('chanceT1')
-            ->add('chanceT2')
-            ->add('injuryT1L')
-            ->add('injuryT2L')
-            ->add('report')
-            ;
-    }
 
     #[NoReturn] protected function postUpdate(object $object): void
     {

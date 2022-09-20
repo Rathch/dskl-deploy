@@ -16,35 +16,13 @@ final class TeamAdmin extends AbstractAdmin
 
     protected function configureDatagridFilters(DatagridMapper $filter): void
     {
-        $filter
-            ->add('id')
-            ->add('name')
-            ->add('professionalism')
-            ->add('brutality')
-            ->add('robustness')
-            ->add('offensive')
-            ->add('defensive')
-            ->add('tactics')
-            ->add('spirit')
-            ->add('power')
-            ->add('active')
-            ;
+        $this->getAdd($filter) ->add('active', null, ["label" => "active"]);
     }
 
     protected function configureListFields(ListMapper $list): void
     {
-        $list
-            ->add('id')
-            ->add('name')
-            ->add('professionalism')
-            ->add('brutality')
-            ->add('robustness')
-            ->add('offensive')
-            ->add('defensive')
-            ->add('tactics')
-            ->add('spirit')
-            ->add('power')
-            ->add('active',FieldDescriptionInterface::TYPE_BOOLEAN)
+        $this->getAdd($list)
+            ->add('active',FieldDescriptionInterface::TYPE_BOOLEAN,["label"=>"active"])
             ->add(ListMapper::NAME_ACTIONS, null, [
                 'actions' => [
                     'show' => [],
@@ -56,33 +34,32 @@ final class TeamAdmin extends AbstractAdmin
 
     protected function configureFormFields(FormMapper $form): void
     {
-        $form
-            ->add('name')
-            ->add('professionalism')
-            ->add('brutality')
-            ->add('robustness')
-            ->add('offensive')
-            ->add('defensive')
-            ->add('tactics')
-            ->add('spirit')
-            ->add('active')
+        $this->getAdd($form)
+            ->add('active',null,["label"=>"active"])
             ;
     }
 
     protected function configureShowFields(ShowMapper $show): void
     {
-        $show
-            ->add('id')
-            ->add('name')
-            ->add('professionalism')
-            ->add('brutality')
-            ->add('robustness')
-            ->add('offensive')
-            ->add('defensive')
-            ->add('tactics')
-            ->add('spirit')
-            ->add('power')
-            ->add('active')
-            ;
+        $this->getAdd($show);
+    }
+
+    /**
+     * @param $filter
+     */
+    protected function getAdd($filter)
+    {
+        $filter
+            ->add('id', null, ["label" => "id"])
+            ->add('name', null, ["label" => "name"])
+            ->add('professionalism', null, ["label" => "professionalism"])
+            ->add('brutality', null, ["label" => "brutality"])
+            ->add('robustness', null, ["label" => "robustness"])
+            ->add('offensive', null, ["label" => "offensive"])
+            ->add('defensive', null, ["label" => "defensive"])
+            ->add('tactics', null, ["label" => "tactics"])
+            ->add('spirit', null, ["label" => "spirit"])
+           ;
+        return $filter;
     }
 }

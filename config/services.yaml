@@ -43,8 +43,3 @@ services:
         class: App\Admin\LeagueAdmin
         tags:
             - { name: sonata.admin, model_class: App\Entity\League, controller: App\Controller\LeagueAdminController, manager_type: orm, group: admin, label: League }
-
-    admin.league_statistic:
-        class: App\Admin\LeagueStatisticAdmin
-        tags:
-            - { name: sonata.admin, model_class: App\Entity\LeagueStatistic, controller: ~, manager_type: orm, group: admin, label: LeagueStatistic }

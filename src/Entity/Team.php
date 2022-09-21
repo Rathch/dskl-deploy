@@ -17,7 +17,7 @@ class Team
      * @ORM\GeneratedValue
      * @ORM\Column(type="integer")
      */
-    private readonly int $id;
+    private int $id;
 
     /**
      * @ORM\Column(type="string")

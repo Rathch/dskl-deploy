@@ -24,12 +24,6 @@ services:
     # please note that last definitions always *replace* previous ones
 
 
-
-    admin.api_user:
-        class: App\Admin\ApiUserAdmin
-        tags:
-            - { name: sonata.admin, model_class: App\Entity\ApiUser, controller: App\Controller\ApiUserAdminController, manager_type: orm, group: sonata_user, label: ApiUser }
-
     admin.team:
         class: App\Admin\TeamAdmin
         tags:

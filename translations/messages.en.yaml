@@ -4,14 +4,14 @@ active: active
 brutality: brutality
 chanceTeam1: 'Gelegenheiten Team 1'
 chanceTeam2: 'Gelegenheiten Team 2'
+city: city
+color: color
 date: date
 defensive: defensive
 encounters: encounters
-Encounter: Encounter
-Team: Team
-PlayDay: PlayDay
-League: League
+foundingYear: foundingYear
 id: id
+image: image
 injuryTeam1Kritisch: 'Verletzungen Kritisch Team 1'
 injuryTeam1Leicht: 'Verletzungen Leicht Team 1'
 injuryTeam1Schwer: 'Verletzungen Schwer Team 1'
@@ -27,9 +27,15 @@ playday: Spieltag
 playdays: playdays
 pointsTeam1: 'Punkte Team 1'
 pointsTeam2: 'Punkte Team 2'
+presedent: presedent
 professionalism: professionalism
 report: Spielbericht
 robustness: robustness
 spirit: spirit
+sponsor: sponsor
+successes: successes
 tactics: tactics
+team: team
 team1: 'Team 1'
+teamInfo: teamInfo
+trainer: trainer

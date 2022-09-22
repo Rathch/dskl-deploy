@@ -17,7 +17,7 @@ class Team
      * @ORM\GeneratedValue
      * @ORM\Column(type="integer")
      */
-    private readonly int $id;
+    private int $id;
 
     /**
      * @ORM\Column(type="string")
@@ -207,7 +207,7 @@ class Team
 
     public function getPower(): int
     {
-        return $this->getBrutality() + $this->getProfessionalism() + $this->getRobustness() + $this->getDefensive() + $this->getOffensive() + $this->getSpirit() + $this->getTactics();
+        return $this->getBrutality() + $this->getProfessionalism() + $this->getProfessionalism() + $this->getRobustness() + $this->getDefensive() + $this->getOffensive() + $this->getSpirit() + $this->getTactics();
     }
 
     /**

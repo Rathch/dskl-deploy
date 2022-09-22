@@ -1,0 +1,35 @@
+'Team 1': 'Team 1'
+'Team 2': 'Team 2'
+active: active
+brutality: brutality
+chanceTeam1: 'Gelegenheiten Team 1'
+chanceTeam2: 'Gelegenheiten Team 2'
+date: date
+defensive: defensive
+encounters: encounters
+Encounter: Encounter
+Team: Team
+PlayDay: PlayDay
+League: League
+id: id
+injuryTeam1Kritisch: 'Verletzungen Kritisch Team 1'
+injuryTeam1Leicht: 'Verletzungen Leicht Team 1'
+injuryTeam1Schwer: 'Verletzungen Schwer Team 1'
+injuryTeam1Tot: 'Verletzungen Tot Team 1'
+injuryTeam2Kritisch: 'Verletzungen Kritisch Team 2'
+injuryTeam2Leicht: 'Verletzungen Leicht Team 2'
+injuryTeam2Schwer: 'Verletzungen Schwer Team 2'
+injuryTeam2Tot: 'Verletzungen Tot Team 2'
+league: league
+name: name
+offensive: offensive
+playday: Spieltag
+playdays: playdays
+pointsTeam1: 'Punkte Team 1'
+pointsTeam2: 'Punkte Team 2'
+professionalism: professionalism
+report: Spielbericht
+robustness: robustness
+spirit: spirit
+tactics: tactics
+team1: 'Team 1'

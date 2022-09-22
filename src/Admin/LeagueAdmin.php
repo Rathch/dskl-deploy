@@ -15,6 +15,7 @@ use Sonata\AdminBundle\Form\FormMapper;
 use Sonata\AdminBundle\Route\RouteCollectionInterface;
 use Symfony\Component\Form\Extension\Core\Type\DateType;
 use Sonata\AdminBundle\Show\ShowMapper;
+use Symfony\Component\Form\Extension\Core\Type\TextType;
 
 final class LeagueAdmin extends AbstractAdmin
 {
@@ -44,9 +45,10 @@ final class LeagueAdmin extends AbstractAdmin
     protected function configureListFields(ListMapper $list): void
     {
         $list
-            ->add('id')
-            ->add('date',FieldDescriptionInterface::TYPE_DATETIME)
+            ->add('id',null,["label"=>"id"])
+            ->add('date',FieldDescriptionInterface::TYPE_DATETIME,["label"=>"date"])
             ->add("playdays",FieldDescriptionInterface::TYPE_ONE_TO_MANY,[
+                "label"=>"playdays",
                 "associated_property"=>"id",
                 'template' => 'CRUD/Association/list_pladay_one_to_many.html.twig'
             ])
@@ -62,10 +64,8 @@ final class LeagueAdmin extends AbstractAdmin
     protected function configureFormFields(FormMapper $form): void
     {
         $form
-            ->add('date', DateType::class, [
-                    "widget"=>"choice",
-                    'years' => range(2080,2099),
-                    'format' => 'd MMMM yyyy',
+            ->add('date', TextType::class, [
+                    "label"=>"date"
             ]
             );
     }
@@ -73,8 +73,8 @@ final class LeagueAdmin extends AbstractAdmin
     protected function configureShowFields(ShowMapper $show): void
     {
         $show
-            ->add('id')
-            ->add('date')
+            ->add('id',null,["label"=>"id"])
+            ->add('date',null,["label"=>"date"])
             ;
     }
 

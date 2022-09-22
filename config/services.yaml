@@ -24,12 +24,6 @@ services:
     # please note that last definitions always *replace* previous ones
 
 
-
-    admin.api_user:
-        class: App\Admin\ApiUserAdmin
-        tags:
-            - { name: sonata.admin, model_class: App\Entity\ApiUser, controller: App\Controller\ApiUserAdminController, manager_type: orm, group: sonata_user, label: ApiUser }
-
     admin.team:
         class: App\Admin\TeamAdmin
         tags:
@@ -49,8 +43,3 @@ services:
         class: App\Admin\LeagueAdmin
         tags:
             - { name: sonata.admin, model_class: App\Entity\League, controller: App\Controller\LeagueAdminController, manager_type: orm, group: admin, label: League }
-
-    admin.league_statistic:
-        class: App\Admin\LeagueStatisticAdmin
-        tags:
-            - { name: sonata.admin, model_class: App\Entity\LeagueStatistic, controller: ~, manager_type: orm, group: admin, label: LeagueStatistic }

@@ -53,7 +53,7 @@ final class TeamInfoAdmin extends AbstractAdmin
     protected function configureFormFields(FormMapper $form): void
     {
         $form
-            ->add('team',null,["choice_label"=>"name","label"=>"team"])
+            ->add('team',null,["choice_label"=>"name","label"=>"team","disabled"=>true])
             ->add(
                 'image',
                 FileType::class,

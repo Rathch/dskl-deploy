@@ -139,6 +139,11 @@ class TeamStatistic
      */
     private $team;
 
+    /**
+     * @ORM\ManyToOne(targetEntity=TeamInfo::class, inversedBy="foo")
+     */
+    private $teamInfo;
+
 
 
 
@@ -460,6 +465,22 @@ class TeamStatistic
         $this->team = $team;
 
         return $this;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getTeamInfo()
+    {
+        return $this->teamInfo;
+    }
+
+    /**
+     * @param mixed $teamInfo
+     */
+    public function setTeamInfo($teamInfo): void
+    {
+        $this->teamInfo = $teamInfo;
     }
 
 

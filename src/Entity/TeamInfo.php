@@ -3,6 +3,8 @@
 namespace App\Entity;
 
 use App\Repository\TeamInfoRepository;
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\HttpFoundation\File\UploadedFile;
 
@@ -22,7 +24,7 @@ class TeamInfo
     private UploadedFile $image;
 
     /**
-     * @ORM\Column(type="string", length=255)
+     * @ORM\Column(type="string", length=255, nullable=true)
      */
     private ?string $imageName = null;
 
@@ -65,6 +67,17 @@ class TeamInfo
      * @ORM\OneToOne(targetEntity=Team::class, mappedBy="teamInfo", cascade={"persist", "remove"})
      */
     private $team;
+
+    /**
+     * @ORM\OneToMany(targetEntity=TeamStatistic::class, mappedBy="teams")
+     */
+    private $teamStatistics;
+
+    public function __construct()
+    {
+        $this->teamStatistics = new ArrayCollection();
+    }
+
 
     /**
      * @return string|null
@@ -201,6 +214,36 @@ class TeamInfo
         }
 
         $this->team = $team;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, TeamStatistic>
+     */
+    public function getTeamStatistics(): Collection
+    {
+        return $this->teamStatistics;
+    }
+
+    public function addTeamStatistic(TeamStatistic $teamStatistic): self
+    {
+        if (!$this->teamStatistics->contains($teamStatistic)) {
+            $this->teamStatistics[] = $teamStatistic;
+            $teamStatistic->setTeamInfo($this);
+        }
+
+        return $this;
+    }
+
+    public function removeTeamStatistic(TeamStatistic $teamStatistic): self
+    {
+        if ($this->teamStatistics->removeElement($teamStatistic)) {
+            // set the owning side to null (unless already changed)
+            if ($teamStatistic->getTeamInfo() === $this) {
+                $teamStatistic->setTeamInfo(null);
+            }
+        }
 
         return $this;
     }

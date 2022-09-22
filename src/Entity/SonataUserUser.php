@@ -20,4 +20,9 @@ class SonataUserUser extends BaseUser
      */
     protected $id;
 
+    public function getId(): ?int
+    {
+        return $this->id;
+    }
+
 }

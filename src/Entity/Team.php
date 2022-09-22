@@ -76,6 +76,11 @@ class Team
      */
     private $teamStatistics;
 
+    /**
+     * @ORM\OneToOne(targetEntity=TeamInfo::class, inversedBy="team", cascade={"persist", "remove"})
+     */
+    private $teamInfo;
+
 
     public function __construct()
     {
@@ -278,6 +283,18 @@ class Team
                 $teamStatistic->setTeam(null);
             }
         }
+
+        return $this;
+    }
+
+    public function getTeamInfo(): ?TeamInfo
+    {
+        return $this->teamInfo;
+    }
+
+    public function setTeamInfo(?TeamInfo $teamInfo): self
+    {
+        $this->teamInfo = $teamInfo;
 
         return $this;
     }

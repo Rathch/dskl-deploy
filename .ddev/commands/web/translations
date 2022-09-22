@@ -1,0 +1,10 @@
+#!/bin/bash
+
+## #ddev-generated
+## Description: Enable or disable xdebug
+## Usage: translate
+## Example: "ddev sconsole"
+
+echo "http://jmsyst.com/bundles/JMSTranslationBundle"
+bin/console translation:extract --config app
+

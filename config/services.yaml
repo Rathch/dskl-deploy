@@ -4,8 +4,11 @@
 # Put parameters here that don't need to change on each machine where the app is deployed
 # https://symfony.com/doc/current/best_practices.html#use-parameters-for-application-configuration
 parameters:
-
+    locale: 'en'
+    app_locales: en|de
 services:
+
+
     # default configuration for services in *this* file
     _defaults:
         autowire: true      # Automatically injects dependencies in your services.
@@ -22,8 +25,6 @@ services:
 
     # add more service definitions when explicit configuration is needed
     # please note that last definitions always *replace* previous ones
-
-
     admin.team:
         class: App\Admin\TeamAdmin
         tags:
@@ -39,7 +40,7 @@ services:
         tags:
             - { name: sonata.admin, model_class: App\Entity\PlayDay, controller: App\Controller\PlayDayAdminController, manager_type: orm, group: admin, label: PlayDay }
 
-    admin.league:
-        class: App\Admin\LeagueAdmin
+    admin.team_info:
+        class: App\Admin\TeamInfoAdmin
         tags:
-            - { name: sonata.admin, model_class: App\Entity\League, controller: App\Controller\LeagueAdminController, manager_type: orm, group: admin, label: League }
+            - { name: sonata.admin, model_class: App\Entity\TeamInfo, controller: ~, manager_type: orm, group: admin, label: TeamInfo }

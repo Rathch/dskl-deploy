@@ -8,57 +8,37 @@ use Doctrine\Common\Collections\Collection;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
 
-/**
- * @ORM\Entity(repositoryClass=LeagueRepository::class)
- */
+#[ORM\Entity(repositoryClass: LeagueRepository::class)]
 class League
 {
-    /**
-     * @ORM\Id
-     * @ORM\GeneratedValue
-     * @ORM\Column(type="integer")
-     */
+    #[ORM\Id]
+    #[ORM\GeneratedValue]
+    #[ORM\Column(type: 'integer')]
     private $id;
 
-    /**
-     * @ORM\Column(type="date")
-     */
+    #[ORM\Column(type: 'date')]
     private $date;
 
-    /**
-     * @ORM\OneToMany(targetEntity=PlayDay::class, mappedBy="league")
-     */
+    #[ORM\OneToMany(targetEntity: PlayDay::class, mappedBy: 'league')]
     private $playdays;
 
-    /**
-     * @ORM\Column(type="integer")
-     */
-    private $numberOfTeams;
+    #[ORM\Column(type: 'integer')]
+    private $numberOfTeams = 24;
 
-    /**
-     * @ORM\Column(type="integer")
-     */
-    private $numberOfPlayDays;
+    #[ORM\Column(type: 'integer')]
+    private $numberOfPlayDays = 23;
 
-    /**
-     * @ORM\ManyToOne(targetEntity=TeamStatistic::class, inversedBy="league")
-     */
+    #[ORM\ManyToOne(targetEntity: TeamStatistic::class, inversedBy: 'league')]
     private $teamStatistic;
 
-    /**
-     * @ORM\OneToOne(targetEntity=LeagueStatistic::class, mappedBy="league", cascade={"persist", "remove"})
-     */
+    #[ORM\OneToOne(targetEntity: LeagueStatistic::class, mappedBy: 'league', cascade: ['persist', 'remove'])]
     private $leagueStatistic;
 
-    /**
-     * @ORM\OneToMany(targetEntity=TeamStatistic::class, mappedBy="league2")
-     */
+    #[ORM\OneToMany(targetEntity: TeamStatistic::class, mappedBy: 'league2')]
     private $teamStatistics;
 
     public function __construct()
     {
-        $this->numberOfPlayDays = 23;
-        $this->numberOfTeams = 24;
         $this->playdays = new ArrayCollection();
         $this->teamStatistics = new ArrayCollection();
     }

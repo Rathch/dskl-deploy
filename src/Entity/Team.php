@@ -7,78 +7,50 @@ use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 
-/**
- * @ORM\Entity(repositoryClass=TeamRepository::class)
- */
+#[ORM\Entity(repositoryClass: TeamRepository::class)]
 class Team
 {
-    /**
-     * @ORM\Id
-     * @ORM\GeneratedValue
-     * @ORM\Column(type="integer")
-     */
+    #[ORM\Id]
+    #[ORM\GeneratedValue]
+    #[ORM\Column(type: 'integer')]
     private int $id;
 
-    /**
-     * @ORM\Column(type="string")
-     */
+    #[ORM\Column(type: 'string')]
     private string $name;
 
-    /**
-     * @ORM\Column(type="integer")
-     */
+    #[ORM\Column(type: 'integer')]
     private int $professionalism;
 
-    /**
-     * @ORM\Column(type="integer")
-     */
+    #[ORM\Column(type: 'integer')]
     private int $brutality;
 
-    /**
-     * @ORM\Column(type="integer")
-     */
+    #[ORM\Column(type: 'integer')]
     private int $robustness;
 
-    /**
-     * @ORM\Column(type="integer")
-     */
+    #[ORM\Column(type: 'integer')]
     private int $offensive;
 
-    /**
-     * @ORM\Column(type="integer")
-     */
+    #[ORM\Column(type: 'integer')]
     private int $defensive;
 
-    /**
-     * @ORM\Column(type="integer")
-     */
+    #[ORM\Column(type: 'integer')]
     private int $tactics;
 
-    /**
-     * @ORM\Column(type="integer")
-     */
+    #[ORM\Column(type: 'integer')]
     private int $spirit;
 
     private $power;
 
-    /**
-     * @ORM\OneToMany(targetEntity=Encounter::class, mappedBy="team1")
-     */
+    #[ORM\OneToMany(targetEntity: Encounter::class, mappedBy: 'team1')]
     private $encounters;
 
-    /**
-     * @ORM\Column(type="boolean")
-     */
+    #[ORM\Column(type: 'boolean')]
     private $active;
 
-    /**
-     * @ORM\OneToMany(targetEntity=TeamStatistic::class, mappedBy="teams")
-     */
+    #[ORM\OneToMany(targetEntity: TeamStatistic::class, mappedBy: 'teams')]
     private $teamStatistics;
 
-    /**
-     * @ORM\OneToOne(targetEntity=TeamInfo::class, inversedBy="team", cascade={"persist", "remove"})
-     */
+    #[ORM\OneToOne(targetEntity: TeamInfo::class, inversedBy: 'team', cascade: ['persist', 'remove'])]
     private $teamInfo;
 
 

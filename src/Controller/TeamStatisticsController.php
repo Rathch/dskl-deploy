@@ -33,7 +33,7 @@ class TeamStatisticsController extends AbstractController
     }
 
     #[Route(path: '/teamstatistic/regenerate', name: 'team.statistic.regenerate')]
-    public function teamStatisticRegenerateAction(Request $request)
+    public function teamStatisticRegenerateAction(Request $request): \Symfony\Component\HttpFoundation\Response
     {
         $this->generateTeamStatisticService->regenerate();
         return new RedirectResponse('/teamstatistic');

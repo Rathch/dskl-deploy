@@ -89,8 +89,9 @@
         }
     },
     "require-dev": {
+        "rector/rector": "^0.14.3",
         "symfony/debug-bundle": "6.0.*",
-        "symfony/maker-bundle": "^1.45",
+        "symfony/maker-bundle": "^1.46",
         "symfony/stopwatch": "6.0.*",
         "symfony/web-profiler-bundle": "6.0.*"
     }

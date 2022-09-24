@@ -6,31 +6,21 @@ use App\Repository\LeagueStatisticRepository;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
 
-/**
- * @ORM\Entity(repositoryClass=LeagueStatisticRepository::class)
- */
+#[ORM\Entity(repositoryClass: LeagueStatisticRepository::class)]
 class LeagueStatistic
 {
-    /**
-     * @ORM\Id
-     * @ORM\GeneratedValue
-     * @ORM\Column(type="integer")
-     */
+    #[ORM\Id]
+    #[ORM\GeneratedValue]
+    #[ORM\Column(type: 'integer')]
     private $id;
 
-    /**
-     * @ORM\OneToOne(targetEntity=League::class, inversedBy="leagueStatistic", cascade={"persist", "remove"})
-     */
+    #[ORM\OneToOne(targetEntity: League::class, inversedBy: 'leagueStatistic', cascade: ['persist', 'remove'])]
     private $league;
 
-    /**
-     * @ORM\Column(type="boolean")
-     */
+    #[ORM\Column(type: 'boolean')]
     private $done;
 
-    /**
-     * @ORM\Column(type="datetime", nullable=true)
-     */
+    #[ORM\Column(type: 'datetime', nullable: true)]
     private $timestamp;
 
 

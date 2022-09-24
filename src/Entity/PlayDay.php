@@ -8,31 +8,21 @@ use Doctrine\Common\Collections\Collection;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
 
-/**
- * @ORM\Entity(repositoryClass=PlayDayRepository::class)
- */
+#[ORM\Entity(repositoryClass: PlayDayRepository::class)]
 class PlayDay
 {
-    /**
-     * @ORM\Id
-     * @ORM\GeneratedValue
-     * @ORM\Column(type="integer")
-     */
+    #[ORM\Id]
+    #[ORM\GeneratedValue]
+    #[ORM\Column(type: 'integer')]
     private $id;
 
-    /**
-     * @ORM\Column(type="date", nullable=true)
-     */
+    #[ORM\Column(type: 'date', nullable: true)]
     private $date;
 
-    /**
-     * @ORM\OneToMany(targetEntity=Encounter::class, mappedBy="playDay")
-     */
+    #[ORM\OneToMany(targetEntity: Encounter::class, mappedBy: 'playDay')]
     private $encounters;
 
-    /**
-     * @ORM\ManyToOne(targetEntity=League::class, inversedBy="playdays")
-     */
+    #[ORM\ManyToOne(targetEntity: League::class, inversedBy: 'playdays')]
     private $league;
 
     public function __construct()

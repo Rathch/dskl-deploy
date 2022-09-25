@@ -49,6 +49,10 @@ class TeamInfo
     #[ORM\OneToMany(targetEntity: TeamStatistic::class, mappedBy: 'teams')]
     private $teamStatistics;
 
+
+
+    private ?string $name = null;
+
     public function __construct()
     {
         $this->teamStatistics = new ArrayCollection();
@@ -224,4 +228,8 @@ class TeamInfo
         return $this;
     }
 
+    public function getName(): ?string
+    {
+        return $this->getTeam()->getName();
+    }
 }

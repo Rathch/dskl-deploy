@@ -41,23 +41,29 @@ class Team
 
     private $power;
 
-    #[ORM\OneToMany(targetEntity: Encounter::class, mappedBy: 'team1')]
+    #[ORM\OneToMany(mappedBy: 'team1', targetEntity: Encounter::class)]
     private $encounters;
 
     #[ORM\Column(type: 'boolean')]
     private $active;
 
-    #[ORM\OneToMany(targetEntity: TeamStatistic::class, mappedBy: 'teams')]
+    #[ORM\OneToMany(mappedBy: 'teams', targetEntity: TeamStatistic::class, cascade: ['persist', 'remove'])]
     private $teamStatistics;
 
-    #[ORM\OneToOne(targetEntity: TeamInfo::class, inversedBy: 'team', cascade: ['persist', 'remove'])]
+    #[ORM\OneToOne(inversedBy: 'team', targetEntity: TeamInfo::class, cascade: ['persist', 'remove'])]
     private $teamInfo;
+
+    #[ORM\OneToMany(mappedBy: 'team', targetEntity: Squad::class, cascade: ['persist', 'remove'])]
+    private Collection $squads;
+
+
 
 
     public function __construct()
     {
         $this->encounters = new ArrayCollection();
         $this->teamStatistics = new ArrayCollection();
+        $this->squads = new ArrayCollection();
     }
 
     public function getId(): int
@@ -270,4 +276,36 @@ class Team
 
         return $this;
     }
+
+    /**
+     * @return Collection<int, Squad>
+     */
+    public function getSquads(): Collection
+    {
+        return $this->squads;
+    }
+
+    public function addSquad(Squad $squad): self
+    {
+        if (!$this->squads->contains($squad)) {
+            $this->squads[] =$squad;
+            $squad->setTeam($this);
+        }
+
+        return $this;
+    }
+
+    public function removeSquad(Squad $squad): self
+    {
+        if ($this->squads->removeElement($squad)) {
+            // set the owning side to null (unless already changed)
+            if ($squad->getTeam() === $this) {
+                $squad->setTeam(null);
+            }
+        }
+
+        return $this;
+    }
+
+
 }

@@ -10,10 +10,12 @@ use Sonata\AdminBundle\Datagrid\DatagridMapper;
 use Sonata\AdminBundle\Datagrid\ListMapper;
 use Sonata\AdminBundle\FieldDescription\FieldDescriptionInterface;
 use Sonata\AdminBundle\Form\FormMapper;
-use Sonata\AdminBundle\Form\Type\CollectionType;
+use Sonata\AdminBundle\Form\Type\AdminType;
+use Sonata\Form\Type\CollectionType;
 use Sonata\AdminBundle\Form\Type\ModelType;
 use Sonata\AdminBundle\Show\ShowMapper;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
+use Symfony\Component\Form\Extension\Core\Type\HiddenType;
 
 final class TeamAdmin extends AbstractAdmin
 {
@@ -40,6 +42,25 @@ final class TeamAdmin extends AbstractAdmin
     {
         $this->getAdd($form)
             ->add('active',null,["label"=>"active"])
+            ->add('teamInfo', AdminType::class,
+                [
+                    "label"=>"teamInfo",
+                ]
+            )
+
+            ->add('squads', CollectionType::class, [
+                "label"=>"encounters",
+                "btn_catalogue"=>true,
+                "btn_add"=>true,
+                'type_options' => [
+                    // Prevents the "Delete" option from being displayed
+                    'delete' => true,
+                    'btn_add' => true,
+                ]
+            ], [
+                'edit' => 'inline',
+                'inline' => 'table'
+            ])
             ;
     }
 

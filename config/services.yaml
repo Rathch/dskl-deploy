@@ -44,3 +44,8 @@ services:
         class: App\Admin\TeamInfoAdmin
         tags:
             - { name: sonata.admin, model_class: App\Entity\TeamInfo, controller: ~, manager_type: orm, group: admin, label: TeamInfo }
+
+    admin.squad:
+        class: App\Admin\SquadAdmin
+        tags:
+            - { name: sonata.admin, model_class: App\Entity\Squad, controller: ~, manager_type: orm, group: admin, label: Squad }

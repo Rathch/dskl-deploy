@@ -3,6 +3,7 @@
 namespace App\Entity;
 
 use App\Repository\SquadRepository;
+use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
 
 #[ORM\Entity(repositoryClass: SquadRepository::class)]
@@ -25,11 +26,15 @@ class Squad
     #[ORM\Column(length: 255, nullable: true)]
     private ?string $age = null;
 
-    #[ORM\Column(length: 255, nullable: true)]
-    private ?string $description = null;
-
     #[ORM\Column(nullable: true)]
     private ?bool $active = null;
+
+    #[ORM\Column(type: Types::TEXT, nullable: true)]
+    private ?string $comment = null;
+
+    #[ORM\ManyToOne(targetEntity: Team::class,inversedBy: 'squads')]
+    private ?Team $team = null;
+
 
     public function getId(): ?int
     {
@@ -84,17 +89,6 @@ class Squad
         return $this;
     }
 
-    public function getDescription(): ?string
-    {
-        return $this->description;
-    }
-
-    public function setDescription(?string $description): self
-    {
-        $this->description = $description;
-
-        return $this;
-    }
 
     public function isActive(): ?bool
     {
@@ -107,4 +101,31 @@ class Squad
 
         return $this;
     }
+
+
+    public function getComment(): ?string
+    {
+        return $this->comment;
+    }
+
+    public function setComment(?string $comment): self
+    {
+        $this->comment = $comment;
+
+        return $this;
+    }
+
+    public function getTeam(): ?Team
+    {
+        return $this->team;
+    }
+
+    public function setTeam(?Team $team): self
+    {
+        $this->team = $team;
+
+        return $this;
+    }
+
+
 }

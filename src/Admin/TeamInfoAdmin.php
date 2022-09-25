@@ -53,7 +53,7 @@ final class TeamInfoAdmin extends AbstractAdmin
     protected function configureFormFields(FormMapper $form): void
     {
         $form
-            ->add('team',null,["choice_label"=>"name","label"=>"team","disabled"=>true])
+            //->add('team',null,["choice_label"=>"name","label"=>"team","disabled"=>true])
             ->add(
                 'image',
                 FileType::class,
@@ -84,9 +84,10 @@ final class TeamInfoAdmin extends AbstractAdmin
     }
 
     private function addPrieview($object, $fileFormOptions) {
-        //todo make it work with jpg as well
-        $fileFormOptions['help'] = '<img src="/img/teams/'.$object->getTeam()->getId()."/" .$object->getImageName(). '" with=100px height=100px class="admin-preview"/>';
-        $fileFormOptions['help_html'] = true;
+        if ($object->getTeam()) {
+            $fileFormOptions['help'] = '<img src="/img/teams/'.$object->getTeam()->getId()."/" .$object->getImageName(). '" with=100px height=100px class="admin-preview"/>';
+            $fileFormOptions['help_html'] = true;
+        }
         return $fileFormOptions;
     }
     protected function prePersist(object $object): void

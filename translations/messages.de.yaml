@@ -39,3 +39,8 @@ team: Team
 team1: 'Team 1'
 teamInfo: 'Team Informationen'
 trainer: Cheftrainer
+position: Position
+metatyp: Metatyp
+age: Alter
+comment: Anmerkung
+Squad: Kader

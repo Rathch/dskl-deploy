@@ -18,28 +18,6 @@ class Team
     #[ORM\Column(type: 'string')]
     private string $name;
 
-    #[ORM\Column(type: 'integer')]
-    private int $professionalism;
-
-    #[ORM\Column(type: 'integer')]
-    private int $brutality;
-
-    #[ORM\Column(type: 'integer')]
-    private int $robustness;
-
-    #[ORM\Column(type: 'integer')]
-    private int $offensive;
-
-    #[ORM\Column(type: 'integer')]
-    private int $defensive;
-
-    #[ORM\Column(type: 'integer')]
-    private int $tactics;
-
-    #[ORM\Column(type: 'integer')]
-    private int $spirit;
-
-    private $power;
 
     #[ORM\OneToMany(mappedBy: 'team1', targetEntity: Encounter::class)]
     private $encounters;
@@ -52,6 +30,9 @@ class Team
 
     #[ORM\OneToOne(inversedBy: 'team', targetEntity: TeamInfo::class, cascade: ['persist', 'remove'])]
     private $teamInfo;
+
+    #[ORM\OneToOne(inversedBy: 'team', targetEntity: TeamAttributes::class, cascade: ['persist', 'remove'])]
+    private $teamAttributes;
 
     #[ORM\OneToMany(mappedBy: 'team', targetEntity: Squad::class, cascade: ['persist', 'remove'])]
     private Collection $squads;
@@ -71,105 +52,7 @@ class Team
         return $this->id;
     }
 
-    public function getProfessionalism(): int
-    {
-        return $this->professionalism;
-    }
 
-    public function setProfessionalism(int $professionalism): self
-    {
-        $this->professionalism = $professionalism;
-
-        return $this;
-    }
-
-    public function getBrutality(): int
-    {
-        return $this->brutality;
-    }
-
-    public function setBrutality(int $brutality): self
-    {
-        $this->brutality = $brutality;
-
-        return $this;
-    }
-
-    public function getRobustness(): int
-    {
-        return $this->robustness;
-    }
-
-    public function setRobustness(int $robustness): self
-    {
-        $this->robustness = $robustness;
-
-        return $this;
-    }
-
-    /**
-     * @return int
-     */
-    public function getOffensive(): int
-    {
-        return $this->offensive;
-    }
-
-    /**
-     * @param int $offensive
-     */
-    public function setOffensive(int $offensive): void
-    {
-        $this->offensive = $offensive;
-    }
-
-    /**
-     * @return int
-     */
-    public function getDefensive(): int
-    {
-        return $this->defensive;
-    }
-
-    /**
-     * @param int $defensive
-     */
-    public function setDefensive(int $defensive): void
-    {
-        $this->defensive = $defensive;
-    }
-
-    /**
-     * @return int
-     */
-    public function getTactics()
-    {
-        return $this->tactics;
-    }
-
-    /**
-     * @param mixed $tactics
-     */
-    public function setTactics($tactics): void
-    {
-        $this->tactics = $tactics;
-    }
-
-    /**
-     * @return int
-     */
-    public function getSpirit()
-    {
-        return $this->spirit;
-    }
-
-    /**
-     * @param int $spirit
-     */
-    public function setSpirit(int $spirit): void
-    {
-        $this->spirit = $spirit;
-    }
 
     /**
      * @return string
@@ -185,12 +68,6 @@ class Team
     public function setName(string $name): void
     {
         $this->name = $name;
-    }
-
-
-    public function getPower(): int
-    {
-        return $this->getBrutality() + $this->getProfessionalism() + $this->getProfessionalism() + $this->getRobustness() + $this->getDefensive() + $this->getOffensive() + $this->getSpirit() + $this->getTactics();
     }
 
     /**
@@ -273,6 +150,18 @@ class Team
     public function setTeamInfo(?TeamInfo $teamInfo): self
     {
         $this->teamInfo = $teamInfo;
+
+        return $this;
+    }
+
+    public function getTeamAttributes(): ?TeamAttributes
+    {
+        return $this->teamAttributes;
+    }
+
+    public function setTeamAttributes(?TeamAttributes $teamAttributes): self
+    {
+        $this->teamAttributes = $teamAttributes;
 
         return $this;
     }

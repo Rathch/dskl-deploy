@@ -50,10 +50,14 @@ final class SquadAdmin extends AbstractAdmin
 
     protected function configureFormFields(FormMapper $form): void
     {
+        $disabled = true;
+        if ($this->getRequest()->getPathInfo() == "/admin/app/squad/".$this->getSubject()->getId()."/edit") {
+            $disabled = false;
+        }
         $form
             ->add('team',ModelType::class,
                 [
-                    "disabled"=>true,
+                    "disabled"=>$disabled,
                     'class' => Team::class,
                     'property'=>'name',
                     'btn_add'=>false,

@@ -19,7 +19,7 @@ class League
     #[ORM\Column(type: 'date')]
     private $date;
 
-    #[ORM\OneToMany(targetEntity: PlayDay::class, mappedBy: 'league')]
+    #[ORM\OneToMany(mappedBy: 'league', targetEntity: PlayDay::class)]
     private $playdays;
 
     #[ORM\Column(type: 'integer')]
@@ -31,10 +31,10 @@ class League
     #[ORM\ManyToOne(targetEntity: TeamStatistic::class, inversedBy: 'league')]
     private $teamStatistic;
 
-    #[ORM\OneToOne(targetEntity: LeagueStatistic::class, mappedBy: 'league', cascade: ['persist', 'remove'])]
+    #[ORM\OneToOne(mappedBy: 'league', targetEntity: LeagueStatistic::class, cascade: ['persist', 'remove'])]
     private $leagueStatistic;
 
-    #[ORM\OneToMany(targetEntity: TeamStatistic::class, mappedBy: 'league2')]
+    #[ORM\OneToMany(mappedBy: 'league2', targetEntity: TeamStatistic::class)]
     private $teamStatistics;
 
     public function __construct()

@@ -2,6 +2,8 @@
 
 namespace App\Entity;
 
+use App\Doctrine\Enum\Flag;
+use App\Doctrine\Enum\Position;
 use App\Repository\SquadRepository;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
@@ -14,8 +16,8 @@ class Squad
     #[ORM\Column(type: 'integer')]
     private ?int $id = null;
 
-    #[ORM\Column(length: 255, nullable: true)]
-    private ?string $position = null;
+    #[ORM\Column(type: "position")]
+    private ?Position $position = null;
 
     #[ORM\Column(length: 255, nullable: true)]
     private ?string $name = null;
@@ -26,8 +28,11 @@ class Squad
     #[ORM\Column(length: 255, nullable: true)]
     private ?string $age = null;
 
-    #[ORM\Column(nullable: true)]
-    private ?bool $active = null;
+    #[ORM\Column(length: 255, nullable: true)]
+    private ?string $value = null;
+
+    #[ORM\Column(type: "flag")]
+    private ?Flag $active = null;
 
     #[ORM\Column(type: Types::TEXT, nullable: true)]
     private ?string $comment = null;
@@ -35,23 +40,32 @@ class Squad
     #[ORM\ManyToOne(targetEntity: Team::class,inversedBy: 'squads')]
     private ?Team $team = null;
 
+    #[ORM\Column(nullable: true)]
+    private ?bool $replacement = null;
+
 
     public function getId(): ?int
     {
         return $this->id;
     }
 
-    public function getPosition(): ?string
+    /**
+     * @return string|null
+     */
+    public function getValue(): ?string
     {
-        return $this->position;
+        return $this->value;
     }
 
-    public function setPosition(?string $position): self
+    /**
+     * @param string|null $value
+     */
+    public function setValue(?string $value): void
     {
-        $this->position = $position;
-
-        return $this;
+        $this->value = $value;
     }
+
+
 
     public function getName(): ?string
     {
@@ -89,18 +103,40 @@ class Squad
         return $this;
     }
 
+    /**
+     * @return Position|null
+     */
+    public function getPosition(): ?Position
+    {
+        return $this->position;
+    }
 
-    public function isActive(): ?bool
+    /**
+     * @param Position|null $position
+     */
+    public function setPosition(?Position $position): void
+    {
+        $this->position = $position;
+    }
+
+    /**
+     * @return Flag|null
+     */
+    public function getActive(): ?Flag
     {
         return $this->active;
     }
 
-    public function setActive(?bool $active): self
+    /**
+     * @param Flag|null $active
+     */
+    public function setActive(?Flag $active): void
     {
         $this->active = $active;
-
-        return $this;
     }
+
+
+
 
 
     public function getComment(): ?string
@@ -123,6 +159,18 @@ class Squad
     public function setTeam(?Team $team): self
     {
         $this->team = $team;
+
+        return $this;
+    }
+
+    public function isReplacement(): ?bool
+    {
+        return $this->replacement;
+    }
+
+    public function setReplacement(?bool $replacement): self
+    {
+        $this->replacement = $replacement;
 
         return $this;
     }

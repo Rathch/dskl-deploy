@@ -2,6 +2,7 @@
 
 namespace App\Entity;
 
+use App\Doctrine\Enum\Flag;
 use App\Repository\TeamRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
@@ -22,8 +23,8 @@ class Team
     #[ORM\OneToMany(mappedBy: 'team1', targetEntity: Encounter::class)]
     private $encounters;
 
-    #[ORM\Column(type: 'boolean')]
-    private $active;
+    #[ORM\Column(type: "flag")]
+    private ?Flag $active = null;
 
     #[ORM\OneToMany(mappedBy: 'teams', targetEntity: TeamStatistic::class, cascade: ['persist', 'remove'])]
     private $teamStatistics;
@@ -100,17 +101,23 @@ class Team
         return $this;
     }
 
-    public function isActive(): ?bool
+    /**
+     * @return Flag|null
+     */
+    public function getActive(): ?Flag
     {
         return $this->active;
     }
 
-    public function setActive(bool $active): self
+    /**
+     * @param Flag|null $active
+     */
+    public function setActive(?Flag $active): void
     {
         $this->active = $active;
-
-        return $this;
     }
+
+
 
     /**
      * @return Collection<int, TeamStatistic>

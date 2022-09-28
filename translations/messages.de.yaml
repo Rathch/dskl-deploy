@@ -42,5 +42,10 @@ trainer: Cheftrainer
 position: Position
 metatyp: Metatyp
 age: Alter
+value: Wert €
 comment: Anmerkung
 Squad: Kader
+squads: Mannschaft
+replacement: Ersatzspieler
+teamAttributes: Werte
+link_add: hinzufügen

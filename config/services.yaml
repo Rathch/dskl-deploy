@@ -8,7 +8,9 @@ parameters:
     app_locales: en|de
 services:
 
-
+    _instanceof:
+        App\Doctrine\Type\AbstractEnumTyp:
+            tags: [ 'app.doctrine_enum_type' ]
     # default configuration for services in *this* file
     _defaults:
         autowire: true      # Automatically injects dependencies in your services.

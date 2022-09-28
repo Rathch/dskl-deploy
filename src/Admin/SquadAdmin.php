@@ -4,14 +4,18 @@ declare(strict_types=1);
 
 namespace App\Admin;
 
+use App\Doctrine\Enum\Flag;
+use App\Doctrine\Enum\Position;
 use App\Entity\Team;
 use App\Entity\TeamInfo;
 use Sonata\AdminBundle\Admin\AbstractAdmin;
 use Sonata\AdminBundle\Datagrid\DatagridMapper;
 use Sonata\AdminBundle\Datagrid\ListMapper;
+use Sonata\AdminBundle\FieldDescription\FieldDescriptionInterface;
 use Sonata\AdminBundle\Form\FormMapper;
 use Sonata\AdminBundle\Form\Type\ModelType;
 use Sonata\AdminBundle\Show\ShowMapper;
+use Symfony\Component\Form\Extension\Core\Type\EnumType;
 
 final class SquadAdmin extends AbstractAdmin
 {
@@ -20,12 +24,19 @@ final class SquadAdmin extends AbstractAdmin
     {
         $filter
             ->add('id')
-            ->add('position')
+            ->add('active')
+
             ->add('name')
+            ->add('position', null, [
+                'field_type' => EnumType::class,
+                'field_options' => [
+                    'class' => Position::class,
+                    'choice_label' => 'value',
+                ],
+            ])
             ->add('metatyp')
             ->add('age')
             ->add('comment')
-            ->add('active')
             ;
     }
 
@@ -33,12 +44,12 @@ final class SquadAdmin extends AbstractAdmin
     {
         $list
             ->add('id', null, ["label" => "id"])
-            ->add('position', null, ["label" => "position"])
+            ->add('active', FieldDescriptionInterface::TYPE_ENUM, ["label" => "active"])
             ->add('name', null, ["label" => "name"])
+            ->add('position', FieldDescriptionInterface::TYPE_ENUM, ["label" => "position"])
             ->add('metatyp', null, ["label" => "metatyp"])
             ->add('age', null, ["label" => "age"])
             ->add('comment', null, ["label" => "comment"])
-            ->add('active')
             ->add(ListMapper::NAME_ACTIONS, null, [
                 'actions' => [
                     'show' => [],
@@ -50,27 +61,27 @@ final class SquadAdmin extends AbstractAdmin
 
     protected function configureFormFields(FormMapper $form): void
     {
-        $disabled = true;
+
         if ($this->getRequest()->getPathInfo() == "/admin/app/squad/".$this->getSubject()->getId()."/edit") {
-            $disabled = false;
+            $form
+                ->add('team',ModelType::class,
+                    [
+                        'class' => Team::class,
+                        'property'=>'name',
+                        'btn_add'=>false,
+                        "label" => "Team"
+                    ]
+                );
         }
         $form
-            ->add('team',ModelType::class,
-                [
-                    "disabled"=>$disabled,
-                    'class' => Team::class,
-                    'property'=>'name',
-                    'btn_add'=>false,
-                    "label" => "Team"
-                ]
-            )
-            ->add('position', null, ["label" => "position"])
+            ->add('position', EnumType::class, ["class"=>Position::class,"choice_label"=>"value","label" => "position"])
             ->add('name', null, ["label" => "name"])
             ->add('metatyp', null, ["label" => "metatyp"])
             ->add('age', null, ["label" => "age"])
+            ->add('value', null, ["label" => "value"])
             ->add('comment', null, ["label" => "comment"])
-            ->add('active', null, ["label" => "active"])
-
+            ->add('replacement', null, ["label" => "replacement"])
+            ->add('active', EnumType::class, ["class"=>Flag::class,"label" => "active"])
             ;
     }
 

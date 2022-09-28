@@ -16,8 +16,8 @@ class League
     #[ORM\Column(type: 'integer')]
     private $id;
 
-    #[ORM\Column(type: 'date')]
-    private $date;
+    #[ORM\Column(type: 'string')]
+    private $seasonName;
 
     #[ORM\OneToMany(mappedBy: 'league', targetEntity: PlayDay::class)]
     private $playdays;
@@ -48,17 +48,23 @@ class League
         return $this->id;
     }
 
-    public function getDate(): ?\DateTimeInterface
+    /**
+     * @return mixed
+     */
+    public function getSeasonName()
     {
-        return $this->date;
+        return $this->seasonName;
     }
 
-    public function setDate(\DateTimeInterface $date): self
+    /**
+     * @param mixed $seasonName
+     */
+    public function setSeasonName($seasonName): void
     {
-        $this->date = $date;
-
-        return $this;
+        $this->seasonName = $seasonName;
     }
+
+
 
     /**
      * @return Collection<int, PlayDay>

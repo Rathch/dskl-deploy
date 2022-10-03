@@ -10,7 +10,7 @@ additional_fqdns: []
 mariadb_version: "10.6"
 mysql_version: ""
 nfs_mount_enabled: false
-mutagen_enabled: true
+mutagen_enabled: false
 hooks:
   post-start:
   - exec-host: ddev auth ssh

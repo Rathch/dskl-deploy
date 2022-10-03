@@ -4,6 +4,7 @@ doctrine:
             enum: string
         types:
             flag: App\Doctrine\Type\FlagTyp
+            methaTyp: App\Doctrine\Type\MethaTypTyp
             position: App\Doctrine\Type\PositionTyp
         url: '%env(DATABASE_URL)%'
 

@@ -29,6 +29,8 @@ services:
     # please note that last definitions always *replace* previous ones
     admin.team:
         class: App\Admin\TeamAdmin
+        calls:
+            - [ setTemplate, [ 'show', 'TeamAdmin/show.html.twig' ] ]
         tags:
             - { name: sonata.admin, model_class: App\Entity\Team, controller: ~, manager_type: orm, group: admin, label: Team }
 

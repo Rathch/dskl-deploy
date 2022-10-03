@@ -7,6 +7,7 @@ namespace App\Admin;
 use App\Doctrine\Enum\Flag;
 use App\Entity\TeamAttributes;
 use App\Entity\TeamInfo;
+use ReflectionProperty;
 use Sonata\AdminBundle\Admin\AbstractAdmin;
 use Sonata\AdminBundle\Datagrid\DatagridMapper;
 use Sonata\AdminBundle\Datagrid\ListMapper;
@@ -14,6 +15,7 @@ use Sonata\AdminBundle\FieldDescription\FieldDescriptionInterface;
 use Sonata\AdminBundle\Form\FormMapper;
 use Sonata\AdminBundle\Form\Type\AdminType;
 use Sonata\AdminBundle\Show\ShowMapper;
+use Symfony\Component\Filesystem\Filesystem;
 use Symfony\Component\Form\Extension\Core\Type\EnumType;
 use function Webmozart\Assert\Tests\StaticAnalysis\null;
 
@@ -109,5 +111,25 @@ final class TeamAdmin extends AbstractAdmin
         $teamInfo->setTeam($team);
         $teamAttributs = new TeamAttributes();
         $teamAttributs->setTeam($team);
+
+
+    }
+
+    protected function preUpdate(object $object): void
+    {
+        $reflectionProperty = new ReflectionProperty("App\Entity\TeamInfo", 'image');
+        $teaminfo = $object->getTeamInfo();
+        if ($reflectionProperty->isInitialized($teaminfo)) {
+            $thumbnailName = $teaminfo->getTeam()->getName();
+            $thumbnailName = strtolower($thumbnailName);
+            $thumbnailName = trim($thumbnailName);
+            $teaminfo->setImageName($thumbnailName .  "." . $teaminfo->getImage()->guessExtension());
+
+            $filesystem= new Filesystem();
+            $filesystem->mkdir("/var/www/html/public/img/teams/".$teaminfo->getTeam()->getId());
+
+            file_put_contents(  "/var/www/html/public/img/teams/".$teaminfo->getTeam()->getId()."/". $thumbnailName .  "." . $teaminfo->getImage()->guessExtension(), $teaminfo->getImage()->getContent());
+        }
+
     }
 }

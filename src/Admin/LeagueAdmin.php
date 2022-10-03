@@ -38,7 +38,7 @@ final class LeagueAdmin extends AbstractAdmin
     {
         $filter
             ->add('id')
-            ->add('date')
+            ->add('seasonName')
             ;
     }
 
@@ -46,7 +46,7 @@ final class LeagueAdmin extends AbstractAdmin
     {
         $list
             ->add('id',null,["label"=>"id"])
-            ->add('date',FieldDescriptionInterface::TYPE_DATETIME,["label"=>"date"])
+            ->add('seasonName',null,["label"=>"seasonName"])
             ->add("playdays",FieldDescriptionInterface::TYPE_ONE_TO_MANY,[
                 "label"=>"playdays",
                 "associated_property"=>"id",
@@ -64,17 +64,18 @@ final class LeagueAdmin extends AbstractAdmin
     protected function configureFormFields(FormMapper $form): void
     {
         $form
-            ->add('date', TextType::class, [
-                    "label"=>"date"
+            ->add('seasonName', TextType::class, [
+                    "label"=>"seasonName"
             ]
             );
     }
 
     protected function configureShowFields(ShowMapper $show): void
     {
+
         $show
             ->add('id',null,["label"=>"id"])
-            ->add('date',null,["label"=>"date"])
+            ->add('seasonName',null,["label"=>"seasonName"])
             ;
     }
 

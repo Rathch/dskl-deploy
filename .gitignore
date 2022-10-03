@@ -20,3 +20,5 @@ yarn-error.log
 public/build
 
 .env
+
+public/img/teams/

@@ -1,0 +1,163 @@
+{{ encore_entry_link_tags('app') }}
+{% dump(object) %}
+{% dump(object.teamInfo.city) %}
+{% dump(admin) %}
+
+{% set active = [] %}
+{% set ersatz = [] %}
+
+{% for squad in object.squads %}
+
+    {% if squad.replacement != 1 %}
+        {% set active = active|merge([squad]) %}
+    {% else %}
+        {% set ersatz = ersatz|merge([squad]) %}
+    {% endif %}
+{% endfor %}
+
+<figure class="figure">
+    <img src="/img/teams/{{ object.id }}/{{ object.teamInfo.imageName }}" class="figure-img img-fluid rounded"
+         alt="{{ object.name }}">
+    <figcaption class="figure-caption">{{ object.name }}</figcaption>
+</figure>
+
+
+<div class="accordion" id="accordionExample">
+    <div class="card">
+        <div class="card-header" id="headingOne">
+
+            <button class="btn btn-link btn-block text-left" type="button" data-toggle="collapse" data-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
+                <h2 class="mb-0">VEREINSINFO</h2>
+            </button>
+
+        </div>
+
+        <div id="collapseOne" class="collapse" aria-labelledby="headingOne" data-parent="#accordionExample">
+            <div class="card-body">
+                <table class="table">
+                    <tbody>
+                    <tr>
+                        <th scope="row">Stadt</th>
+                        <td>{{ object.teamInfo.city }}</td>
+                    </tr>
+                    <tr>
+                        <th scope="row">Teamfarben</th>
+                        <td>{{ object.teamInfo.color }}</td>
+
+                    </tr>
+                    <tr>
+                        <th scope="row">Gründungsjahr</th>
+                        <td colspan="2">{{ object.teamInfo.foundingYear }}</td>
+                    </tr>
+                    <tr>
+                        <th scope="row">Präsident</th>
+                        <td colspan="2">{{ object.teamInfo.presedent }}</td>
+                    </tr>
+                    <tr>
+                        <th scope="row">Trainer</th>
+                        <td colspan="2">{{ object.teamInfo.trainer }}</td>
+                    </tr>
+                    <tr>
+                        <th scope="row">Sponsor</th>
+                        <td colspan="2">{{ object.teamInfo.sponsor }}</td>
+                    </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+    <div class="card">
+        <div class="card-header" id="headingTwo">
+
+            <button class="btn btn-link btn-block text-left collapsed" type="button" data-toggle="collapse" data-target="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo">
+                <h2 class="mb-0">ERFOLGE</h2>
+            </button>
+
+        </div>
+        <div id="collapseTwo" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionExample">
+            <div class="card-body">
+                {{ object.teamInfo.successes }}
+            </div>
+        </div>
+    </div>
+    <div class="card">
+        <div class="card-header" id="headingThree">
+            <button class="btn btn-link btn-block text-left collapsed" type="button" data-toggle="collapse" data-target="#collapseThree" aria-expanded="false" aria-controls="collapseThree">
+                <h2 class="mb-0">AKTUELLER KADER</h2>
+            </button>
+        </div>
+        <div id="collapseThree" class="collapse" aria-labelledby="headingThree" data-parent="#accordionExample">
+            <div class="card-body">
+                <table class="table table-hover" id="sortTable">
+                    <thead>
+                    <tr>
+                        <th>Name</th>
+                        <th>Position</th>
+                        <th>Metatyp</th>
+                        <th>Alter</th>
+                        <th>Wert €</th>
+                        <th>Anmerkung</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+
+                    {% for squad in active %}
+                        <tr>
+                            <td>{{ squad.name }}</td>
+                            <td>{{ squad.position.value }}</td>
+                            <td>{{ squad.methaTyp.value }}</td>
+                            <td>{{ squad.age }}</td>
+                            <td>{{ squad.value }}</td>
+                            <td>{{ squad.comment }}</td>
+                        </tr>
+                    {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+            <div class="card-body">
+                <h2>Ersatzspieler:</h2>
+                <table class="table table-hover" id="sortTable">
+                    <thead>
+                    <tr>
+                        <th>Name</th>
+                        <th>Position</th>
+                        <th>Metatyp</th>
+                        <th>Alter</th>
+                        <th>Wert €</th>
+                        <th>Anmerkung</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+
+                    {% for squad in ersatz %}
+                        <tr>
+                            <td>{{ squad.name }}</td>
+                            <td>{{ squad.position.value }}</td>
+                            <td>{{ squad.methaTyp.value }}</td>
+                            <td>{{ squad.age }}</td>
+                            <td>{{ squad.value }}</td>
+                            <td>{{ squad.comment }}</td>
+                        </tr>
+                    {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+        </div>
+        <div class="card">
+            <div class="card-header" id="headingFor">
+
+                <button class="btn btn-link btn-block text-left collapsed" type="button" data-toggle="collapse" data-target="#collapseFor" aria-expanded="false" aria-controls="collapseFor">
+                    <h2 class="mb-0">Begegnungen</h2>
+                </button>
+
+            </div>
+            <div id="collapseFor" class="collapse" aria-labelledby="headingFor" data-parent="#accordionExample">
+                <div class="card-body">
+                    {{ dump(object.encounters) }}
+
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+

@@ -24,7 +24,7 @@ class Team
     private $encounters;
 
     #[ORM\Column(type: "flag")]
-    private ?Flag $active = null;
+    private ?Flag $active;
 
     #[ORM\OneToMany(mappedBy: 'teams', targetEntity: TeamStatistic::class, cascade: ['persist', 'remove'])]
     private $teamStatistics;

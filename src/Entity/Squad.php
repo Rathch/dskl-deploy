@@ -3,7 +3,9 @@
 namespace App\Entity;
 
 use App\Doctrine\Enum\Flag;
+use App\Doctrine\Enum\MethaTyp;
 use App\Doctrine\Enum\Position;
+use App\Doctrine\Type\MethaTypTyp;
 use App\Repository\SquadRepository;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
@@ -22,8 +24,8 @@ class Squad
     #[ORM\Column(length: 255, nullable: true)]
     private ?string $name = null;
 
-    #[ORM\Column(length: 255, nullable: true)]
-    private ?string $metatyp = null;
+    #[ORM\Column(type: "methaTyp")]
+    private ?MethaTyp $methaTyp = null;
 
     #[ORM\Column(length: 255, nullable: true)]
     private ?string $age = null;
@@ -79,16 +81,14 @@ class Squad
         return $this;
     }
 
-    public function getMetatyp(): ?string
+    public function getMethaTyp(): ?MethaTyp
     {
-        return $this->metatyp;
+        return $this->methaTyp;
     }
 
-    public function setMetatyp(?string $metatyp): self
+    public function setMethaTyp(?MethaTyp $methaTyp)
     {
-        $this->metatyp = $metatyp;
-
-        return $this;
+        $this->methaTyp = $methaTyp;
     }
 
     public function getAge(): ?string

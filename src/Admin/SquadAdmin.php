@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace App\Admin;
 
 use App\Doctrine\Enum\Flag;
+use App\Doctrine\Enum\MethaTyp;
 use App\Doctrine\Enum\Position;
 use App\Entity\Team;
 use App\Entity\TeamInfo;
@@ -34,7 +35,13 @@ final class SquadAdmin extends AbstractAdmin
                     'choice_label' => 'value',
                 ],
             ])
-            ->add('metatyp')
+            ->add('methaTyp', null, [
+                'field_type' => EnumType::class,
+                'field_options' => [
+                    'class' => MethaTyp::class,
+                    'choice_label' => 'value',
+                ],
+            ])
             ->add('age')
             ->add('comment')
             ;
@@ -47,7 +54,7 @@ final class SquadAdmin extends AbstractAdmin
             ->add('active', FieldDescriptionInterface::TYPE_ENUM, ["label" => "active"])
             ->add('name', null, ["label" => "name"])
             ->add('position', FieldDescriptionInterface::TYPE_ENUM, ["label" => "position"])
-            ->add('metatyp', null, ["label" => "metatyp"])
+            ->add('methaTyp', FieldDescriptionInterface::TYPE_ENUM, ["label" => "metatyp"])
             ->add('age', null, ["label" => "age"])
             ->add('comment', null, ["label" => "comment"])
             ->add(ListMapper::NAME_ACTIONS, null, [
@@ -76,7 +83,7 @@ final class SquadAdmin extends AbstractAdmin
         $form
             ->add('position', EnumType::class, ["class"=>Position::class,"choice_label"=>"value","label" => "position"])
             ->add('name', null, ["label" => "name"])
-            ->add('metatyp', null, ["label" => "metatyp"])
+            ->add('methaTyp', EnumType::class, ["class"=>MethaTyp::class,"choice_label"=>"value","label" => "methaTyp"])
             ->add('age', null, ["label" => "age"])
             ->add('value', null, ["label" => "value"])
             ->add('comment', null, ["label" => "comment"])

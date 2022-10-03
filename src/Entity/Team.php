@@ -23,6 +23,9 @@ class Team
     #[ORM\OneToMany(mappedBy: 'team1', targetEntity: Encounter::class)]
     private $encounters;
 
+    #[ORM\OneToMany(mappedBy: 'team2', targetEntity: Encounter::class)]
+    private $encounters2;
+
     #[ORM\Column(type: "flag")]
     private ?Flag $active;
 
@@ -44,6 +47,7 @@ class Team
     public function __construct()
     {
         $this->encounters = new ArrayCollection();
+        $this->encounters2 = new ArrayCollection();
         $this->teamStatistics = new ArrayCollection();
         $this->squads = new ArrayCollection();
     }
@@ -95,6 +99,36 @@ class Team
             // set the owning side to null (unless already changed)
             if ($encounter->getTeam1() === $this) {
                 $encounter->setTeam1(null);
+            }
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, Encounter>
+     */
+    public function getEncounters2(): Collection
+    {
+        return $this->encounters2;
+    }
+
+    public function addEncounter2(Encounter $encounter2): self
+    {
+        if (!$this->encounters2->contains($encounter2)) {
+            $this->encounters2[] = $encounter2;
+            $encounter2->setTeam1($this);
+        }
+
+        return $this;
+    }
+
+    public function removeEncounter2(Encounter $encounter2): self
+    {
+        if ($this->encounters2->removeElement($encounter2)) {
+            // set the owning side to null (unless already changed)
+            if ($encounter2->getTeam1() === $this) {
+                $encounter2->setTeam1(null);
             }
         }
 

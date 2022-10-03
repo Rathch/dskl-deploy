@@ -1,0 +1,10 @@
+#!/bin/bash
+
+## #ddev-generated
+## Description: Enable or disable xdebug
+## Usage: doctrine
+## Example: "ddev sconsole"
+
+
+cd /var/www/html/rdagBackend
+bin/console d:s:u --force

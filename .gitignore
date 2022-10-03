@@ -18,3 +18,7 @@ yarn-error.log
 
 .idea
 public/build
+
+.env
+
+public/img/teams/

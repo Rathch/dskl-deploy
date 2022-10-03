@@ -1,0 +1,10 @@
+#!/bin/bash
+
+## #ddev-generated
+## Description: Enable or disable xdebug
+## Usage: test-all-c
+## Example: "ddev sconsole"
+
+enable_xdebug
+php vendor/bin/codecept run --coverage --coverage-xml --coverage-html
+disable_xdebug

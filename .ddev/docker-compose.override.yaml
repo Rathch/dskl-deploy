@@ -1,0 +1,12 @@
+version: '3.6'
+
+services:
+  web:
+    environment:
+      - PHP_IDE_CONFIG=serverName=${DDEV_PRIMARY_URL}
+      - XDEBUG_MODE=coverage
+    volumes:
+      # add php xdebug profile path
+      - ./php-profiles/:/tmp/debug/:delegated
+      # ports:
+      # - 8899:80

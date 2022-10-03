@@ -3,80 +3,93 @@
 namespace App\Entity;
 
 use App\Repository\TeamInfoRepository;
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\HttpFoundation\File\UploadedFile;
 
-/**
- * @ORM\Entity(repositoryClass=TeamInfoRepository::class)
- */
+#[ORM\Entity(repositoryClass: TeamInfoRepository::class)]
 class TeamInfo
 {
-    /**
-     * @ORM\Id
-     * @ORM\GeneratedValue
-     * @ORM\Column(type="integer")
-     */
+    #[ORM\Id]
+    #[ORM\GeneratedValue]
+    #[ORM\Column(type: 'integer')]
     private $id;
 
-    /**
-     * @ORM\Column(type="string", length=255, nullable=true)
-     */
-    private $image;
 
-    /**
-     * @ORM\Column(type="string", length=255, nullable=true)
-     */
+    private UploadedFile $image;
+
+    #[ORM\Column(type: 'string', length: 255, nullable: true)]
+    private ?string $imageName = null;
+
+    #[ORM\Column(type: 'string', length: 255, nullable: true)]
     private $city;
 
-    /**
-     * @ORM\Column(type="string", length=255, nullable=true)
-     */
+    #[ORM\Column(type: 'string', length: 255, nullable: true)]
     private $color;
 
-    /**
-     * @ORM\Column(type="string", length=255, nullable=true)
-     */
+    #[ORM\Column(type: 'string', length: 255, nullable: true)]
     private $foundingYear;
 
-    /**
-     * @ORM\Column(type="string", length=255, nullable=true)
-     */
+    #[ORM\Column(type: 'string', length: 255, nullable: true)]
     private $sponsor;
 
-    /**
-     * @ORM\Column(type="string", length=255, nullable=true)
-     */
+    #[ORM\Column(type: 'string', length: 255, nullable: true)]
     private $presedent;
 
-    /**
-     * @ORM\Column(type="string", length=255, nullable=true)
-     */
+    #[ORM\Column(type: 'string', length: 255, nullable: true)]
     private $trainer;
 
-    /**
-     * @ORM\Column(type="string", length=255, nullable=true)
-     */
+    #[ORM\Column(type: 'string', length: 255, nullable: true)]
     private $successes;
 
-    /**
-     * @ORM\OneToOne(targetEntity=Team::class, cascade={"persist", "remove"})
-     */
+    #[ORM\OneToOne(targetEntity: Team::class, mappedBy: 'teamInfo', cascade: ['persist', 'remove'])]
     private $team;
+
+    #[ORM\OneToMany(targetEntity: TeamStatistic::class, mappedBy: 'teams')]
+    private $teamStatistics;
+
+
+
+    private ?string $name = null;
+
+    public function __construct()
+    {
+        $this->teamStatistics = new ArrayCollection();
+    }
+
+
+    /**
+     * @return string|null
+     */
+    public function getImageName(): ?string
+    {
+        return $this->imageName;
+    }
+
+    /**
+     * @param string|null $imageName
+     */
+    public function setImageName(?string $imageName): void
+    {
+        $this->imageName = $imageName;
+    }
+
+
 
     public function getId(): ?int
     {
         return $this->id;
     }
 
-    public function getImage(): ?string
+    public function getImage(): ?UploadedFile
     {
         return $this->image;
     }
 
-    public function setImage(?string $image): self
+    public function setImage(?UploadedFile $uploadedFile): void
     {
-        $this->image = $image;
-
-        return $this;
+        $this->image = $uploadedFile;
     }
 
     public function getCity(): ?string
@@ -170,8 +183,53 @@ class TeamInfo
 
     public function setTeam(?Team $team): self
     {
+        // unset the owning side of the relation if necessary
+        if ($team === null && $this->team !== null) {
+            $this->team->setTeamInfo(null);
+        }
+
+        // set the owning side of the relation if necessary
+        if ($team !== null && $team->getTeamInfo() !== $this) {
+            $team->setTeamInfo($this);
+        }
+
         $this->team = $team;
 
         return $this;
+    }
+
+    /**
+     * @return Collection<int, TeamStatistic>
+     */
+    public function getTeamStatistics(): Collection
+    {
+        return $this->teamStatistics;
+    }
+
+    public function addTeamStatistic(TeamStatistic $teamStatistic): self
+    {
+        if (!$this->teamStatistics->contains($teamStatistic)) {
+            $this->teamStatistics[] = $teamStatistic;
+            $teamStatistic->setTeamInfo($this);
+        }
+
+        return $this;
+    }
+
+    public function removeTeamStatistic(TeamStatistic $teamStatistic): self
+    {
+        if ($this->teamStatistics->removeElement($teamStatistic)) {
+            // set the owning side to null (unless already changed)
+            if ($teamStatistic->getTeamInfo() === $this) {
+                $teamStatistic->setTeamInfo(null);
+            }
+        }
+
+        return $this;
+    }
+
+    public function getName(): ?string
+    {
+        return $this->getTeam()->getName();
     }
 }

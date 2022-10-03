@@ -23,10 +23,10 @@ class GenerateEncounterService
 
     public function generate(League $league)
     {
-        //todo: generate Team List
+        //todo: get only active teams
 
-        $teams = $this->teamReposetory->findBy(["active" => true],null,1);
-        $teams2 = $this->teamReposetory->findBy(["active" => true],null,$league->getNumberOfTeams());
+        $teams = $this->teamReposetory->findBy([],null,1);
+        $teams2 = $this->teamReposetory->findBy([],null,$league->getNumberOfTeams());
         $matches = [];
         $counter = $league->getNumberOfTeams()-1;
 

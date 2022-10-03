@@ -1,0 +1,10 @@
+#!/bin/bash
+
+## #ddev-generated
+## Description: Enable or disable xdebug
+## Usage: test-unit-c
+## Example: "ddev sconsole"
+
+enable_xdebug
+php vendor/bin/codecept run Unit --coverage --coverage-xml --coverage-html
+disable_xdebug

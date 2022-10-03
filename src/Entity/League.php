@@ -5,59 +5,40 @@ namespace App\Entity;
 use App\Repository\LeagueRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
+use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
 
-/**
- * @ORM\Entity(repositoryClass=LeagueRepository::class)
- */
+#[ORM\Entity(repositoryClass: LeagueRepository::class)]
 class League
 {
-    /**
-     * @ORM\Id
-     * @ORM\GeneratedValue
-     * @ORM\Column(type="integer")
-     */
+    #[ORM\Id]
+    #[ORM\GeneratedValue]
+    #[ORM\Column(type: 'integer')]
     private $id;
 
-    /**
-     * @ORM\Column(type="date")
-     */
-    private $date;
+    #[ORM\Column(type: 'string')]
+    private $seasonName;
 
-    /**
-     * @ORM\OneToMany(targetEntity=PlayDay::class, mappedBy="league")
-     */
+    #[ORM\OneToMany(mappedBy: 'league', targetEntity: PlayDay::class)]
     private $playdays;
 
-    /**
-     * @ORM\Column(type="integer")
-     */
-    private $numberOfTeams;
+    #[ORM\Column(type: 'integer')]
+    private $numberOfTeams = 24;
 
-    /**
-     * @ORM\Column(type="integer")
-     */
-    private $numberOfPlayDays;
+    #[ORM\Column(type: 'integer')]
+    private $numberOfPlayDays = 23;
 
-    /**
-     * @ORM\ManyToOne(targetEntity=TeamStatistic::class, inversedBy="league")
-     */
+    #[ORM\ManyToOne(targetEntity: TeamStatistic::class, inversedBy: 'league')]
     private $teamStatistic;
 
-    /**
-     * @ORM\OneToOne(targetEntity=LeagueStatistic::class, mappedBy="league", cascade={"persist", "remove"})
-     */
+    #[ORM\OneToOne(mappedBy: 'league', targetEntity: LeagueStatistic::class, cascade: ['persist', 'remove'])]
     private $leagueStatistic;
 
-    /**
-     * @ORM\OneToMany(targetEntity=TeamStatistic::class, mappedBy="league2")
-     */
+    #[ORM\OneToMany(mappedBy: 'league2', targetEntity: TeamStatistic::class)]
     private $teamStatistics;
 
     public function __construct()
     {
-        $this->numberOfPlayDays = 23;
-        $this->numberOfTeams = 24;
         $this->playdays = new ArrayCollection();
         $this->teamStatistics = new ArrayCollection();
     }
@@ -67,17 +48,23 @@ class League
         return $this->id;
     }
 
-    public function getDate(): ?\DateTimeInterface
+    /**
+     * @return mixed
+     */
+    public function getSeasonName()
     {
-        return $this->date;
+        return $this->seasonName;
     }
 
-    public function setDate(\DateTimeInterface $date): self
+    /**
+     * @param mixed $seasonName
+     */
+    public function setSeasonName($seasonName): void
     {
-        $this->date = $date;
-
-        return $this;
+        $this->seasonName = $seasonName;
     }
+
+
 
     /**
      * @return Collection<int, PlayDay>

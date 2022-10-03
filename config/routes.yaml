@@ -12,3 +12,7 @@ sonata_user_admin_security:
 sonata_user_admin_resetting:
     resource: '@SonataUserBundle/Resources/config/routing/admin_resetting.xml'
     prefix: /admin
+
+simple_things_entity_audit:
+    resource: "@SimpleThingsEntityAuditBundle/Resources/config/routing/audit.xml"
+    prefix: /audit

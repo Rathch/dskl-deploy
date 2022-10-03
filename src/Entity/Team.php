@@ -2,85 +2,50 @@
 
 namespace App\Entity;
 
+use App\Doctrine\Enum\Flag;
 use App\Repository\TeamRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 
-/**
- * @ORM\Entity(repositoryClass=TeamRepository::class)
- */
+#[ORM\Entity(repositoryClass: TeamRepository::class)]
 class Team
 {
-    /**
-     * @ORM\Id
-     * @ORM\GeneratedValue
-     * @ORM\Column(type="integer")
-     */
+    #[ORM\Id]
+    #[ORM\GeneratedValue]
+    #[ORM\Column(type: 'integer')]
     private int $id;
 
-    /**
-     * @ORM\Column(type="string")
-     */
+    #[ORM\Column(type: 'string')]
     private string $name;
 
-    /**
-     * @ORM\Column(type="integer")
-     */
-    private int $professionalism;
 
-    /**
-     * @ORM\Column(type="integer")
-     */
-    private int $brutality;
-
-    /**
-     * @ORM\Column(type="integer")
-     */
-    private int $robustness;
-
-    /**
-     * @ORM\Column(type="integer")
-     */
-    private int $offensive;
-
-    /**
-     * @ORM\Column(type="integer")
-     */
-    private int $defensive;
-
-    /**
-     * @ORM\Column(type="integer")
-     */
-    private int $tactics;
-
-    /**
-     * @ORM\Column(type="integer")
-     */
-    private int $spirit;
-
-    private $power;
-
-    /**
-     * @ORM\OneToMany(targetEntity=Encounter::class, mappedBy="team1")
-     */
+    #[ORM\OneToMany(mappedBy: 'team1', targetEntity: Encounter::class)]
     private $encounters;
 
-    /**
-     * @ORM\Column(type="boolean")
-     */
-    private $active;
+    #[ORM\Column(type: "flag")]
+    private ?Flag $active;
 
-    /**
-     * @ORM\OneToMany(targetEntity=TeamStatistic::class, mappedBy="teams")
-     */
+    #[ORM\OneToMany(mappedBy: 'teams', targetEntity: TeamStatistic::class, cascade: ['persist', 'remove'])]
     private $teamStatistics;
+
+    #[ORM\OneToOne(inversedBy: 'team', targetEntity: TeamInfo::class, cascade: ['persist', 'remove'])]
+    private $teamInfo;
+
+    #[ORM\OneToOne(inversedBy: 'team', targetEntity: TeamAttributes::class, cascade: ['persist', 'remove'])]
+    private $teamAttributes;
+
+    #[ORM\OneToMany(mappedBy: 'team', targetEntity: Squad::class, cascade: ['persist', 'remove'])]
+    private Collection $squads;
+
+
 
 
     public function __construct()
     {
         $this->encounters = new ArrayCollection();
         $this->teamStatistics = new ArrayCollection();
+        $this->squads = new ArrayCollection();
     }
 
     public function getId(): int
@@ -88,105 +53,7 @@ class Team
         return $this->id;
     }
 
-    public function getProfessionalism(): int
-    {
-        return $this->professionalism;
-    }
 
-    public function setProfessionalism(int $professionalism): self
-    {
-        $this->professionalism = $professionalism;
-
-        return $this;
-    }
-
-    public function getBrutality(): int
-    {
-        return $this->brutality;
-    }
-
-    public function setBrutality(int $brutality): self
-    {
-        $this->brutality = $brutality;
-
-        return $this;
-    }
-
-    public function getRobustness(): int
-    {
-        return $this->robustness;
-    }
-
-    public function setRobustness(int $robustness): self
-    {
-        $this->robustness = $robustness;
-
-        return $this;
-    }
-
-    /**
-     * @return int
-     */
-    public function getOffensive(): int
-    {
-        return $this->offensive;
-    }
-
-    /**
-     * @param int $offensive
-     */
-    public function setOffensive(int $offensive): void
-    {
-        $this->offensive = $offensive;
-    }
-
-    /**
-     * @return int
-     */
-    public function getDefensive(): int
-    {
-        return $this->defensive;
-    }
-
-    /**
-     * @param int $defensive
-     */
-    public function setDefensive(int $defensive): void
-    {
-        $this->defensive = $defensive;
-    }
-
-    /**
-     * @return int
-     */
-    public function getTactics()
-    {
-        return $this->tactics;
-    }
-
-    /**
-     * @param mixed $tactics
-     */
-    public function setTactics($tactics): void
-    {
-        $this->tactics = $tactics;
-    }
-
-    /**
-     * @return int
-     */
-    public function getSpirit()
-    {
-        return $this->spirit;
-    }
-
-    /**
-     * @param int $spirit
-     */
-    public function setSpirit(int $spirit): void
-    {
-        $this->spirit = $spirit;
-    }
 
     /**
      * @return string
@@ -202,12 +69,6 @@ class Team
     public function setName(string $name): void
     {
         $this->name = $name;
-    }
-
-
-    public function getPower(): int
-    {
-        return $this->getBrutality() + $this->getProfessionalism() + $this->getProfessionalism() + $this->getRobustness() + $this->getDefensive() + $this->getOffensive() + $this->getSpirit() + $this->getTactics();
     }
 
     /**
@@ -240,17 +101,23 @@ class Team
         return $this;
     }
 
-    public function isActive(): ?bool
+    /**
+     * @return Flag|null
+     */
+    public function getActive(): ?Flag
     {
         return $this->active;
     }
 
-    public function setActive(bool $active): self
+    /**
+     * @param Flag|null $active
+     */
+    public function setActive(?Flag $active): void
     {
         $this->active = $active;
-
-        return $this;
     }
+
+
 
     /**
      * @return Collection<int, TeamStatistic>
@@ -281,4 +148,60 @@ class Team
 
         return $this;
     }
+
+    public function getTeamInfo(): ?TeamInfo
+    {
+        return $this->teamInfo;
+    }
+
+    public function setTeamInfo(?TeamInfo $teamInfo): self
+    {
+        $this->teamInfo = $teamInfo;
+
+        return $this;
+    }
+
+    public function getTeamAttributes(): ?TeamAttributes
+    {
+        return $this->teamAttributes;
+    }
+
+    public function setTeamAttributes(?TeamAttributes $teamAttributes): self
+    {
+        $this->teamAttributes = $teamAttributes;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, Squad>
+     */
+    public function getSquads(): Collection
+    {
+        return $this->squads;
+    }
+
+    public function addSquad(Squad $squad): self
+    {
+        if (!$this->squads->contains($squad)) {
+            $this->squads[] =$squad;
+            $squad->setTeam($this);
+        }
+
+        return $this;
+    }
+
+    public function removeSquad(Squad $squad): self
+    {
+        if ($this->squads->removeElement($squad)) {
+            // set the owning side to null (unless already changed)
+            if ($squad->getTeam() === $this) {
+                $squad->setTeam(null);
+            }
+        }
+
+        return $this;
+    }
+
+
 }

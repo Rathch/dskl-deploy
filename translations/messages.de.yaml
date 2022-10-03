@@ -4,14 +4,14 @@ active: Aktiv
 brutality: Brutalität
 chanceTeam1: 'Gelegenheiten Team 1'
 chanceTeam2: 'Gelegenheiten Team 2'
+city: Stadt
+color: Teamfarben
 date: Datum
 defensive: Defensive
 encounters: Begegnungen
-Encounter: Begegnung
-Team: Team
-PlayDay: Spieltag
-League: Liga
+foundingYear: Gründungsjahr
 id: Id
+image: Bild
 injuryTeam1Kritisch: 'Verletzungen Kritisch Team 1'
 injuryTeam1Leicht: 'Verletzungen Leicht Team 1'
 injuryTeam1Schwer: 'Verletzungen Schwer Team 1'
@@ -27,9 +27,25 @@ playday: Spieltag
 playdays: Spieltage
 pointsTeam1: 'Punkte Team 1'
 pointsTeam2: 'Punkte Team 2'
+presedent: Präsident
 professionalism: Proffesionalität
 report: Spielbericht
 robustness: Robustheit
 spirit: Kampfgeist
+sponsor: Sponsor
+successes: Erfolge
 tactics: Taktik
+team: Team
 team1: 'Team 1'
+teamInfo: 'Team Informationen'
+trainer: Cheftrainer
+position: Position
+metatyp: Metatyp
+age: Alter
+value: Wert €
+comment: Anmerkung
+Squad: Kader
+squads: Mannschaft
+replacement: Ersatzspieler
+teamAttributes: Werte
+link_add: hinzufügen

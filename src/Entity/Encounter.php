@@ -6,105 +6,68 @@ namespace App\Entity;
 use App\Repository\EncounterRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
+use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 use Symfony\Component\Validator\Mapping\ClassMetadata;
 
 
-/**
- * @ORM\Entity(repositoryClass=EncounterRepository::class)
- */
+#[ORM\Entity(repositoryClass: EncounterRepository::class)]
 class Encounter
 {
-    /**
-     * @ORM\Id
-     * @ORM\GeneratedValue
-     * @ORM\Column(type="integer")
-     */
+    #[ORM\Id]
+    #[ORM\GeneratedValue]
+    #[ORM\Column(type: 'integer')]
     private $id;
 
-    /**
-     * @ORM\Column(type="integer", nullable=true)
-     */
+    #[ORM\Column(type: 'integer', nullable: true)]
     private  $chanceTeam1;
-    /**
-     * @ORM\Column(type="integer", nullable=true)
-     */
+    #[ORM\Column(type: 'integer', nullable: true)]
     private  $chanceTeam2;
 
-    /**
-     * @ORM\Column(type="integer", nullable=true)
-     */
+    #[ORM\Column(type: 'integer', nullable: true)]
     private  $pointsTeam1;
 
-    /**
-     * @ORM\Column(type="integer", nullable=true)
-     */
+    #[ORM\Column(type: 'integer', nullable: true)]
     private $pointsTeam2;
 
-    /**
-     * @ORM\Column(type="text", nullable=true)
-     */
+    #[ORM\Column(type: 'text', nullable: true)]
     private $report;
 
-    /**
-     * @ORM\Column(type="integer", nullable=true)
-     */
+    #[ORM\Column(type: 'integer', nullable: true)]
     private $injuryTeam1Leicht;
 
-    /**
-     * @ORM\Column(type="integer", nullable=true)
-     */
+    #[ORM\Column(type: 'integer', nullable: true)]
     private $injuryTeam1Schwer;
 
-    /**
-     * @ORM\Column(type="integer", nullable=true)
-     */
+    #[ORM\Column(type: 'integer', nullable: true)]
     private $injuryTeam1Kritisch;
 
-    /**
-     * @ORM\Column(type="integer", nullable=true)
-     */
+    #[ORM\Column(type: 'integer', nullable: true)]
     private $injuryTeam1Tot;
 
-    /**
-     * @ORM\Column(type="integer", nullable=true)
-     */
+    #[ORM\Column(type: 'integer', nullable: true)]
     private $injuryTeam2Leicht;
 
-    /**
-     * @ORM\Column(type="integer", nullable=true)
-     */
+    #[ORM\Column(type: 'integer', nullable: true)]
     private $injuryTeam2Schwer;
 
-    /**
-     * @ORM\Column(type="integer", nullable=true)
-     */
+    #[ORM\Column(type: 'integer', nullable: true)]
     private $injuryTeam2Kritisch;
 
-    /**
-     * @ORM\Column(type="integer", nullable=true)
-     */
+    #[ORM\Column(type: 'integer', nullable: true)]
     private $injuryTeam2Tot;
 
-    /**
-     * @ORM\ManyToOne(targetEntity=PlayDay::class, inversedBy="encounters")
-     */
+    #[ORM\ManyToOne(targetEntity: PlayDay::class, inversedBy: 'encounters')]
     private $playDay;
 
-    /**
-     * @ORM\ManyToOne(targetEntity=Team::class, inversedBy="encounters")
-     */
+    #[ORM\ManyToOne(targetEntity: Team::class, inversedBy: 'encounters')]
     private $team1;
 
-    /**
-     * @ORM\ManyToOne(targetEntity=Team::class, inversedBy="encounters")
-     */
+    #[ORM\ManyToOne(targetEntity: Team::class, inversedBy: 'encounters')]
     private $team2;
 
-    /**
-     * @ORM\Column(type="integer", nullable=true)
-     */
+    #[ORM\Column(type: 'integer', nullable: true)]
     private $winningTeam;
 
     /**

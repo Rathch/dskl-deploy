@@ -83,6 +83,9 @@
     "friendsofphp/proxy-manager-lts": {
         "version": "v1.0.7"
     },
+    "friendsofsymfony/ckeditor-bundle": {
+        "version": "2.4.0"
+    },
     "jms/metadata": {
         "version": "2.7.0"
     },

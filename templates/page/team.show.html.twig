@@ -1,0 +1,191 @@
+{% extends 'page/layout.html.twig' %}
+
+{% block title %}Team Anzeige{% endblock %}
+
+{% block page_contents %}
+
+    <h2 class="text-center">Team {{ team.name }}</h2>
+    {% set active = [] %}
+    {% set ersatz = [] %}
+
+    {% for squad in team.squads %}
+
+        {% if squad.replacement != 1 %}
+            {% set active = active|merge([squad]) %}
+        {% else %}
+            {% set ersatz = ersatz|merge([squad]) %}
+        {% endif %}
+    {% endfor %}
+
+    {% set encounters = [] %}
+
+    {% for encounter in team.encounters %}
+        {% set encounters = encounters|merge([encounter]) %}
+    {% endfor %}
+    {% for encounter in team.encounters2 %}
+        {% set encounters = encounters|merge([encounter]) %}
+    {% endfor %}
+
+    <figure class="figure">
+        <img src="/img/teams/{{ team.id }}/{{ team.teamInfo.imageName }}" class="figure-img img-fluid rounded"
+             alt="{{ team.name }}">
+        <figcaption class="figure-caption">{{ team.name }}</figcaption>
+    </figure>
+    <h2 class="mb-0">VEREINSINFO</h2>
+    <table class="table">
+        <tbody>
+        <tr>
+            <th scope="row">Stadt</th>
+            <td>{{ team.teamInfo.city }}</td>
+        </tr>
+        <tr>
+            <th scope="row">Teamfarben</th>
+            <td>{{ team.teamInfo.color }}</td>
+
+        </tr>
+        <tr>
+            <th scope="row">Gründungsjahr</th>
+            <td colspan="2">{{ team.teamInfo.foundingYear }}</td>
+        </tr>
+        <tr>
+            <th scope="row">Präsident</th>
+            <td colspan="2">{{ team.teamInfo.presedent }}</td>
+        </tr>
+        <tr>
+            <th scope="row">Trainer</th>
+            <td colspan="2">{{ team.teamInfo.trainer }}</td>
+        </tr>
+        <tr>
+            <th scope="row">Sponsor</th>
+            <td colspan="2">{{ team.teamInfo.sponsor }}</td>
+        </tr>
+        </tbody>
+    </table>
+    <div class="accordion accordion-flush" id="accordionFlushExample">
+        <div class="accordion-item">
+            <h2 class="accordion-header" id="flush-headingOne">
+                <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#flush-collapseOne" aria-expanded="false" aria-controls="flush-collapseOne">
+                    <h2 class="mb-0">ERFOLGE</h2>
+                </button>
+            </h2>
+            <div id="flush-collapseOne" class="accordion-collapse collapse" aria-labelledby="flush-headingOne" data-bs-parent="#accordionFlushExample">
+                <div class="accordion-body"> {{ team.teamInfo.successes }}</div>
+            </div>
+        </div>
+        <div class="accordion-item">
+            <h2 class="accordion-header" id="flush-headingTwo">
+                <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#flush-collapseTwo" aria-expanded="false" aria-controls="flush-collapseTwo">
+                    <h2 class="mb-0">BEGEGNUNGEN</h2>
+                </button>
+            </h2>
+            <div id="flush-collapseTwo" class="accordion-collapse collapse" aria-labelledby="flush-headingTwo" data-bs-parent="#accordionFlushExample">
+                <div class="accordion-body">  <table class="table table-striped" id="sortTable">
+                        <tbody>
+                        {% for encounter in encounters | sort((a, b) => a.playday.league <=> b.playday.league) %}
+
+                            <tr><td colspan="3"></td></tr>
+                            <tr>
+                                <td><b>Liga: {{ encounter.playday.league.seasonName }}</b></td>
+                                <td></td>
+                                <td><b>Spieltag: {{ encounter.playday.date|date('d-M-Y') }}</td>
+                            </tr>
+                            <tr>
+                                <td><b>{{ encounter.team1.name }}</b></td>
+                                <td> {{ encounter.pointsTeam1 }} : {{ encounter.pointsTeam2 }} </td>
+                                <td><b>{{ encounter.team2.name }}</b></td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    {% if  encounter.injuryTeam1Leicht %} Leicht {{ encounter.injuryTeam1Leicht }}<br>{% endif %}
+                                    {% if  encounter.injuryTeam1Schwer %} Schwer {{ encounter.injuryTeam1Schwer }}<br>{% endif %}
+                                    {% if  encounter.injuryTeam1Kritisch %} Kritisch {{ encounter.injuryTeam1Kritisch }}<br>{% endif %}
+                                    {% if  encounter.injuryTeam1Tot %} Tot {{ encounter.injuryTeam1Tot }}<br>{% endif %}
+                                </td>
+                                <td> Verletzte </td>
+                                <td>
+                                    {% if  encounter.injuryTeam2Leicht %} Leicht {{ encounter.injuryTeam2Leicht }}<br>{% endif %}
+                                    {% if  encounter.injuryTeam2Schwer %} Schwer {{ encounter.injuryTeam2Schwer }}<br>{% endif %}
+                                    {% if  encounter.injuryTeam2Kritisch %} Kritisch {{ encounter.injuryTeam2Kritisch }}<br>{% endif %}
+                                    {% if  encounter.injuryTeam2Tot %} Tot {{ encounter.injuryTeam2Tot }}<br>{% endif %}
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>{{ encounter.chanceTeam1 }}</td>
+                                <td> Chancen </td>
+                                <td>{{ encounter.chanceTeam2 }}</td>
+                            </tr>
+                            <tr>
+                                <td colspan="3"><p>{{ encounter.report }}</p></td>
+                            </tr>
+                        {% endfor %}
+                        </tbody>
+                    </table></div>
+            </div>
+        </div>
+        <div class="accordion-item">
+            <h2 class="accordion-header" id="flush-headingThree">
+                <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#flush-collapseThree" aria-expanded="false" aria-controls="flush-collapseThree">
+                    <h2 class="mb-0">AKTUELLER KADER</h2>
+                </button>
+            </h2>
+            <div id="flush-collapseThree" class="accordion-collapse collapse" aria-labelledby="flush-headingThree" data-bs-parent="#accordionFlushExample">
+                <div class="accordion-body"><div class="card-body">
+                        <table class="table table-hover" id="sortTable">
+                            <thead>
+                            <tr>
+                                <th>Name</th>
+                                <th>Position</th>
+                                <th>Metatyp</th>
+                                <th>Alter</th>
+                                <th>Wert €</th>
+                                <th>Anmerkung</th>
+                            </tr>
+                            </thead>
+                            <tbody>
+
+                            {% for squad in active %}
+                                <tr>
+                                    <td>{{ squad.name }}</td>
+                                    <td>{{ squad.position.value }}</td>
+                                    <td>{{ squad.methaTyp.value }}</td>
+                                    <td>{{ squad.age }}</td>
+                                    <td>{{ squad.value }}</td>
+                                    <td>{{ squad.comment }}</td>
+                                </tr>
+                            {% endfor %}
+                            </tbody>
+                        </table>
+                    </div>
+                    <div class="card-body">
+                        <h2>Ersatzspieler:</h2>
+                        <table class="table table-hover" id="sortTable">
+                            <thead>
+                            <tr>
+                                <th>Name</th>
+                                <th>Position</th>
+                                <th>Metatyp</th>
+                                <th>Alter</th>
+                                <th>Wert €</th>
+                                <th>Anmerkung</th>
+                            </tr>
+                            </thead>
+                            <tbody>
+
+                            {% for squad in ersatz %}
+                                <tr>
+                                    <td>{{ squad.name }}</td>
+                                    <td>{{ squad.position.value }}</td>
+                                    <td>{{ squad.methaTyp.value }}</td>
+                                    <td>{{ squad.age }}</td>
+                                    <td>{{ squad.value }}</td>
+                                    <td>{{ squad.comment }}</td>
+                                </tr>
+                            {% endfor %}
+                            </tbody>
+                        </table>
+                    </div></div>
+            </div>
+        </div>
+    </div>
+
+{% endblock %}

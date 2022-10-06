@@ -62,3 +62,19 @@ services:
         class: App\Admin\TeamAttributesAdmin
         tags:
             - { name: sonata.admin, model_class: App\Entity\TeamAttributes, controller: ~, manager_type: orm, group: admin, label: TeamAttributes }
+
+    app.menu_builder:
+        class: App\Menu\Builder
+        arguments: [ "@knp_menu.factory" ]
+
+    app.main_menu:
+        class: Knp\Menu\MenuItem # the service definition requires setting the class
+        factory: [ "@app.menu_builder", createMainMenu ]
+        arguments: [ "@request_stack" ]
+        tags:
+            - { name: knp_menu.menu, alias: main } # The alias is what is used to retrieve the menu
+
+    admin.page:
+        class: App\Admin\PageAdmin
+        tags:
+            - { name: sonata.admin, model_class: App\Entity\Page, controller: ~, manager_type: orm, group: admin, label: Page }

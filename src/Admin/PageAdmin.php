@@ -5,7 +5,7 @@ declare(strict_types=1);
 namespace App\Admin;
 
 use App\Utility\StringUtility;
-use FOS\CKEditorBundle\Form\Type\CKEditorType;
+
 use Sonata\AdminBundle\Admin\AbstractAdmin;
 use Sonata\AdminBundle\Datagrid\DatagridMapper;
 use Sonata\AdminBundle\Datagrid\ListMapper;
@@ -48,7 +48,7 @@ final class PageAdmin extends AbstractAdmin
         $form
             ->add('title')
             ->add('slag')
-            ->add('html', CKEditorType::class)
+            ->add('html')
             ->add('templatename')
             ;
     }

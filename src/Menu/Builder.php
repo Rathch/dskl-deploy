@@ -25,6 +25,7 @@ final class Builder implements ContainerAwareInterface
     private $security;
     protected EntityManagerInterface $entityManager;
     protected PageRepository $pageReposetory;
+    protected TeamRepository $teamReposetory;
 
     /**
      * @param FactoryInterface $factory
@@ -35,17 +36,35 @@ final class Builder implements ContainerAwareInterface
         $this->security = $security;
         $this->entityManager = $entityManager;
         $this->pageReposetory = $entityManager->getRepository(Page::class);
+        $this->teamReposetory = $entityManager->getRepository(Team::class);
     }
 
     public function createMainMenu(RequestStack $requestStack)
     {
-
+        $teams = $this->teamReposetory->findAll();
         $pages = $this->pageReposetory->findAll();
         $menu = $this->factory->createItem('root');
         $menu->addChild('Home', ['route' => 'home']);
         $menu->addChild('Teams', ['route' => 'list_teams']);
+        $menu->addChild('Liga', ['route' => 'list_liga']);
         foreach ($pages as $page) {
             $menu->addChild($page->getTitle(), ['route' => 'page', 'routeParameters' => ['title' => $page->getSlag()]]);
+        }
+        foreach ($teams as $team) {
+            $menu['Teams']->addChild($team->getName(), ['route' => 'show_team', 'routeParameters' => ['id' => $team->getId()]]);
+        }
+        $renderer = new ListRenderer(new Matcher());
+        $renderer->render($menu, ['currentAsLink' => false]);
+
+        return $menu;
+    }
+
+    public function createTeamMenu(RequestStack $requestStack)
+    {
+        $teams = $this->teamReposetory->findAll();
+        $menu = $this->factory->createItem('root');
+        foreach ($teams as $team) {
+            $menu->addChild($team->getName(), ['route' => 'show_team', 'routeParameters' => ['id' => $team->getId()]]);
         }
         $renderer = new ListRenderer(new Matcher());
         $renderer->render($menu, ['currentAsLink' => false]);

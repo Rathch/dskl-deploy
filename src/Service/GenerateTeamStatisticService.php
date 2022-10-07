@@ -118,7 +118,6 @@ class GenerateTeamStatisticService
 
     public function show()
     {
-
         $teamStatistics = $this->teamStatisticReposetory->findAll();
 
         /** @var TeamStatistic $statistic */

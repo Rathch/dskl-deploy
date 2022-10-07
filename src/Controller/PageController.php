@@ -2,8 +2,10 @@
 
 namespace App\Controller;
 
+use App\Entity\League;
 use App\Entity\Page;
 use App\Entity\Team;
+use App\Repository\LeagueRepository;
 use App\Repository\PageRepository;
 use App\Repository\TeamRepository;
 use Doctrine\ORM\EntityManagerInterface;
@@ -16,6 +18,7 @@ class PageController extends AbstractController
     protected EntityManagerInterface $entityManager;
     protected PageRepository $pageReposetory;
     protected TeamRepository $teamReposetory;
+    protected LeagueRepository $ligaReposetory;
 
 
     public function __construct( EntityManagerInterface $entityManager)
@@ -23,6 +26,7 @@ class PageController extends AbstractController
         $this->entityManager = $entityManager;
         $this->pageReposetory = $entityManager->getRepository(Page::class);
         $this->teamReposetory = $entityManager->getRepository(Team::class);
+        $this->ligaReposetory = $entityManager->getRepository(League::class);
     }
 
 
@@ -65,6 +69,26 @@ class PageController extends AbstractController
         return $this->render('page/team.show.html.twig', [
             'controller_name' => 'PageController',
             'team' => $team,
+        ]);
+    }
+
+    #[Route(path: '/liga/list', name: 'list_liga')]
+    public function listLiga(): Response
+    {
+        $ligas = $this->ligaReposetory->findAll();
+        return $this->render('page/liga.list.html.twig', [
+            'ligas' => $ligas,
+            'controller_name' => 'PageController',
+        ]);
+    }
+
+    #[Route(path: '/liga/show/{id}', name: 'show_liga')]
+    public function showLiga($id): Response
+    {
+        $liga = $this->ligaReposetory->findOneBy(["id"=>$id]);
+        return $this->render('page/liga.show.html.twig', [
+            'controller_name' => 'PageController',
+            'liga' => $liga,
         ]);
     }
 }

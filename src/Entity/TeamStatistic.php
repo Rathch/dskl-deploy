@@ -84,10 +84,10 @@ class TeamStatistic
     #[ORM\ManyToOne(targetEntity: League::class, inversedBy: 'teamStatistics')]
     private $league;
 
-    #[ORM\ManyToOne(targetEntity: Team::class, inversedBy: 'foo')]
+    #[ORM\ManyToOne(targetEntity: Team::class)]
     private $team;
 
-    #[ORM\ManyToOne(targetEntity: TeamInfo::class, inversedBy: 'foo')]
+    #[ORM\ManyToOne(targetEntity: TeamInfo::class)]
     private $teamInfo;
 
 

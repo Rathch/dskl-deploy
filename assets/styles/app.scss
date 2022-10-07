@@ -20,13 +20,13 @@ $with: rgba(255, 255, 255, 0.826);
 .mynav {
   background: $ionosBlue;
   color: $with;
-  .nav-item .disabled {
+  .nav-item.disabled {
     a {
-      color: $backgroundColor;
-      pointer-events: none;
-      cursor: default;
+      color: rgb(116 115 115 / 83%);
     }
-
+    color: $backgroundColor;
+    pointer-events: none;
+    cursor: default;
   }
   .nav-link {
     color: $with
@@ -76,7 +76,9 @@ a:hover {
   color: $backgroundColor;
   transform: scale(1.1);
 }
-
+.nav-link {
+  color: $ionosBlue;
+}
 code {
   border-radius: 25px;
   background: $backgroundColor;

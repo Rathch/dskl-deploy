@@ -34,7 +34,7 @@ class League
     #[ORM\OneToOne(mappedBy: 'league', targetEntity: LeagueStatistic::class, cascade: ['persist', 'remove'])]
     private $leagueStatistic;
 
-    #[ORM\OneToMany(mappedBy: 'league2', targetEntity: TeamStatistic::class)]
+    #[ORM\OneToMany(mappedBy: 'league', targetEntity: TeamStatistic::class)]
     private $teamStatistics;
 
     public function __construct()

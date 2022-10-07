@@ -3,7 +3,11 @@
 {% block title %}Team Anzeige{% endblock %}
 
 {% block page_contents %}
-
+    <a href="/team/list" class="d-flex align-items-center mb-3 mb-md-0 me-md-auto text-decoration-none">
+        <svg xmlns="http://www.w3.org/2000/svg" width="50" height="50" fill="currentColor" class="bi bi-arrow-left-circle" viewBox="0 0 16 16">
+            <path fill-rule="evenodd" d="M1 8a7 7 0 1 0 14 0A7 7 0 0 0 1 8zm15 0A8 8 0 1 1 0 8a8 8 0 0 1 16 0zm-4.5-.5a.5.5 0 0 1 0 1H5.707l2.147 2.146a.5.5 0 0 1-.708.708l-3-3a.5.5 0 0 1 0-.708l3-3a.5.5 0 1 1 .708.708L5.707 7.5H11.5z"/>
+        </svg>
+    </a>
     <h2 class="text-center">Team {{ team.name }}</h2>
     {% set active = [] %}
     {% set ersatz = [] %}
@@ -83,40 +87,43 @@
                         <tbody>
                         {% for encounter in encounters | sort((a, b) => a.playday.league <=> b.playday.league) %}
 
-                            <tr><td colspan="3"></td></tr>
-                            <tr>
-                                <td><b>Liga: {{ encounter.playday.league.seasonName }}</b></td>
-                                <td></td>
-                                <td><b>Spieltag: {{ encounter.playday.date|date('d-M-Y') }}</td>
-                            </tr>
-                            <tr>
-                                <td><b>{{ encounter.team1.name }}</b></td>
-                                <td> {{ encounter.pointsTeam1 }} : {{ encounter.pointsTeam2 }} </td>
-                                <td><b>{{ encounter.team2.name }}</b></td>
-                            </tr>
-                            <tr>
-                                <td>
-                                    {% if  encounter.injuryTeam1Leicht %} Leicht {{ encounter.injuryTeam1Leicht }}<br>{% endif %}
-                                    {% if  encounter.injuryTeam1Schwer %} Schwer {{ encounter.injuryTeam1Schwer }}<br>{% endif %}
-                                    {% if  encounter.injuryTeam1Kritisch %} Kritisch {{ encounter.injuryTeam1Kritisch }}<br>{% endif %}
-                                    {% if  encounter.injuryTeam1Tot %} Tot {{ encounter.injuryTeam1Tot }}<br>{% endif %}
-                                </td>
-                                <td> Verletzte </td>
-                                <td>
-                                    {% if  encounter.injuryTeam2Leicht %} Leicht {{ encounter.injuryTeam2Leicht }}<br>{% endif %}
-                                    {% if  encounter.injuryTeam2Schwer %} Schwer {{ encounter.injuryTeam2Schwer }}<br>{% endif %}
-                                    {% if  encounter.injuryTeam2Kritisch %} Kritisch {{ encounter.injuryTeam2Kritisch }}<br>{% endif %}
-                                    {% if  encounter.injuryTeam2Tot %} Tot {{ encounter.injuryTeam2Tot }}<br>{% endif %}
-                                </td>
-                            </tr>
-                            <tr>
-                                <td>{{ encounter.chanceTeam1 }}</td>
-                                <td> Chancen </td>
-                                <td>{{ encounter.chanceTeam2 }}</td>
-                            </tr>
-                            <tr>
-                                <td colspan="3"><p>{{ encounter.report }}</p></td>
-                            </tr>
+                            <tr><td>
+                                    <table  class="table table-striped-columns">
+                                        <tr>
+                                            <td><b>Liga: {{ encounter.playday.league.seasonName }}</b></td>
+                                            <td></td>
+                                            <td><b>Spieltag: {{ encounter.playday.date|date('d-M-Y') }}</td>
+                                        </tr>
+                                        <tr>
+                                            <td><b>{{ encounter.team1.name }}</b></td>
+                                            <td> {{ encounter.pointsTeam1 }} : {{ encounter.pointsTeam2 }} </td>
+                                            <td><b>{{ encounter.team2.name }}</b></td>
+                                        </tr>
+                                        <tr>
+                                            <td>
+                                                {% if  encounter.injuryTeam1Leicht %} Leicht {{ encounter.injuryTeam1Leicht }}<br>{% endif %}
+                                                {% if  encounter.injuryTeam1Schwer %} Schwer {{ encounter.injuryTeam1Schwer }}<br>{% endif %}
+                                                {% if  encounter.injuryTeam1Kritisch %} Kritisch {{ encounter.injuryTeam1Kritisch }}<br>{% endif %}
+                                                {% if  encounter.injuryTeam1Tot %} Tot {{ encounter.injuryTeam1Tot }}<br>{% endif %}
+                                            </td>
+                                            <td> Verletzte </td>
+                                            <td>
+                                                {% if  encounter.injuryTeam2Leicht %} Leicht {{ encounter.injuryTeam2Leicht }}<br>{% endif %}
+                                                {% if  encounter.injuryTeam2Schwer %} Schwer {{ encounter.injuryTeam2Schwer }}<br>{% endif %}
+                                                {% if  encounter.injuryTeam2Kritisch %} Kritisch {{ encounter.injuryTeam2Kritisch }}<br>{% endif %}
+                                                {% if  encounter.injuryTeam2Tot %} Tot {{ encounter.injuryTeam2Tot }}<br>{% endif %}
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td>{{ encounter.chanceTeam1 }}</td>
+                                            <td> Chancen </td>
+                                            <td>{{ encounter.chanceTeam2 }}</td>
+                                        </tr>
+                                        <tr>
+                                            <td colspan="3"><p>{{ encounter.report }}</p></td>
+                                        </tr>
+                                    </table>
+                                </td></tr>
                         {% endfor %}
                         </tbody>
                     </table></div>
@@ -187,5 +194,9 @@
             </div>
         </div>
     </div>
-
+    <br>
+    <p class="te">
+    <h3>weitere Teams</h3>
+    {{ knp_menu_render('team') }}
+    </p>
 {% endblock %}

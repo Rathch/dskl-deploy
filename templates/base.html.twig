@@ -1,19 +1,48 @@
+
+{# templates/base.html.twig #}
 <!DOCTYPE html>
 <html>
-    <head>
-        <meta charset="UTF-8">
-        <title>{% block title %}Welcome!{% endblock %}</title>
-        <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 128 128%22><text y=%221.2em%22 font-size=%2296%22>⚫️</text></svg>">
-        {# Run `composer require symfony/webpack-encore-bundle` to start using Symfony UX #}
-        {% block stylesheets %}
-            {{ encore_entry_link_tags('app') }}
-        {% endblock %}
+<head>
+    <meta charset="UTF-8">
+    <title>DSKL | {% block title %}Deutsche Stadtkrieg-Liga{% endblock %}</title>
+    {% block stylesheets %}
+        {{ encore_entry_link_tags('app') }}
+    {% endblock %}
 
-        {% block javascripts %}
-            {{ encore_entry_script_tags('app') }}
+    {% block javascripts %}
+        {{ encore_entry_script_tags('app') }}
+    {% endblock %}
+</head>
+<body class="demo-wrap">
+{% block body %}
+    <main class="demo-content">
+
+        {% block sidebar %}
+            <nav class=" justify-content-center mb-4  sticky-top">
+                <div class="container-fluid mynav ">
+                    <div class="row">
+                        <div class="col-3">
+                            <a href="/" class="navbar-brand">
+                                <span class="fs-4 text-color-with">Deutsche Stadtkrieg-Liga</span>
+                            </a>
+                        </div>
+                        <div class="col-8">
+                            {{ knp_menu_render('main') }}
+                        </div>
+
+
+                    </div>
+
+                </div>
+            </nav>
         {% endblock %}
-    </head>
-    <body>
-        {% block body %}{% endblock %}
-    </body>
+        <div id="content" class="container">
+            {% block content %}{% endblock %}
+        </div>
+    </main>
+    <footer>
+        {{ knp_menu_render('footer') }}
+    </footer>
+{% endblock %}
+</body>
 </html>

@@ -7,7 +7,7 @@
         <div class="accordion-item">
             <h2 class="accordion-header" id="headingTwo">
                 <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapse-{{loop.index}}" aria-expanded="false" aria-controls="collapse-{{loop.index}}">
-                    {{loop.index}} - {{ statistics.0.league.date|date("Y") }}
+                    {{loop.index}} - {{ statistics.0.league.seasonName}}
                 </button>
             </h2>
             <div id="collapse-{{loop.index}}" class="accordion-collapse collapse" aria-labelledby="headingTwo" data-bs-parent="#accordionExample">

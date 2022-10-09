@@ -45,7 +45,7 @@ class AppFixtures extends Fixture
 
 
 
-        /*$encounterReposetory = $manager->getRepository(Encounter::class);
+        $encounterReposetory = $manager->getRepository(Encounter::class);
 
 
         $encounters = $encounterReposetory->findAll();
@@ -63,8 +63,8 @@ class AppFixtures extends Fixture
             $encounter->setInjuryTeam2Tot($faker->numberBetween(0,3));
             $encounter->setPointsTeam1($faker->numberBetween(1,10));
             $encounter->setPointsTeam2($faker->numberBetween(1,10));
-            $encounter->setReport($faker->text);
-        }*/
+            $encounter->setReport($faker->word);
+        }
         $manager->flush();
     }
 

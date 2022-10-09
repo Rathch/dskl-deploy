@@ -9,84 +9,132 @@
         </svg>
     </a>
     <h2 class="text-center">Liga {{ liga.seasonName }}</h2>
-    {% for playday in liga.playdays %}
-        {% dump(playday) %}
-    {% endfor %}
 
-    {% set foo ="#6eb493"  %}
-    {% set bar ="#cb5858"  %}
-    <div class="accordion" id="accordionExample">
+
+    {% set gruen ="#6eb493"  %}
+    {% set rot ="#cb5858"  %}
+    {% set gelb ="#e2b007"  %}
+    <h2>Gesamtstatistik: {{ liga.seasonName }}</h2>
+
+    <table class="table table-striped table-hover table-sm generalStatistic">
+        <thead>
+        <tr>
+            <th></th>
+            <th></th>
+            <th></th>
+            <th></th>
+            <th></th>
+            <th></th>
+            <th></th>
+            <th></th>
+            <th colspan="3" style="background-color:{{ gruen }}">Verletzungen verursacht</th>
+            <th colspan="3" style="background-color:{{ rot }}">Verletzungen erlitten</th>
+        </tr>
+        <tr>
+            <th class="fa-rotate-90">Mannschaft</th>
+            <th class="fa-rotate-90">Punkte</th>
+            <th class="fa-rotate-90" style="background-color:{{ gruen }}">S</th>
+            <th class="fa-rotate-90" style="background-color:{{ gelb }}">U</th>
+            <th class="fa-rotate-90" style="background-color:{{ rot }}">N</th>
+            <th class="fa-rotate-90">Differenz</th>
+            <th class="fa-rotate-90">Tore</th>
+            <th class="fa-rotate-90">Gegentore</th>
+            <th class="fa-rotate-90" style="background-color:{{ gruen }}">Leicht</th>
+            <th class="fa-rotate-90" style="background-color:{{ gruen }}">Schwer</th>
+            <th class="fa-rotate-90" style="background-color:{{ gruen }}">Kritisch</th>
+            <th class="fa-rotate-90" style="background-color:{{ rot }}">Leicht</th>
+            <th class="fa-rotate-90" style="background-color:{{ rot }}">Schwer</th>
+            <th class="fa-rotate-90" style="background-color:{{ rot }}">Kritisch</th>
+            <th class="fa-rotate-90">Verhältnis</th>
+            <th class="fa-rotate-90" style="background-color:{{ gruen }}">Kills</th>
+            <th class="fa-rotate-90" style="background-color:{{ rot }}">Tode</th>
+            <th class="fa-rotate-90">Chancenverwertung</th>
+        </tr>
+        </thead>
+        <tbody>
+        {% for statistic in liga.teamStatistics %}
+            <tr class="{{ loop.index is  even ? 'lightBlue' }}">
+                <td>{{ statistic.team.name }}</td>
+                <td>{{ statistic.points }}</td>
+                <td style="background-color:{{ gruen }}">{{ statistic.wins }}</td>
+                <td style="background-color:{{ gelb }}">{{ statistic.drows }}</td>
+                <td style="background-color:{{ rot }}">{{ statistic.loss }}</td>
+                <td>{{ statistic.goaleDifference }}</td>
+                <td>{{ statistic.goales }}</td>
+                <td>{{ statistic.reGoeals }}</td>
+                <td style="background-color:{{ gruen }}">{{ statistic.injuriesDoneLeich }}</td>
+                <td style="background-color:{{ gruen }}">{{ statistic.injurysDoneSchwer }}</td>
+                <td style="background-color:{{ gruen }}">{{ statistic.injurysDoneKritisch }}</td>
+                <td style="background-color:{{ rot }}">{{ statistic.injuriesGetLeich }}</td>
+                <td style="background-color:{{ rot }}">{{ statistic.injurysGetSchwer }}</td>
+                <td style="background-color:{{ rot }}">{{ statistic.injurysGetKritisch }}</td>
+                <td>{{ statistic.opportunities }} - {{ statistic.opportunitiesOpponent }}</td>
+                <td style="background-color:{{ gruen }}">{{ statistic.kills }}</td>
+                <td style="background-color:{{ rot }}">{{ statistic.deaths }}</td>
+                <td>{{ statistic.oddsRatio }}%</td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+    <br>
+    <h2>Spieltage:</h2>
+    {% for playday in liga.playdays %}
+        <div class="accordion" id="accordionExample-{{loop.index}}">
             <div class="accordion-item">
                 <h2 class="accordion-header" id="headingTwo">
-                    <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapse-1" aria-expanded="false" aria-controls="collapse-1">
-                        Statistic - {{ liga.seasonName }}
+                    <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapse-{{loop.index}}" aria-expanded="false" aria-controls="collapse-{{loop.index}}">
+                        {{loop.index}} - {{ playday.date | date("d-M-Y") }}
                     </button>
                 </h2>
-                <div id="collapse-1" class="accordion-collapse collapse" aria-labelledby="headingTwo" data-bs-parent="#accordionExample">
+                <div id="collapse-{{loop.index}}" class="accordion-collapse collapse" aria-labelledby="headingTwo" data-bs-parent="#accordionExample">
                     <div class="accordion-body">
-                        <table class="table table-striped table-hover">
-                            <thead>
-                            <tr>
-                                <th></th>
-                                <th></th>
-                                <th></th>
-                                <th></th>
-                                <th></th>
-                                <th></th>
-                                <th></th>
-                                <th></th>
-                                <th colspan="3" style="background-color:{{ foo }}">Verletzungen verursacht</th>
-                                <th colspan="3" style="background-color:{{ bar }}">Verletzungen erlitten</th>
-                            </tr>
-                            <tr>
-                                <th>Mannschaft</th>
-                                <th>Punkte</th>
-                                <th>S</th>
-                                <th>U</th>
-                                <th>N</th>
-                                <th>Tordifferenz</th>
-                                <th>Tore</th>
-                                <th>Gegentore</th>
-                                <th style="background-color:{{ foo }}">Leicht</th>
-                                <th style="background-color:{{ foo }}">Schwer</th>
-                                <th style="background-color:{{ foo }}">Kritisch</th>
-                                <th style="background-color:{{ bar }}">Leicht</th>
-                                <th style="background-color:{{ bar }}">Schwer</th>
-                                <th style="background-color:{{ bar }}">Kritisch</th>
-                                <th>Chancenverhältnis</th>
-                                <th style="background-color:{{ foo }}">Kills</th>
-                                <th style="background-color:{{ bar }}">Tode</th>
-                                <th>Chancenverwertung</th>
-                            </tr>
-                            </thead>
-                            <tbody>
-                            {% for statistic in liga.teamStatistics %}
-                                <tr class="{{ loop.index is  even ? 'lightBlue' }}">
-                                    <td>{{ statistic.team.name }}</td>
-                                    <td>{{ statistic.points }}</td>
-                                    <td>{{ statistic.wins }}</td>
-                                    <td>{{ statistic.drows }}</td>
-                                    <td>{{ statistic.loss }}</td>
-                                    <td>{{ statistic.goaleDifference }}</td>
-                                    <td>{{ statistic.goales }}</td>
-                                    <td>{{ statistic.reGoeals }}</td>
-                                    <td style="background-color:{{ foo }}">{{ statistic.injuriesDoneLeich }}</td>
-                                    <td style="background-color:{{ foo }}">{{ statistic.injurysDoneSchwer }}</td>
-                                    <td style="background-color:{{ foo }}">{{ statistic.injurysDoneKritisch }}</td>
-                                    <td style="background-color:{{ bar }}">{{ statistic.injuriesGetLeich }}</td>
-                                    <td style="background-color:{{ bar }}">{{ statistic.injurysGetSchwer }}</td>
-                                    <td style="background-color:{{ bar }}">{{ statistic.injurysGetKritisch }}</td>
-                                    <td>{{ statistic.opportunities }} - {{ statistic.opportunitiesOpponent }}</td>
-                                    <td style="background-color:{{ foo }}">{{ statistic.kills }}</td>
-                                    <td style="background-color:{{ bar }}">{{ statistic.deaths }}</td>
-                                    <td>{{ statistic.oddsRatio }}%</td>
-                                </tr>
-                            {% endfor %}
-                            </tbody>
-                        </table>
+                        {% for encounter in playday.encounters %}
+                                        {% set team2color =gelb  %}
+                                        {% set team1color =gelb  %}
+                                    {% if encounter.pointsTeam1 < encounter.pointsTeam2 %}
+                                        {% set team2color =gruen  %}
+                                        {% set team1color =rot  %}
+                                    {% endif %}
+                            {% if encounter.pointsTeam1 > encounter.pointsTeam2 %}
+                                {% set team2color =rot  %}
+                                {% set team1color =gruen  %}
+                            {% endif %}
+                                    <table  class="table table-striped-columns table-sm generalStatistic text-center justify-content-center">
+                                        <tr>
+                                            <td class="spacialtd" style="background-color:{{ team1color }}"><b>{{ encounter.team1.name }}</b></td>
+                                            <td class="spacialtd"> {{ encounter.pointsTeam1 }} : {{ encounter.pointsTeam2 }} </td>
+                                            <td class="spacialtd" style="background-color:{{ team2color }}"><b>{{ encounter.team2.name }}</b></td>
+                                        </tr>
+                                        <tr>
+                                            <td class="spacialtd">
+                                                {% if  encounter.injuryTeam1Leicht %} Leicht {{ encounter.injuryTeam1Leicht }}<br>{% endif %}
+                                                {% if  encounter.injuryTeam1Schwer %} Schwer {{ encounter.injuryTeam1Schwer }}<br>{% endif %}
+                                                {% if  encounter.injuryTeam1Kritisch %} Kritisch {{ encounter.injuryTeam1Kritisch }}<br>{% endif %}
+                                                {% if  encounter.injuryTeam1Tot %} Tot {{ encounter.injuryTeam1Tot }}<br>{% endif %}
+                                            </td>
+                                            <td class="spacialtd"> Verletzte </td>
+                                            <td class="spacialtd">
+                                                {% if  encounter.injuryTeam2Leicht %} Leicht {{ encounter.injuryTeam2Leicht }}<br>{% endif %}
+                                                {% if  encounter.injuryTeam2Schwer %} Schwer {{ encounter.injuryTeam2Schwer }}<br>{% endif %}
+                                                {% if  encounter.injuryTeam2Kritisch %} Kritisch {{ encounter.injuryTeam2Kritisch }}<br>{% endif %}
+                                                {% if  encounter.injuryTeam2Tot %} Tot {{ encounter.injuryTeam2Tot }}<br>{% endif %}
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td class="spacialtd">{{ encounter.chanceTeam1 }}</td>
+                                            <td class="spacialtd"> Chancen </td>
+                                            <td class="spacialtd">{{ encounter.chanceTeam2 }}</td>
+                                        </tr>
+                                        <tr>
+                                            <td colspan="3"><p>{{ encounter.report }}</p></td>
+                                        </tr>
+                                    </table>
+
+                        {% endfor %}
                     </div>
                 </div>
             </div>
-    </div>
-
+        </div>
+        <br>
+    {% endfor %}
 {% endblock %}

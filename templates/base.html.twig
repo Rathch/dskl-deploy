@@ -13,25 +13,36 @@
         {{ encore_entry_script_tags('app') }}
     {% endblock %}
 </head>
-<body>
+<body class="demo-wrap">
 {% block body %}
-    <main>
-        <div id="sidebar">
-            {% block sidebar %}
+    <main class="demo-content">
+
+        {% block sidebar %}
+            <nav class=" justify-content-center mb-4  sticky-top">
                 <div class="container-fluid mynav ">
-                    <header class="d-flex flex-wrap justify-content-center py-3 mb-4 border-bottom">
-                        <a href="/" class="d-flex align-items-center mb-3 mb-md-0 me-md-auto text-decoration-none">
-                            <span class="fs-4 text-color-with">Deutsche Stadtkrieg-Liga</span>
-                        </a>
-                        {{ knp_menu_render('main') }}
-                    </header>
+                    <div class="row">
+                        <div class="col-3">
+                            <a href="/" class="navbar-brand">
+                                <span class="fs-4 text-color-with">Deutsche Stadtkrieg-Liga</span>
+                            </a>
+                        </div>
+                        <div class="col-8">
+                            {{ knp_menu_render('main') }}
+                        </div>
+
+
+                    </div>
+
                 </div>
-            {% endblock %}
-        </div>
-        <div id="content" class="container-fluid">
+            </nav>
+        {% endblock %}
+        <div id="content" class="container">
             {% block content %}{% endblock %}
         </div>
     </main>
+    <footer>
+        {{ knp_menu_render('footer') }}
+    </footer>
 {% endblock %}
 </body>
 </html>

@@ -6,6 +6,13 @@ $ionosBlue: #145b68;
 $with: rgba(255, 255, 255, 0.826);
 
 
+.spacialtd {
+  width:33%; // 3 evenly sized columns
+}
+
+.generalStatistic{
+  font-size: 14px!important;
+}
 .accordion .accordion-button:not(.collapsed){
   color: $ionosBlue;
   background-color: $backgroundColor;
@@ -42,8 +49,9 @@ $with: rgba(255, 255, 255, 0.826);
 }
 
 body {
-  background: $backgroundColor;
-  color: black;
+  background-image: url('../img/bg.jpg');
+  min-height: 100vh;
+  color: $ionosBlue;
   font: 16px/1.5 sans-serif;
   justify-content: center;
   margin: 0;

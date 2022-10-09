@@ -59,6 +59,17 @@ final class Builder implements ContainerAwareInterface
         return $menu;
     }
 
+    public function createFooterMenu(RequestStack $requestStack)
+    {
+        $menu = $this->factory->createItem('root');
+        $menu->addChild('Impressum', ['route' => 'impressum']);
+        $menu->addChild('Datenschutz', ['route' => 'datenschutz']);
+        $renderer = new ListRenderer(new Matcher());
+        $renderer->render($menu, ['currentAsLink' => false]);
+
+        return $menu;
+    }
+
     public function createTeamMenu(RequestStack $requestStack)
     {
         $teams = $this->teamReposetory->findAll();
@@ -71,4 +82,6 @@ final class Builder implements ContainerAwareInterface
 
         return $menu;
     }
+
+
 }

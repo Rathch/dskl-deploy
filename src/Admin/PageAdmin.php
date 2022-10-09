@@ -11,6 +11,7 @@ use Sonata\AdminBundle\Datagrid\DatagridMapper;
 use Sonata\AdminBundle\Datagrid\ListMapper;
 use Sonata\AdminBundle\Form\FormMapper;
 use Sonata\AdminBundle\Show\ShowMapper;
+use Symfony\Component\Form\Extension\Core\Type\TextareaType;
 
 final class PageAdmin extends AbstractAdmin
 {
@@ -32,7 +33,9 @@ final class PageAdmin extends AbstractAdmin
             ->add('id')
             ->add('title')
             ->add('slag')
-            ->add('html')
+            ->add('html',TextareaType::class,[
+            '   row_attr' => ['id' => 'editor'],
+            ])
             ->add('templatename')
             ->add(ListMapper::NAME_ACTIONS, null, [
                 'actions' => [

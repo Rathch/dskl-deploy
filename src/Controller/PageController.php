@@ -39,6 +39,22 @@ class PageController extends AbstractController
         ]);
     }
 
+    #[Route('/datenschutz', name: 'datenschutz')]
+    public function datenschutz(): Response
+    {
+        return $this->render('page/datenschutz.html.twig', [
+            'controller_name' => 'PageController',
+        ]);
+    }
+
+    #[Route('/impressum', name: 'impressum')]
+    public function impressum(): Response
+    {
+        return $this->render('page/impressum.html.twig', [
+            'controller_name' => 'PageController',
+        ]);
+    }
+
     #[Route('/page/{title}', name: 'page')]
     public function page($title): Response
     {

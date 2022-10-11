@@ -33,9 +33,7 @@ final class PageAdmin extends AbstractAdmin
             ->add('id')
             ->add('title')
             ->add('slag')
-            ->add('html',TextareaType::class,[
-            '   row_attr' => ['id' => 'editor'],
-            ])
+            ->add('html')
             ->add('templatename')
             ->add(ListMapper::NAME_ACTIONS, null, [
                 'actions' => [
@@ -51,7 +49,9 @@ final class PageAdmin extends AbstractAdmin
         $form
             ->add('title')
             ->add('slag')
-            ->add('html')
+            ->add('html',TextareaType::class,[
+                "attr"=>["rows"=>10]
+            ])
             ->add('templatename')
             ;
     }

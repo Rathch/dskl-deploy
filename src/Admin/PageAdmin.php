@@ -9,6 +9,7 @@ use App\Utility\StringUtility;
 use Sonata\AdminBundle\Admin\AbstractAdmin;
 use Sonata\AdminBundle\Datagrid\DatagridMapper;
 use Sonata\AdminBundle\Datagrid\ListMapper;
+use Sonata\AdminBundle\FieldDescription\FieldDescriptionInterface;
 use Sonata\AdminBundle\Form\FormMapper;
 use Sonata\AdminBundle\Show\ShowMapper;
 use Symfony\Component\Form\Extension\Core\Type\TextareaType;
@@ -33,7 +34,7 @@ final class PageAdmin extends AbstractAdmin
             ->add('id')
             ->add('title')
             ->add('slag')
-            ->add('html')
+            ->add('html',FieldDescriptionInterface::TYPE_HTML)
             ->add('templatename')
             ->add(ListMapper::NAME_ACTIONS, null, [
                 'actions' => [
@@ -50,7 +51,8 @@ final class PageAdmin extends AbstractAdmin
             ->add('title')
             ->add('slag')
             ->add('html',TextareaType::class,[
-                "attr"=>["rows"=>10]
+                "attr"=>["rows"=>10],
+                "required"=>false
             ])
             ->add('templatename')
             ;

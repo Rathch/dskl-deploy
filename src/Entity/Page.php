@@ -19,7 +19,7 @@ class Page
     #[ORM\Column(length: 255)]
     private ?string $slag = null;
 
-    #[ORM\Column(length: 255)]
+    #[ORM\Column(type: "text")]
     private ?string $html = null;
 
     #[ORM\Column(length: 255, nullable: true)]

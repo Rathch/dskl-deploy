@@ -89,7 +89,6 @@ services:
 
     admin.page:
         class: App\Admin\PageAdmin
-        calls:
-            - [ setTemplate, [ 'edit', 'PageAdmin/edit.html.twig' ] ]
+
         tags:
             - { name: sonata.admin, model_class: App\Entity\Page, controller: ~, manager_type: orm, group: admin, label: Page }

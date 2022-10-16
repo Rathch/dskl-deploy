@@ -12,7 +12,7 @@ enum MethaTyp: string
     case mensch = 'Mensch';
     case dryaden = 'Dryaden';
     case enkanto = 'Enkanto';
-    case nächtliche = 'Nächtliche';
+    case naechtliche = 'Nächtliche';
     case wakyambis = 'Wakyambis';
     case xapiri = 'Xapiri Thëpë';
     case nartaki = 'Nartaki';

@@ -49,3 +49,5 @@ squads: Mannschaft
 replacement: Ersatzspieler
 teamAttributes: Werte
 link_add: hinzufügen
+generateStatistic: New Statistik
+regenerateStatistic: Reset Statistik

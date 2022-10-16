@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace App\Admin;
 
+use App\Entity\ContentElements\Teaser;
 use App\Utility\StringUtility;
 
 use Sonata\AdminBundle\Admin\AbstractAdmin;
@@ -11,6 +12,8 @@ use Sonata\AdminBundle\Datagrid\DatagridMapper;
 use Sonata\AdminBundle\Datagrid\ListMapper;
 use Sonata\AdminBundle\FieldDescription\FieldDescriptionInterface;
 use Sonata\AdminBundle\Form\FormMapper;
+use Sonata\Form\Type\CollectionType;
+use Sonata\AdminBundle\Form\Type\ModelType;
 use Sonata\AdminBundle\Show\ShowMapper;
 use Symfony\Component\Form\Extension\Core\Type\TextareaType;
 
@@ -24,7 +27,6 @@ final class PageAdmin extends AbstractAdmin
             ->add('title')
             ->add('slag')
             ->add('html')
-            ->add('templatename')
             ;
     }
 
@@ -35,7 +37,6 @@ final class PageAdmin extends AbstractAdmin
             ->add('title')
             ->add('slag')
             ->add('html',FieldDescriptionInterface::TYPE_HTML)
-            ->add('templatename')
             ->add(ListMapper::NAME_ACTIONS, null, [
                 'actions' => [
                     'show' => [],
@@ -54,7 +55,21 @@ final class PageAdmin extends AbstractAdmin
                 "attr"=>["rows"=>10],
                 "required"=>false
             ])
-            ->add('templatename')
+            ->add('contentElementsTeaser',CollectionType::class,
+                [
+                    "label"=>"Teaser",
+                    "btn_catalogue"=>true,
+                    "btn_add"=>true,
+                    'type_options' => [
+                        // Prevents the "Delete" option from being displayed
+                        'delete' => true,
+                        'btn_add' => true,
+                    ]
+                ], [
+                    'edit' => 'inline',
+                    'inline' => 'table'
+                ]
+            )
             ;
     }
 

@@ -41,7 +41,24 @@ file that was distributed with this source code.
 {% use '@SonataAdmin/CRUD/base_edit_form.html.twig' with form as parentForm %}
 
 {% block form %}
+
     {{ block('parentForm') }}
+    <script>
+        function myFunction(item) {
+            ClassicEditor
+                .create( item )
+                .catch( error => {
+                    console.error( error );
+                } );
+        }
+        function fun() {
+                const elements = document.querySelectorAll( '.ckeditor' )
+                elements.forEach(myFunction)
+
+        }
+    </script>
+
+    <button onclick = "fun()">ck editor</button>
     <script>
         ClassicEditor
             .create( document.querySelector( 'textarea' ) )

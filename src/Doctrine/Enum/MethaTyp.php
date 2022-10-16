@@ -6,6 +6,10 @@ namespace App\Doctrine\Enum;
 enum MethaTyp: string
 {
     case ork = 'Ork';
+    case elf = 'Elf';
+    case troll = 'Troll';
+    case zwerg = 'Zwerg';
+    case mensch = 'Mensch';
     case dryaden = 'Dryaden';
     case enkanto = 'Enkanto';
     case nächtliche = 'Nächtliche';
@@ -25,8 +29,4 @@ enum MethaTyp: string
     case korobokuru = 'Korobokuru';
     case menehunen = 'Menehunen';
     case querxe = 'Querxe';
-    case elf = 'Elf';
-    case troll = 'Troll';
-    case zwerg = 'Zwerg';
-    case mensch = 'Mensch';
 }

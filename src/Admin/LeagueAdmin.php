@@ -19,8 +19,8 @@ use Symfony\Component\Form\Extension\Core\Type\TextType;
 
 final class LeagueAdmin extends AbstractAdmin
 {
-    private $generateEncounterService;
-    private $generateTeamStatisticService;
+    private GenerateEncounterService $generateEncounterService;
+    private GenerateTeamStatisticService $generateTeamStatisticService;
 
 
     /**
@@ -32,6 +32,17 @@ final class LeagueAdmin extends AbstractAdmin
         $this->generateEncounterService = $generateEncounterService;
         $this->generateTeamStatisticService = $generateTeamStatisticService;
         parent::__construct();
+    }
+
+    /**
+     * @param RouteCollectionInterface $collection
+     * @return void
+     */
+    protected function configureRoutes(RouteCollectionInterface $collection): void
+    {
+        $collection->remove("edit");
+        $collection->add('generateStatistic');
+        $collection->add('regenerateStatistic');
     }
 
     protected function configureDatagridFilters(DatagridMapper $filter): void
@@ -86,9 +97,19 @@ final class LeagueAdmin extends AbstractAdmin
         $this->generateTeamStatisticService->generate($object);
     }
 
-    protected function configureRoutes(RouteCollectionInterface $collection): void
+    protected function configureActionButtons(array $buttonList, string $action, ?object $object = null): array
     {
-        $collection
-            ->remove("edit");
+        $buttonList['generateStatistic'] = ['template' => 'generateStatistic_button.html.twig'];
+        $buttonList['regenerateStatistic'] = ['template' => 'regenerateStatistic_button.html.twig'];
+
+        return $buttonList;
+    }
+
+    protected function configureDashboardActions(array $actions): array
+    {
+        $actions['generateStatistic'] = ['template' => 'generateStatistic_dashboard_button.html.twig'];
+        $actions['regenerateStatistic'] = ['template' => 'regenerateStatistic_dashboard_button.html.twig'];
+
+        return $actions;
     }
 }

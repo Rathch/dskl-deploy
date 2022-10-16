@@ -56,7 +56,7 @@ services:
     admin.league:
         class: App\Admin\LeagueAdmin
         tags:
-            - { name: sonata.admin, model_class: App\Entity\League, controller: ~, manager_type: orm, group: admin, label: League }
+            - { name: sonata.admin, model_class: App\Entity\League, controller: App\Controller\LeagueAdminController, manager_type: orm, group: admin, label: League }
 
     admin.team_attributes:
         class: App\Admin\TeamAttributesAdmin
@@ -92,3 +92,10 @@ services:
 
         tags:
             - { name: sonata.admin, model_class: App\Entity\Page, controller: ~, manager_type: orm, group: admin, label: Page }
+
+    admin.teaser:
+        class: App\Admin\TeaserAdmin
+        calls:
+            - [ setTemplate, [ 'edit', 'ck_edit.html.twig' ] ]
+        tags:
+            - { name: sonata.admin, model_class: App\Entity\ContentElements\Teaser, controller: ~, manager_type: orm, group: admin, label: Teaser }

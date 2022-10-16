@@ -2,7 +2,10 @@
 
 namespace App\Entity;
 
+use App\Entity\ContentElements\Teaser;
 use App\Repository\PageRepository;
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 
 #[ORM\Entity(repositoryClass: PageRepository::class)]
@@ -19,11 +22,16 @@ class Page
     #[ORM\Column(length: 255)]
     private ?string $slag = null;
 
-    #[ORM\Column(type: "text")]
+    #[ORM\Column(type: "text", nullable: true)]
     private ?string $html = null;
 
-    #[ORM\Column(length: 255, nullable: true)]
-    private ?string $templatename = null;
+    #[ORM\OneToMany(mappedBy: 'page', targetEntity: Teaser::class, cascade: ["persist"])]
+    private Collection $contentElementsTeaser;
+
+    public function __construct()
+    {
+        $this->contentElementsTeaser = new ArrayCollection();
+    }
 
     public function getId(): ?int
     {
@@ -59,21 +67,39 @@ class Page
         return $this->html;
     }
 
-    public function setHtml(string $html): self
+    public function setHtml($html): self
     {
         $this->html = $html;
 
         return $this;
     }
 
-    public function getTemplatename(): ?string
+    /**
+     * @return Collection<int, Teaser>
+     */
+    public function getContentElementsTeaser(): Collection
     {
-        return $this->templatename;
+        return $this->contentElementsTeaser;
     }
 
-    public function setTemplatename(?string $templatename): self
+    public function addContentElementsTeaser(Teaser $contentElementsTeaser): self
     {
-        $this->templatename = $templatename;
+        if (!$this->contentElementsTeaser->contains($contentElementsTeaser)) {
+            $this->contentElementsTeaser->add($contentElementsTeaser);
+            $contentElementsTeaser->setPage($this);
+        }
+
+        return $this;
+    }
+
+    public function removeContentElementsTeaser(Teaser $contentElementsTeaser): self
+    {
+        if ($this->contentElementsTeaser->removeElement($contentElementsTeaser)) {
+            // set the owning side to null (unless already changed)
+            if ($contentElementsTeaser->getPage() === $this) {
+                $contentElementsTeaser->setPage(null);
+            }
+        }
 
         return $this;
     }

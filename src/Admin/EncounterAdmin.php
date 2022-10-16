@@ -110,7 +110,8 @@ final class EncounterAdmin extends AbstractAdmin
             ->end()
             ->with("", ['class' => 'col-md-12'])
                 ->add('report',TextareaType::class, [
-                    "label" => "report"
+                    "label" => "report",
+                    'attr' => ["class" => "ckeditor"],
                 ])
             ->end()
 

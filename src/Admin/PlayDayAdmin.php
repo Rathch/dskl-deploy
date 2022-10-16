@@ -36,7 +36,7 @@ final class PlayDayAdmin extends AbstractAdmin
                 "associated_property"=>"id"
             ])*/
             ->add('league',FieldDescriptionInterface::TYPE_MANY_TO_ONE,[
-                "associated_property"=>"id",
+                "associated_property"=>"seasonName",
                 "label"=>"league"
             ])
             ->add('date',null,["label"=>"date"])

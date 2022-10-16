@@ -17,6 +17,7 @@ use Sonata\AdminBundle\Form\FormMapper;
 use Sonata\AdminBundle\Form\Type\ModelType;
 use Sonata\AdminBundle\Show\ShowMapper;
 use Symfony\Component\Form\Extension\Core\Type\EnumType;
+use Sonata\AdminBundle\Route\RouteCollectionInterface;
 
 final class SquadAdmin extends AbstractAdmin
 {
@@ -53,15 +54,19 @@ final class SquadAdmin extends AbstractAdmin
             ->add('id', null, ["label" => "id"])
             ->add('active', FieldDescriptionInterface::TYPE_ENUM, ["label" => "active"])
             ->add('name', null, ["label" => "name"])
+            ->add('team', FieldDescriptionInterface::TYPE_MANY_TO_ONE, ["associated_property"=>"name","label" => "team"])
+            ->add('transfers', FieldDescriptionInterface::TYPE_ONE_TO_MANY, ["associated_property"=>"oldTeam.name","label" => "Transfer Historie"])
             ->add('position', FieldDescriptionInterface::TYPE_ENUM, ["label" => "position"])
             ->add('methaTyp', FieldDescriptionInterface::TYPE_ENUM, ["label" => "metatyp"])
             ->add('age', null, ["label" => "age"])
-            ->add('comment', null, ["label" => "comment"])
             ->add(ListMapper::NAME_ACTIONS, null, [
                 'actions' => [
                     'show' => [],
                     'edit' => [],
                     'delete' => [],
+                    'transfer' => [
+                        'template' => 'CRUD/list__action_transfer.html.twig',
+                    ],
                 ],
             ]);
     }
@@ -83,7 +88,7 @@ final class SquadAdmin extends AbstractAdmin
         $form
             ->add('position', EnumType::class, ["class"=>Position::class,"choice_label"=>"value","label" => "position"])
             ->add('name', null, ["label" => "name"])
-            ->add('methaTyp', EnumType::class, ["class"=>MethaTyp::class,"choice_label"=>"value","label" => "methaTyp"])
+            ->add('methaTyp', EnumType::class, ["class"=>MethaTyp::class,"choice_label"=>"value","label" => "metatyp"])
             ->add('age', null, ["label" => "age"])
             ->add('value', null, ["label" => "value"])
             ->add('comment', null, ["label" => "comment"])
@@ -103,5 +108,13 @@ final class SquadAdmin extends AbstractAdmin
             ->add('description', null, ["label" => "description"])
             ->add('active', null, ["label" => "active"])
             ;
+    }
+
+
+
+    protected function configureRoutes(RouteCollectionInterface $collection): void
+    {
+        $collection
+            ->add('transfer', $this->getRouterIdParameter().'/transfer');
     }
 }

@@ -2,27 +2,26 @@
 
 namespace App\Repository;
 
-use App\Entity\Team;
+use App\Entity\TransferHistory;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Persistence\ManagerRegistry;
 
-
 /**
- * @extends ServiceEntityRepository<Team>
+ * @extends ServiceEntityRepository<TransferHistory>
  *
- * @method Team|null find($id, $lockMode = null, $lockVersion = null)
- * @method Team|null findOneBy(array $criteria, array $orderBy = null)
- * @method Team[]    findAll()
- * @method Team[]    findBy(array $criteria, array $orderBy = null, $limit = null, $offset = null)
+ * @method TransferHistory|null find($id, $lockMode = null, $lockVersion = null)
+ * @method TransferHistory|null findOneBy(array $criteria, array $orderBy = null)
+ * @method TransferHistory[]    findAll()
+ * @method TransferHistory[]    findBy(array $criteria, array $orderBy = null, $limit = null, $offset = null)
  */
-class TeamRepository extends ServiceEntityRepository
+class TransferHistoryRepository extends ServiceEntityRepository
 {
     public function __construct(ManagerRegistry $registry)
     {
-        parent::__construct($registry, Team::class);
+        parent::__construct($registry, TransferHistory::class);
     }
 
-    public function add(Team $entity, bool $flush = false): void
+    public function save(TransferHistory $entity, bool $flush = false): void
     {
         $this->getEntityManager()->persist($entity);
 
@@ -31,7 +30,7 @@ class TeamRepository extends ServiceEntityRepository
         }
     }
 
-    public function remove(Team $entity, bool $flush = false): void
+    public function remove(TransferHistory $entity, bool $flush = false): void
     {
         $this->getEntityManager()->remove($entity);
 
@@ -41,7 +40,7 @@ class TeamRepository extends ServiceEntityRepository
     }
 
 //    /**
-//     * @return Team[] Returns an array of Team objects
+//     * @return TransferHistory[] Returns an array of TransferHistory objects
 //     */
 //    public function findByExampleField($value): array
 //    {
@@ -55,7 +54,7 @@ class TeamRepository extends ServiceEntityRepository
 //        ;
 //    }
 
-//    public function findOneBySomeField($value): ?Team
+//    public function findOneBySomeField($value): ?TransferHistory
 //    {
 //        return $this->createQueryBuilder('t')
 //            ->andWhere('t.exampleField = :val')
@@ -64,13 +63,4 @@ class TeamRepository extends ServiceEntityRepository
 //            ->getOneOrNullResult()
 //        ;
 //    }
-    public function byId(string $id)
-    {
-        // TODO: Implement byId() method.
-    }
-
-    public function all(): array
-    {
-        // TODO: Implement all() method.
-    }
 }

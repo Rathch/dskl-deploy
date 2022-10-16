@@ -7,6 +7,8 @@ use App\Doctrine\Enum\MethaTyp;
 use App\Doctrine\Enum\Position;
 use App\Doctrine\Type\MethaTypTyp;
 use App\Repository\SquadRepository;
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
 
@@ -44,6 +46,16 @@ class Squad
 
     #[ORM\Column(nullable: true)]
     private ?bool $replacement = null;
+
+    #[ORM\OneToMany(mappedBy: 'squad', targetEntity: TransferHistory::class)]
+    private Collection $transfers;
+
+    public function __construct()
+    {
+        $this->transfers = new ArrayCollection();
+    }
+
+
 
 
     public function getId(): ?int
@@ -174,6 +186,38 @@ class Squad
 
         return $this;
     }
+
+    /**
+     * @return Collection<int, TransferHistory>
+     */
+    public function getTransfers(): Collection
+    {
+        return $this->transfers;
+    }
+
+    public function addTransfer(TransferHistory $transfer): self
+    {
+        if (!$this->transfers->contains($transfer)) {
+            $this->transfers->add($transfer);
+            $transfer->setSquad($this);
+        }
+
+        return $this;
+    }
+
+    public function removeTransfer(TransferHistory $transfer): self
+    {
+        if ($this->transfers->removeElement($transfer)) {
+            // set the owning side to null (unless already changed)
+            if ($transfer->getSquad() === $this) {
+                $transfer->setSquad(null);
+            }
+        }
+
+        return $this;
+    }
+
+
 
 
 }

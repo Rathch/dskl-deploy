@@ -37,10 +37,14 @@ class League
     #[ORM\OneToMany(mappedBy: 'league', targetEntity: TeamStatistic::class)]
     private $teamStatistics;
 
+    #[ORM\OneToMany(mappedBy: 'season', targetEntity: TransferHistory::class)]
+    private Collection $transferHistories;
+
     public function __construct()
     {
         $this->playdays = new ArrayCollection();
         $this->teamStatistics = new ArrayCollection();
+        $this->transferHistories = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -178,6 +182,36 @@ class League
             // set the owning side to null (unless already changed)
             if ($teamStatistic->getLeague() === $this) {
                 $teamStatistic->setLeague(null);
+            }
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, TransferHistory>
+     */
+    public function getTransferHistories(): Collection
+    {
+        return $this->transferHistories;
+    }
+
+    public function addTransferHistory(TransferHistory $transferHistory): self
+    {
+        if (!$this->transferHistories->contains($transferHistory)) {
+            $this->transferHistories->add($transferHistory);
+            $transferHistory->setSeason($this);
+        }
+
+        return $this;
+    }
+
+    public function removeTransferHistory(TransferHistory $transferHistory): self
+    {
+        if ($this->transferHistories->removeElement($transferHistory)) {
+            // set the owning side to null (unless already changed)
+            if ($transferHistory->getSeason() === $this) {
+                $transferHistory->setSeason(null);
             }
         }
 

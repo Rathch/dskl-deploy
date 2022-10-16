@@ -9,6 +9,7 @@ color: Teamfarben
 date: Datum
 defensive: Defensive
 encounters: Begegnungen
+Encounters: Begegnungen
 foundingYear: Gründungsjahr
 id: Id
 image: Bild
@@ -21,9 +22,11 @@ injuryTeam2Leicht: 'Verletzungen Leicht Team 2'
 injuryTeam2Schwer: 'Verletzungen Schwer Team 2'
 injuryTeam2Tot: 'Verletzungen Tot Team 2'
 league: Liga
+League: Liga
 name: Name
 offensive: Offensive
 playday: Spieltag
+Playday: Spieltag
 playdays: Spieltage
 pointsTeam1: 'Punkte Team 1'
 pointsTeam2: 'Punkte Team 2'
@@ -51,3 +54,4 @@ teamAttributes: Werte
 link_add: hinzufügen
 generateStatistic: New Statistik
 regenerateStatistic: Reset Statistik
+description: Beschreibung

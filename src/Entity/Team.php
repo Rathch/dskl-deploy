@@ -19,6 +19,9 @@ class Team
     #[ORM\Column(type: 'string')]
     private string $name;
 
+    #[ORM\Column(type: 'text')]
+    private string $description;
+
 
     #[ORM\OneToMany(mappedBy: 'team1', targetEntity: Encounter::class)]
     private $encounters;
@@ -41,6 +44,9 @@ class Team
     #[ORM\OneToMany(mappedBy: 'team', targetEntity: Squad::class, cascade: ['persist', 'remove'])]
     private Collection $squads;
 
+    #[ORM\OneToMany(mappedBy: 'oldTeam', targetEntity: TransferHistory::class)]
+    private Collection $transferHistories;
+
 
 
 
@@ -50,11 +56,28 @@ class Team
         $this->encounters2 = new ArrayCollection();
         $this->teamStatistics = new ArrayCollection();
         $this->squads = new ArrayCollection();
+        $this->transferHistories = new ArrayCollection();
     }
 
     public function getId(): int
     {
         return $this->id;
+    }
+
+    /**
+     * @return string
+     */
+    public function getDescription(): string
+    {
+        return $this->description;
+    }
+
+    /**
+     * @param string $description
+     */
+    public function setDescription(string $description): void
+    {
+        $this->description = $description;
     }
 
 
@@ -231,6 +254,58 @@ class Team
             // set the owning side to null (unless already changed)
             if ($squad->getTeam() === $this) {
                 $squad->setTeam(null);
+            }
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, TransferHistory>
+     */
+    public function getTransferHistories(): Collection
+    {
+        return $this->transferHistories;
+    }
+
+    public function addTransferHistories(TransferHistory $transferHistories): self
+    {
+        if (!$this->transferHistories->contains($transferHistories)) {
+            $this->transferHistories->add($transferHistories);
+            $transferHistories->setOldTeam($this);
+        }
+
+        return $this;
+    }
+
+    public function removeTransferHistories(TransferHistory $transferHistories): self
+    {
+        if ($this->transferHistories->removeElement($transferHistories)) {
+            // set the owning side to null (unless already changed)
+            if ($transferHistories->getOldTeam() === $this) {
+                $transferHistories->setOldTeam(null);
+            }
+        }
+
+        return $this;
+    }
+
+    public function addTransferHistory(TransferHistory $transferHistory): self
+    {
+        if (!$this->transferHistories->contains($transferHistory)) {
+            $this->transferHistories->add($transferHistory);
+            $transferHistory->setNewTeam($this);
+        }
+
+        return $this;
+    }
+
+    public function removeTransferHistory(TransferHistory $transferHistory): self
+    {
+        if ($this->transferHistories->removeElement($transferHistory)) {
+            // set the owning side to null (unless already changed)
+            if ($transferHistory->getNewTeam() === $this) {
+                $transferHistory->setNewTeam(null);
             }
         }
 

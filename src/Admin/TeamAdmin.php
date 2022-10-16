@@ -17,6 +17,7 @@ use Sonata\AdminBundle\Form\Type\AdminType;
 use Sonata\AdminBundle\Show\ShowMapper;
 use Symfony\Component\Filesystem\Filesystem;
 use Symfony\Component\Form\Extension\Core\Type\EnumType;
+use Symfony\Component\Form\Extension\Core\Type\TextareaType;
 use function Webmozart\Assert\Tests\StaticAnalysis\null;
 
 
@@ -32,6 +33,7 @@ final class TeamAdmin extends AbstractAdmin
     {
         $list->add('id', null, ["label" => "id"])
             ->add('name', null, ["label" => "name"])
+            ->add('description', null, ["label" => "description"])
             ->add('active', FieldDescriptionInterface::TYPE_ENUM, ["label" => "active"])
             ->add(ListMapper::NAME_ACTIONS, null, [
                 'actions' => [
@@ -48,6 +50,7 @@ final class TeamAdmin extends AbstractAdmin
             ->tab('team')
                 ->with('', ['class' => 'col-md-12'])
                     ->add('name', null, ["label" => "name"])
+                    ->add('description', TextareaType::class, ["label" => "description"])
             ->add('active', EnumType::class, ["class"=>Flag::class,"label" => "active"])
                 ->end()
             ->end()

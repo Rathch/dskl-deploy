@@ -6,6 +6,8 @@ use App\Entity\League;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Persistence\ManagerRegistry;
 
+
+
 /**
  * @extends ServiceEntityRepository<League>
  *
@@ -63,4 +65,13 @@ class LeagueRepository extends ServiceEntityRepository
 //            ->getOneOrNullResult()
 //        ;
 //    }
+    public function byId(string $id)
+    {
+        // TODO: Implement byId() method.
+    }
+
+    public function all(): array
+    {
+        // TODO: Implement all() method.
+    }
 }

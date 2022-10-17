@@ -7,6 +7,7 @@ namespace App\Admin;
 use App\Doctrine\Enum\Flag;
 use App\Entity\TeamAttributes;
 use App\Entity\TeamInfo;
+use FOS\CKEditorBundle\Form\Type\CKEditorType;
 use ReflectionProperty;
 use Sonata\AdminBundle\Admin\AbstractAdmin;
 use Sonata\AdminBundle\Datagrid\DatagridMapper;
@@ -50,7 +51,7 @@ final class TeamAdmin extends AbstractAdmin
             ->tab('team')
                 ->with('', ['class' => 'col-md-12'])
                     ->add('name', null, ["label" => "name"])
-                    ->add('description', TextareaType::class, ["label" => "description"])
+                    ->add('description', CKEditorType::class, ["label" => "description", "required"=>false])
             ->add('active', EnumType::class, ["class"=>Flag::class,"label" => "active"])
                 ->end()
             ->end()

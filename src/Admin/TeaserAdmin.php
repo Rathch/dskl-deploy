@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace App\Admin;
 
+use FOS\CKEditorBundle\Form\Type\CKEditorType;
 use Sonata\AdminBundle\Admin\AbstractAdmin;
 use Sonata\AdminBundle\Datagrid\DatagridMapper;
 use Sonata\AdminBundle\Datagrid\ListMapper;
@@ -45,8 +46,7 @@ final class TeaserAdmin extends AbstractAdmin
             ->add('title',null,[
                 "required"=>false
             ])
-            ->add('text',TextareaType::class,[
-                'attr' => ["class" => "ckeditor"],
+            ->add('text',CKEditorType::class,[
                 "required"=>false
             ])
             ->add('link',UrlType::class,[

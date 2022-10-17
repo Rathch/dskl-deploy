@@ -9,6 +9,7 @@ use App\Doctrine\Enum\MethaTyp;
 use App\Doctrine\Enum\Position;
 use App\Entity\Team;
 use App\Entity\TeamInfo;
+use FOS\CKEditorBundle\Form\Type\CKEditorType;
 use Sonata\AdminBundle\Admin\AbstractAdmin;
 use Sonata\AdminBundle\Datagrid\DatagridMapper;
 use Sonata\AdminBundle\Datagrid\ListMapper;
@@ -91,7 +92,7 @@ final class SquadAdmin extends AbstractAdmin
             ->add('methaTyp', EnumType::class, ["class"=>MethaTyp::class,"choice_label"=>"value","label" => "metatyp"])
             ->add('age', null, ["label" => "age"])
             ->add('value', null, ["label" => "value"])
-            ->add('comment', null, ["label" => "comment"])
+            ->add('comment', CKEditorType::class, ["label" => "comment", "required"=>false])
             ->add('replacement', null, ["label" => "replacement"])
             ->add('active', EnumType::class, ["class"=>Flag::class,"label" => "active"])
             ;

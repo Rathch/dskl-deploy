@@ -7,6 +7,7 @@ namespace App\Admin;
 use App\Entity\ContentElements\Teaser;
 use App\Utility\StringUtility;
 
+use FOS\CKEditorBundle\Form\Type\CKEditorType;
 use Sonata\AdminBundle\Admin\AbstractAdmin;
 use Sonata\AdminBundle\Datagrid\DatagridMapper;
 use Sonata\AdminBundle\Datagrid\ListMapper;
@@ -51,8 +52,7 @@ final class PageAdmin extends AbstractAdmin
         $form
             ->add('title')
             ->add('slag')
-            ->add('html',TextareaType::class,[
-                "attr"=>["rows"=>10],
+            ->add('html',CKEditorType::class,[
                 "required"=>false
             ])
             ->add('contentElementsTeaser',CollectionType::class,

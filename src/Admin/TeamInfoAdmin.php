@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace App\Admin;
 
+use FOS\CKEditorBundle\Form\Type\CKEditorType;
 use Sonata\AdminBundle\Admin\AbstractAdmin;
 use Sonata\AdminBundle\Datagrid\DatagridMapper;
 use Sonata\AdminBundle\Datagrid\ListMapper;
@@ -64,7 +65,7 @@ final class TeamInfoAdmin extends AbstractAdmin
             ->add('sponsor',null,["label"=>"sponsor"])
             ->add('presedent',null,["label"=>"presedent"])
             ->add('trainer',null,["label"=>"trainer"])
-            ->add('successes',null,["label"=>"successes"])
+            ->add('successes',CKEditorType::class,["label"=>"successes", "required"=>false])
             ;
     }
 

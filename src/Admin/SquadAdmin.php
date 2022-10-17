@@ -17,6 +17,7 @@ use Sonata\AdminBundle\FieldDescription\FieldDescriptionInterface;
 use Sonata\AdminBundle\Form\FormMapper;
 use Sonata\AdminBundle\Form\Type\ModelType;
 use Sonata\AdminBundle\Show\ShowMapper;
+use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Form\Extension\Core\Type\EnumType;
 use Sonata\AdminBundle\Route\RouteCollectionInterface;
 
@@ -28,8 +29,11 @@ final class SquadAdmin extends AbstractAdmin
         $filter
             ->add('id')
             ->add('active')
-
+            ->add('firstName')
+            ->add('figthName')
             ->add('name')
+
+
             ->add('position', null, [
                 'field_type' => EnumType::class,
                 'field_options' => [
@@ -44,7 +48,6 @@ final class SquadAdmin extends AbstractAdmin
                     'choice_label' => 'value',
                 ],
             ])
-            ->add('age')
             ->add('comment')
             ;
     }
@@ -54,12 +57,13 @@ final class SquadAdmin extends AbstractAdmin
         $list
             ->add('id', null, ["label" => "id"])
             ->add('active', FieldDescriptionInterface::TYPE_ENUM, ["label" => "active"])
+            ->add('firstName', null, ["label" => "firstName"])
+            ->add('figthName', null, ["label" => "figthName"])
             ->add('name', null, ["label" => "name"])
             ->add('team', FieldDescriptionInterface::TYPE_MANY_TO_ONE, ["associated_property"=>"name","label" => "team"])
             ->add('transfers', FieldDescriptionInterface::TYPE_ONE_TO_MANY, ["associated_property"=>"oldTeam.name","label" => "Transfer Historie"])
             ->add('position', FieldDescriptionInterface::TYPE_ENUM, ["label" => "position"])
             ->add('methaTyp', FieldDescriptionInterface::TYPE_ENUM, ["label" => "metatyp"])
-            ->add('age', null, ["label" => "age"])
             ->add(ListMapper::NAME_ACTIONS, null, [
                 'actions' => [
                     'show' => [],
@@ -88,9 +92,12 @@ final class SquadAdmin extends AbstractAdmin
         }
         $form
             ->add('position', EnumType::class, ["class"=>Position::class,"choice_label"=>"value","label" => "position"])
+            ->add('firstName', null, ["label" => "firstName"])
+            ->add('figthName', null, ["label" => "figthName"])
             ->add('name', null, ["label" => "name"])
             ->add('methaTyp', EnumType::class, ["class"=>MethaTyp::class,"choice_label"=>"value","label" => "metatyp"])
-            ->add('age', null, ["label" => "age"])
+            ->add('birthYear', null, ["label" => "birthYear"])
+            ->add('gender', ChoiceType::class, ["choices"=>["M"=>"M","W"=>"W","D"=>"D"],"label" => "gender"])
             ->add('value', null, ["label" => "value"])
             ->add('comment', CKEditorType::class, ["label" => "comment", "required"=>false])
             ->add('replacement', null, ["label" => "replacement"])

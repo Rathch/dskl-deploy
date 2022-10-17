@@ -55,3 +55,7 @@ link_add: hinzufügen
 generateStatistic: New Statistik
 regenerateStatistic: Reset Statistik
 description: Beschreibung
+birthYear: Geburtsjahr
+gender: Geschlecht
+firstName: Vorname
+figthName: Kampfname

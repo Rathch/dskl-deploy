@@ -30,9 +30,6 @@ class Squad
     private ?MethaTyp $methaTyp = null;
 
     #[ORM\Column(length: 255, nullable: true)]
-    private ?string $age = null;
-
-    #[ORM\Column(length: 255, nullable: true)]
     private ?string $value = null;
 
     #[ORM\Column(type: "flag")]
@@ -49,6 +46,18 @@ class Squad
 
     #[ORM\OneToMany(mappedBy: 'squad', targetEntity: TransferHistory::class)]
     private Collection $transfers;
+
+    #[ORM\Column(length: 255, nullable: true)]
+    private ?string $firstName = null;
+
+    #[ORM\Column(length: 255, nullable: true)]
+    private ?string $figthName = null;
+
+    #[ORM\Column(length: 255, nullable: true)]
+    private ?string $gender = null;
+
+    #[ORM\Column(nullable: true)]
+    private ?int $birthYear = null;
 
     public function __construct()
     {
@@ -213,6 +222,54 @@ class Squad
                 $transfer->setSquad(null);
             }
         }
+
+        return $this;
+    }
+
+    public function getFirstName(): ?string
+    {
+        return $this->firstName;
+    }
+
+    public function setFirstName(?string $firstName): self
+    {
+        $this->firstName = $firstName;
+
+        return $this;
+    }
+
+    public function getFigthName(): ?string
+    {
+        return $this->figthName;
+    }
+
+    public function setFigthName(?string $figthName): self
+    {
+        $this->figthName = $figthName;
+
+        return $this;
+    }
+
+    public function getGender(): ?string
+    {
+        return $this->gender;
+    }
+
+    public function setGender(?string $gender): self
+    {
+        $this->gender = $gender;
+
+        return $this;
+    }
+
+    public function getBirthYear(): ?int
+    {
+        return $this->birthYear;
+    }
+
+    public function setBirthYear(?int $birthYear): self
+    {
+        $this->birthYear = $birthYear;
 
         return $this;
     }

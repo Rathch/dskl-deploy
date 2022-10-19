@@ -25,6 +25,7 @@ class AppFixtures extends Fixture
             for ($i = 1; $i <= 24; $i++) {
                 $team = new Team();
                 $team->setName('Team '.$i." ".$faker->city);
+                $team->setDescription($faker->word);
                 $team->setActive(Flag::Active);
                 $manager->persist($team);
             }

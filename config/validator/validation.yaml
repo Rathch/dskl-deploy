@@ -1,0 +1,7 @@
+App\Entity\TeamInfo:
+  properties:
+    image:
+      - File:
+          maxSize: 4m
+          mimeTypes: [image/*]
+          mimeTypesMessage: Please upload a valid image

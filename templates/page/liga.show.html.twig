@@ -52,6 +52,7 @@
         </tr>
         </thead>
         <tbody>
+        {% dump(liga.teamStatistics) %}
         {% for statistic in liga.teamStatistics %}
             <tr class="{{ loop.index is  even ? 'lightBlue' }}">
                 <td>{{ statistic.team.name }}</td>

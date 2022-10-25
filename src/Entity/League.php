@@ -28,13 +28,16 @@ class League
     #[ORM\Column(type: 'integer')]
     private $numberOfPlayDays = 23;
 
+
     #[ORM\ManyToOne(targetEntity: TeamStatistic::class, inversedBy: 'league')]
+    #[ORM\OrderBy(['points' => 'DESC'])]
     private $teamStatistic;
 
     #[ORM\OneToOne(mappedBy: 'league', targetEntity: LeagueStatistic::class, cascade: ['persist', 'remove'])]
     private $leagueStatistic;
 
     #[ORM\OneToMany(mappedBy: 'league', targetEntity: TeamStatistic::class)]
+    #[ORM\OrderBy(['points' => 'DESC'])]
     private $teamStatistics;
 
     #[ORM\OneToMany(mappedBy: 'season', targetEntity: TransferHistory::class)]

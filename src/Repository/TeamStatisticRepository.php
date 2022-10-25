@@ -11,7 +11,6 @@ use Doctrine\Persistence\ManagerRegistry;
  *
  * @method TeamStatistic|null find($id, $lockMode = null, $lockVersion = null)
  * @method TeamStatistic|null findOneBy(array $criteria, array $orderBy = null)
- * @method TeamStatistic[]    findAll()
  * @method TeamStatistic[]    findBy(array $criteria, array $orderBy = null, $limit = null, $offset = null)
  */
 class TeamStatisticRepository extends ServiceEntityRepository
@@ -37,6 +36,11 @@ class TeamStatisticRepository extends ServiceEntityRepository
         if ($flush) {
             $this->getEntityManager()->flush();
         }
+    }
+
+    public function findAll(): array
+    {
+        return $this->findBy(array(), array('points' => 'DESC'));
     }
 
 //    /**

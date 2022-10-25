@@ -54,7 +54,7 @@
         <tbody>
         {% for statistic in liga.teamStatistics %}
             <tr class="{{ loop.index is  even ? 'lightBlue' }}">
-                <td>{{ statistic.team.name }}</td>
+                <td><a href="/team/show/{{ statistic.team.id }}">{{ statistic.team.name }}</a></td>
                 <td>{{ statistic.points }}</td>
                 <td style="background-color:{{ gruen }}">{{ statistic.wins }}</td>
                 <td style="background-color:{{ gelb }}">{{ statistic.drows }}</td>
@@ -101,9 +101,9 @@
                             {% endif %}
                                     <table  class="table table-striped-columns table-sm generalStatistic text-center justify-content-center">
                                         <tr>
-                                            <td class="spacialtd" style="background-color:{{ team1color }}"><b>{{ encounter.team1.name }}</b></td>
+                                            <td class="spacialtd" style="background-color:{{ team1color }}"><b><a href="/team/show/{{ encounter.team1.id }}">{{ encounter.team1.name }}</a></b></td>
                                             <td class="spacialtd"> {{ encounter.pointsTeam1 }} : {{ encounter.pointsTeam2 }} </td>
-                                            <td class="spacialtd" style="background-color:{{ team2color }}"><b>{{ encounter.team2.name }}</b></td>
+                                            <td class="spacialtd" style="background-color:{{ team2color }}"><b><a href="/team/show/{{ encounter.team2.id }}">{{ encounter.team2.name }}</a></b></td>
                                         </tr>
                                         <tr>
                                             <td class="spacialtd">
@@ -126,7 +126,7 @@
                                             <td class="spacialtd">{{ encounter.chanceTeam2 }}</td>
                                         </tr>
                                         <tr>
-                                            <td colspan="3"><p>{{ encounter.report }}</p></td>
+                                            <td colspan="3"><p>{{ encounter.report | raw}}</p></td>
                                         </tr>
                                     </table>
 

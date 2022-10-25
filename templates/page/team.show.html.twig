@@ -152,10 +152,10 @@
 
                             {% for squad in active %}
                                 <tr>
-                                    <td>{{ squad.name }}</td>
+                                    <td>{{ squad.firstName }} "{{ squad.figthName }}" {{ squad.name }}</td>
                                     <td>{{ squad.position.value }}</td>
                                     <td>{{ squad.methaTyp.value }}</td>
-                                    <td>{{ squad.age }}</td>
+                                    <td>{{ squad.birthYear }}</td>
                                     <td>{{ squad.value }}</td>
                                     <td>{{ squad.comment }}</td>
                                 </tr>
@@ -180,10 +180,10 @@
 
                             {% for squad in ersatz %}
                                 <tr>
-                                    <td>{{ squad.name }}</td>
+                                    <td>{{ squad.firstName }} "{{ squad.figthName }}" {{ squad.name }}</td>
                                     <td>{{ squad.position.value }}</td>
                                     <td>{{ squad.methaTyp.value }}</td>
-                                    <td>{{ squad.age }}</td>
+                                    <td>{{ squad.birthYear }}</td>
                                     <td>{{ squad.value }}</td>
                                     <td>{{ squad.comment }}</td>
                                 </tr>

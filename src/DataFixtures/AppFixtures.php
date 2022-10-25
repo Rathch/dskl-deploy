@@ -127,8 +127,10 @@ class AppFixtures extends Fixture
             $squad = new Squad();
             $squad->setTeam($team);
             $squad->setActive(Flag::Active);
-            $squad->setName($faker->name);
-            $squad->setAge($faker->numberBetween(18, 37));
+            $squad->setFirstName($faker->firstName);
+            $squad->setFigthName($faker->userName);
+            $squad->setName($faker->lastName);
+            $squad->setBirthYear($faker->year);
             $squad->setMethaTyp($methaTyp);
             $squad->setPosition($position);
             $squad->setReplacement($faker->boolean());

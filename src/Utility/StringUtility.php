@@ -8,38 +8,22 @@ final class StringUtility
     /**
      * @var string[]
      */
-    private const SEARCH = array(
-        'Ä',
-        'Ö',
-        'Ü',
-        'ä',
-        'ö',
-        'ü',
-        'é',
-    );
+    private const SEARCH = ['Ä', 'Ö', 'Ü', 'ä', 'ö', 'ü', 'é'];
 
     /**
      * @var string[]
      */
-    private const REPLACE = array(
-        'Ae',
-        'Oe',
-        'Ue',
-        'ae',
-        'oe',
-        'ue',
-        'e',
-    );
+    private const REPLACE = ['Ae', 'Oe', 'Ue', 'ae', 'oe', 'ue', 'e'];
 
     public static function removeSpecialCharacter($string): string
     {
-        $string = str_replace(' ', '-', $string);
+        $string = str_replace(' ', '-', (string) $string);
         return preg_replace('#[^A-Za-z0-9\-]#', '', $string);
     }
 
     private static function replaceSpecialCars($stringToClean): string|array
     {
-        return str_replace(self::SEARCH, self::REPLACE, $stringToClean);
+        return str_replace(self::SEARCH, self::REPLACE, (string) $stringToClean);
     }
 
     public static function prepareStringForUrl($stringToClean): string

@@ -25,14 +25,12 @@ use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 
 final class SquadAdminController extends CRUDController{
 
-    protected EntityManagerInterface $entityManager;
     protected PageRepository $pageReposetory;
     protected TeamRepository $teamReposetory;
     protected LeagueRepository $ligaReposetory;
 
-    public function __construct(EntityManagerInterface $entityManager)
+    public function __construct(protected EntityManagerInterface $entityManager)
     {
-        $this->entityManager = $entityManager;
         $this->pageReposetory = $entityManager->getRepository(Page::class);
         $this->teamReposetory = $entityManager->getRepository(Team::class);
         $this->ligaReposetory = $entityManager->getRepository(League::class);
@@ -41,6 +39,7 @@ final class SquadAdminController extends CRUDController{
     public function transferAction(Request $request): \Symfony\Component\HttpFoundation\Response
     {
 
+        $id = null;
         $leagues =  $this->ligaReposetory->findAll();
         $teams =  $this->teamReposetory->findAll();
 

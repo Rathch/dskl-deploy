@@ -17,14 +17,14 @@ class GenerateTeamStatisticService
     protected $teamReposetory;
     protected $teamStatisticReposetory;
     protected $leagueStatisticReposetory;
-    protected EntityManagerInterface $entityManager;
+    protected $encountersReposetory;
 
-    public function __construct(EntityManagerInterface $entityManager)
+    public function __construct(protected EntityManagerInterface $entityManager)
     {
-        $this->entityManager = $entityManager;
         $this->teamReposetory = $entityManager->getRepository(Team::class);
         $this->teamStatisticReposetory = $entityManager->getRepository(TeamStatistic::class);
         $this->leagueStatisticReposetory = $entityManager->getRepository(LeagueStatistic::class);
+        $this->encountersReposetory = $entityManager->getRepository(Encounter::class);
     }
 
     public function generate(League $object)
@@ -104,7 +104,6 @@ class GenerateTeamStatisticService
     }
 
     /**
-     * @param Encounter $encounter
      * @return int
      */
     public function checkWinningTeam(Encounter $encounter)
@@ -116,18 +115,29 @@ class GenerateTeamStatisticService
         }
     }
 
-    public function show()
+    public function calculateStatistic(League $league)
     {
-        $teamStatistics = $this->teamStatisticReposetory->findAll();
+        $leagueStatistic = $this->leagueStatisticReposetory->findOneBy(["league" => $league->getId()]);
+        $teamStatistics = $this->teamStatisticReposetory->findBy(["league" => $league->getId()]);
+
+        /** @var PlayDay $playday */
+        foreach ($league->getPlaydays() as $playday) {
+            /** @var Encounter $encounter */
+            foreach ($playday->getEncounters() as $encounter) {
+                $encounter->setLeague($league);
+                $this->entityManager->persist($encounter);
+                $league->addEncounter($encounter);
+                $this->entityManager->persist($league);
+            }
+        }
+        $this->entityManager->flush();
 
         /** @var TeamStatistic $statistic */
         foreach ($teamStatistics as $statistic) {
             /** @var LeagueStatistic $leagueStatistic */
-            $leagueStatistic = $this->leagueStatisticReposetory->findOneBy(["league" =>$statistic->getLeague()->getId()]);
             if (!$leagueStatistic->isDone()){
-                $encounters = $statistic->getTeam()->getEncounters();
                 /** @var Encounter $encounter */
-                foreach ($encounters as $encounter) {
+                foreach ($league->getEncounters() as $encounter) {
                     if ($encounter->getTeam1() === $statistic->getTeam()) {
                         if ( $encounter->getPointsTeam1() > $encounter->getPointsTeam2()) {
                             $statistic->setWins($statistic->getWins()+1);
@@ -136,7 +146,7 @@ class GenerateTeamStatisticService
                         if ( $encounter->getPointsTeam1() < $encounter->getPointsTeam2()) {
                             $statistic->setLoss($statistic->getLoss()+1);
                         }
-                        if ( $encounter->getPointsTeam1() === $encounter->getPointsTeam2()) {
+                        if ($encounter->getPointsTeam1() === $encounter->getPointsTeam2() && $encounter->getPointsTeam1() != 0 && $encounter->getPointsTeam2() != 0) {
                             $statistic->setDrows($statistic->getDrows()+1);
                             $statistic->setPoints($statistic->getPoints()+1);
                         }
@@ -160,7 +170,8 @@ class GenerateTeamStatisticService
                         $statistic->setInjurysDoneKritisch($statistic->getInjurysDoneKritisch()+$encounter->getInjuryTeam2Kritisch());
                         $statistic->setKills($statistic->getDeaths()+$encounter->getInjuryTeam2Tot());
 
-                    } else {
+                    }
+                    elseif($encounter->getTeam2() === $statistic->getTeam()) {
                         if ( $encounter->getPointsTeam1() < $encounter->getPointsTeam2()) {
                             $statistic->setWins($statistic->getWins()+1);
                             $statistic->setPoints($statistic->getPoints()+3);
@@ -169,7 +180,7 @@ class GenerateTeamStatisticService
                             $statistic->setLoss($statistic->getLoss()+1);
 
                         }
-                        if ( $encounter->getPointsTeam1() === $encounter->getPointsTeam2()) {
+                        if ($encounter->getPointsTeam1() === $encounter->getPointsTeam2() && $encounter->getPointsTeam1() != 0 && $encounter->getPointsTeam2() != 0) {
                             $statistic->setDrows($statistic->getDrows()+1);
                             $statistic->setPoints($statistic->getPoints()+1);
                         }
@@ -206,6 +217,7 @@ class GenerateTeamStatisticService
                     $statistic->setGoaleDifference($statistic->getGoales()-$statistic->getReGoeals());
 
                     $this->entityManager->persist($statistic);
+
                 }
             }
 
@@ -229,47 +241,39 @@ class GenerateTeamStatisticService
     /**
      * @throws \Exception
      */
-    public function regenerate()
+    public function regenerateStatistic(League $league)
     {
-        $leagueStatistics = $this->leagueStatisticReposetory->findAll()[0];
+        $leagueStatistic = $this->leagueStatisticReposetory->findOneBy(["league" => $league->getId()]);
+        $teamStatistics = $this->teamStatisticReposetory->findBy(["league" => $league->getId()]);
 
-        if ($leagueStatistics->getTimestamp() < new \DateTime("yesterday")) {
-            $teamStatistics = $this->teamStatisticReposetory->findAll();
+        foreach ($teamStatistics as $statistic) {
+            $statistic->setOddsRatio( 0);
+            $statistic->setPoints( 0);
+            $statistic->setWins( 0);
+            $statistic->setDrows( 0);
+            $statistic->setLoss( 0);
+            $statistic->setReGoeals( 0);
+            $statistic->setGoales( 0);
+            $statistic->setGoaleDifference( 0);
+            $statistic->setOpportunities( 0);
+            $statistic->setOpportunities( 0);
+            $statistic->setOpportunitiesOpponent( 0);
 
-            foreach ($teamStatistics as $statistic) {
-                $statistic->setOddsRatio( 0);
-                $statistic->setPoints( 0);
-                $statistic->setWins( 0);
-                $statistic->setDrows( 0);
-                $statistic->setLoss( 0);
-                $statistic->setReGoeals( 0);
-                $statistic->setGoales( 0);
-                $statistic->setGoaleDifference( 0);
-                $statistic->setOpportunities( 0);
-                $statistic->setOpportunities( 0);
-                $statistic->setOpportunitiesOpponent( 0);
+            $statistic->setInjuriesGetLeich(0);
+            $statistic->setInjurysGetSchwer(0);
+            $statistic->setInjurysGetKritisch(0);
+            $statistic->setDeaths(0);
 
-                $statistic->setInjuriesGetLeich(0);
-                $statistic->setInjurysGetSchwer(0);
-                $statistic->setInjurysGetKritisch(0);
-                $statistic->setDeaths(0);
-
-                $statistic->setInjuriesDoneLeich(0);
-                $statistic->setInjurysDoneSchwer(0);
-                $statistic->setInjurysDoneKritisch(0);
-                $statistic->setKills(0);
-                $this->entityManager->persist($statistic);
-            }
-            $leagueStatistics = $this->leagueStatisticReposetory->findAll();
-            /** @var LeagueStatistic $leagueStatistic */
-            foreach ($leagueStatistics as $leagueStatistic) {
-                $leagueStatistic->setDone(false);
-                $leagueStatistic->setTimestamp(new \datetime("now"));
-                $this->entityManager->persist($leagueStatistic);
-            }
-            $this->entityManager->flush();
+            $statistic->setInjuriesDoneLeich(0);
+            $statistic->setInjurysDoneSchwer(0);
+            $statistic->setInjurysDoneKritisch(0);
+            $statistic->setKills(0);
+            $this->entityManager->persist($statistic);
         }
 
-
+        $leagueStatistic->setDone(false);
+        $leagueStatistic->setTimestamp(new \datetime("now"));
+        $this->entityManager->persist($leagueStatistic);
+        $this->entityManager->flush();
     }
 }

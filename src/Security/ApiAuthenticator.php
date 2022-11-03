@@ -38,7 +38,7 @@ final class ApiAuthenticator extends AbstractGuardAuthenticator
             return false;
         }
 
-        return 0 === strpos($request->headers->get(self::AUTHORIZATION), 'Bearer ');
+        return str_starts_with($request->headers->get(self::AUTHORIZATION), 'Bearer ');
     }
 
     public function getCredentials(Request $request): string

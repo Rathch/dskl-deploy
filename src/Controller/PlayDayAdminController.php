@@ -11,15 +11,13 @@ use Sonata\AdminBundle\Controller\CRUDController;
 
 final class PlayDayAdminController extends CRUDController{
 
-    private $generateEncounterForPlayDayService;
     private $teamReposetory;
 
     /**
      * @param $generateEncounterForPlayDayService
      */
-    public function __construct(GenerateEncounterService $generateEncounterForPlayDayService)
+    public function __construct(private readonly GenerateEncounterService $generateEncounterForPlayDayService)
     {
-        $this->generateEncounterForPlayDayService = $generateEncounterForPlayDayService;
     }
 
 

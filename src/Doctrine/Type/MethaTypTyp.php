@@ -5,7 +5,7 @@ use App\Doctrine\Enum\MethaTyp;
 
 class MethaTypTyp extends AbstractEnumTyp
 {
-    public const NAME = 'methaTyp';
+    final public const NAME = 'methaTyp';
 
     public function getName(): string // the name of the type.
     {

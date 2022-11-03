@@ -101,10 +101,7 @@ class TeamStatistic
         return $this->opportunitiesOpponent;
     }
 
-    /**
-     * @param mixed $opportunitiesOpponent
-     */
-    public function setOpportunitiesOpponent($opportunitiesOpponent): void
+    public function setOpportunitiesOpponent(mixed $opportunitiesOpponent): void
     {
         $this->opportunitiesOpponent = $opportunitiesOpponent;
     }
@@ -317,10 +314,7 @@ class TeamStatistic
         return $this->injurysDoneTot;
     }
 
-    /**
-     * @param mixed $injurysDoneTot
-     */
-    public function setInjurysDoneTot($injurysDoneTot): void
+    public function setInjurysDoneTot(mixed $injurysDoneTot): void
     {
         $this->injurysDoneTot = $injurysDoneTot;
     }
@@ -333,10 +327,7 @@ class TeamStatistic
         return $this->injuriesGetLeich;
     }
 
-    /**
-     * @param mixed $injuriesGetLeich
-     */
-    public function setInjuriesGetLeich($injuriesGetLeich): void
+    public function setInjuriesGetLeich(mixed $injuriesGetLeich): void
     {
         $this->injuriesGetLeich = $injuriesGetLeich;
     }
@@ -349,10 +340,7 @@ class TeamStatistic
         return $this->injurysGetSchwer;
     }
 
-    /**
-     * @param mixed $injurysGetSchwer
-     */
-    public function setInjurysGetSchwer($injurysGetSchwer): void
+    public function setInjurysGetSchwer(mixed $injurysGetSchwer): void
     {
         $this->injurysGetSchwer = $injurysGetSchwer;
     }
@@ -365,10 +353,7 @@ class TeamStatistic
         return $this->injurysGetKritisch;
     }
 
-    /**
-     * @param mixed $injurysGetKritisch
-     */
-    public function setInjurysGetKritisch($injurysGetKritisch): void
+    public function setInjurysGetKritisch(mixed $injurysGetKritisch): void
     {
         $this->injurysGetKritisch = $injurysGetKritisch;
     }
@@ -381,10 +366,7 @@ class TeamStatistic
         return $this->injurysGetTot;
     }
 
-    /**
-     * @param mixed $injurysGetTot
-     */
-    public function setInjurysGetTot($injurysGetTot): void
+    public function setInjurysGetTot(mixed $injurysGetTot): void
     {
         $this->injurysGetTot = $injurysGetTot;
     }
@@ -421,10 +403,7 @@ class TeamStatistic
         return $this->teamInfo;
     }
 
-    /**
-     * @param mixed $teamInfo
-     */
-    public function setTeamInfo($teamInfo): void
+    public function setTeamInfo(mixed $teamInfo): void
     {
         $this->teamInfo = $teamInfo;
     }

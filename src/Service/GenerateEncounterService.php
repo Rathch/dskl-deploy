@@ -14,11 +14,9 @@ use ScheduleBuilder;
 class GenerateEncounterService
 {
     protected TeamRepository $teamReposetory;
-    protected EntityManagerInterface $entityManager;
 
-    public function __construct(EntityManagerInterface $entityManager)
+    public function __construct(protected EntityManagerInterface $entityManager)
     {
-        $this->entityManager = $entityManager;
         $this->teamReposetory = $entityManager->getRepository(Team::class);
     }
 
@@ -44,7 +42,7 @@ class GenerateEncounterService
     }
 
 
-    private function mapRoundToPlayday(array $rounds, $league): void
+    private function mapRoundToPlayday(array $rounds, League $league): void
     {
         $playDay = new PlayDay();
         $playDay->setLeague($league);
@@ -53,8 +51,11 @@ class GenerateEncounterService
             $encounter->setTeam1($round[0]);
             $encounter->setTeam2($round[1]);
             $encounter->setPlayDay($playDay);
+            $encounter->setLeague($league);
             $playDay->addEncounter($encounter);
             $this->entityManager->persist($encounter);
+            $league->addEncounter($encounter);
+            $this->entityManager->persist($league);
         }
         $this->entityManager->persist($playDay);
     }

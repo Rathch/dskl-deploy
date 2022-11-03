@@ -59,17 +59,11 @@ class TeamInfo
     }
 
 
-    /**
-     * @return string|null
-     */
     public function getImageName(): ?string
     {
         return $this->imageName;
     }
 
-    /**
-     * @param string|null $imageName
-     */
     public function setImageName(?string $imageName): void
     {
         $this->imageName = $imageName;

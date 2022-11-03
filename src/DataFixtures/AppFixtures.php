@@ -69,12 +69,6 @@ class AppFixtures extends Fixture
         $manager->flush();
     }
 
-    /**
-     * @param \Faker\Generator $faker
-     * @param Team $team
-     * @param ObjectManager $manager
-     * @return TeamAttributes
-     */
     protected function getTeamAttributesForTeam(\Faker\Generator $faker, Team $team, ObjectManager $manager): TeamAttributes
     {
         $teamAttributes = new TeamAttributes();
@@ -91,12 +85,6 @@ class AppFixtures extends Fixture
         return $teamAttributes;
     }
 
-    /**
-     * @param \Faker\Generator $faker
-     * @param Team $team
-     * @param ObjectManager $manager
-     * @return void
-     */
     protected function getTeamInfoForTeam(\Faker\Generator $faker, Team $team, ObjectManager $manager): void
     {
         $teamInfo = new TeamInfo();
@@ -112,18 +100,12 @@ class AppFixtures extends Fixture
         $manager->persist($teamInfo);
     }
 
-    /**
-     * @param \Faker\Generator $faker
-     * @param Team $team
-     * @param ObjectManager $manager
-     * @return int
-     */
     protected function getSquadForTeam(\Faker\Generator $faker, Team $team, ObjectManager $manager): int
     {
         $randomNumber = $faker->numberBetween(6,12);
         for ($i = 1; $i <= $randomNumber; $i++) {
-            $methaTyp = $faker->randomElement([MethaTyp::elf, MethaTyp::mensch, MethaTyp::ork, MethaTyp::troll, MethaTyp::zwerg], $count = 1);
-            $position = $faker->randomElement([Position::attaker, Position::breacher, Position::hunter, Position::sani, Position::scout, Position::shooter], $count = 1);
+            $methaTyp = $faker->randomElement([MethaTyp::elf, MethaTyp::mensch, MethaTyp::ork, MethaTyp::troll, MethaTyp::zwerg]);
+            $position = $faker->randomElement([Position::attaker, Position::breacher, Position::hunter, Position::sani, Position::scout, Position::shooter]);
             $squad = new Squad();
             $squad->setTeam($team);
             $squad->setActive(Flag::Active);

@@ -68,6 +68,12 @@ final class LeagueAdmin extends AbstractAdmin
                     'show' => [],
                     'edit' => false,
                     'delete' => false,
+                    'generateStatistic' => [
+                        'template' => 'CRUD/list__action_generateStatistic.html.twig',
+                    ],
+                    'regenerateStatistic' => [
+                        'template' => 'CRUD/list__action_regenerateStatistic.html.twig',
+                    ],
                 ],
             ]);
     }
@@ -97,19 +103,5 @@ final class LeagueAdmin extends AbstractAdmin
         $this->generateTeamStatisticService->generate($object);
     }
 
-    protected function configureActionButtons(array $buttonList, string $action, ?object $object = null): array
-    {
-        $buttonList['generateStatistic'] = ['template' => 'generateStatistic_button.html.twig'];
-        $buttonList['regenerateStatistic'] = ['template' => 'regenerateStatistic_button.html.twig'];
 
-        return $buttonList;
-    }
-
-    protected function configureDashboardActions(array $actions): array
-    {
-        $actions['generateStatistic'] = ['template' => 'generateStatistic_dashboard_button.html.twig'];
-        $actions['regenerateStatistic'] = ['template' => 'regenerateStatistic_dashboard_button.html.twig'];
-
-        return $actions;
-    }
 }

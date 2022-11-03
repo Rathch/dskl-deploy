@@ -23,16 +23,12 @@ use Symfony\Component\Form\Extension\Core\Type\TextareaType;
 
 final class EncounterAdmin extends AbstractAdmin
 {
-    private $generateTeamStatisticService;
-
-
     /**
      *
      * @param GenerateTeamStatisticService $generateTeamStatisticService
      */
-    public function __construct( GenerateTeamStatisticService $generateTeamStatisticService)
+    public function __construct( private readonly GenerateTeamStatisticService $generateTeamStatisticService)
     {
-        $this->generateTeamStatisticService = $generateTeamStatisticService;
         parent::__construct();
     }
 

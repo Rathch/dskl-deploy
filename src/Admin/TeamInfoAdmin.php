@@ -104,15 +104,12 @@ final class TeamInfoAdmin extends AbstractAdmin
     }
 
 
-    /**
-     * @param object $object
-     */
     private function manageFileUpload(object $object): void
     {
 
         if ($object->getImage() !== null) {
             $thumbnailName = $object->getTeam()->getName();
-            $thumbnailName = strtolower($thumbnailName);
+            $thumbnailName = strtolower((string) $thumbnailName);
             $thumbnailName = trim($thumbnailName);
             $object->setImageName($thumbnailName .  "." . $object->getImage()->guessExtension());
 

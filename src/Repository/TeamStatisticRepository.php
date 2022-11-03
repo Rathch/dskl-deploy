@@ -40,7 +40,7 @@ class TeamStatisticRepository extends ServiceEntityRepository
 
     public function findAll(): array
     {
-        return $this->findBy(array(), array('points' => 'DESC'));
+        return $this->findBy([], ['points' => 'DESC']);
     }
 
 //    /**

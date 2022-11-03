@@ -21,6 +21,7 @@ return static function (RectorConfig $rectorConfig): void {
         SymfonySetList::ANNOTATIONS_TO_ATTRIBUTES,
         SensiolabsSetList::FRAMEWORK_EXTRA_61,
         SymfonySetList::SYMFONY_CODE_QUALITY,
+        LevelSetList::UP_TO_PHP_81
     ]);
     // define sets of rules
     //    $rectorConfig->sets([

@@ -19,11 +19,8 @@ use Symfony\Component\Security\Http\Authenticator\Passport\SelfValidatingPasspor
 
 final class ApiKeyAuthenticator extends AbstractAuthenticator
 {
-    private readonly \App\Repository\ApiUserRepository $apiUserRepository;
-
-    public function __construct(ApiUserRepository $apiUserRepository)
+    public function __construct(private readonly ApiUserRepository $apiUserRepository)
     {
-        $this->apiUserRepository = $apiUserRepository;
     }
 
 

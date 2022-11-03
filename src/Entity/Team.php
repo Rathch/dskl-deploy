@@ -30,7 +30,7 @@ class Team
     private $encounters2;
 
     #[ORM\Column(type: "flag")]
-    private ?Flag $active;
+    private ?Flag $active = null;
 
     #[ORM\OneToMany(mappedBy: 'teams', targetEntity: TeamStatistic::class, cascade: ['persist', 'remove'])]
     private $teamStatistics;
@@ -64,17 +64,11 @@ class Team
         return $this->id;
     }
 
-    /**
-     * @return string
-     */
     public function getDescription(): string
     {
         return $this->description;
     }
 
-    /**
-     * @param string $description
-     */
     public function setDescription(string $description): void
     {
         $this->description = $description;
@@ -82,17 +76,11 @@ class Team
 
 
 
-    /**
-     * @return string
-     */
     public function getName(): string
     {
         return $this->name;
     }
 
-    /**
-     * @param string $name
-     */
     public function setName(string $name): void
     {
         $this->name = $name;
@@ -158,17 +146,11 @@ class Team
         return $this;
     }
 
-    /**
-     * @return Flag|null
-     */
     public function getActive(): ?Flag
     {
         return $this->active;
     }
 
-    /**
-     * @param Flag|null $active
-     */
     public function setActive(?Flag $active): void
     {
         $this->active = $active;

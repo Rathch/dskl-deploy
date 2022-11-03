@@ -72,17 +72,11 @@ class Squad
         return $this->id;
     }
 
-    /**
-     * @return string|null
-     */
     public function getValue(): ?string
     {
         return $this->value;
     }
 
-    /**
-     * @param string|null $value
-     */
     public function setValue(?string $value): void
     {
         $this->value = $value;
@@ -124,33 +118,21 @@ class Squad
         return $this;
     }
 
-    /**
-     * @return Position|null
-     */
     public function getPosition(): ?Position
     {
         return $this->position;
     }
 
-    /**
-     * @param Position|null $position
-     */
     public function setPosition(?Position $position): void
     {
         $this->position = $position;
     }
 
-    /**
-     * @return Flag|null
-     */
     public function getActive(): ?Flag
     {
         return $this->active;
     }
 
-    /**
-     * @param Flag|null $active
-     */
     public function setActive(?Flag $active): void
     {
         $this->active = $active;

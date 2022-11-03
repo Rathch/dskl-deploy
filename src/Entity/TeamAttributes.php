@@ -91,33 +91,21 @@ class TeamAttributes
         return $this;
     }
 
-    /**
-     * @return int
-     */
     public function getOffensive(): int
     {
         return $this->offensive;
     }
 
-    /**
-     * @param int $offensive
-     */
     public function setOffensive(int $offensive): void
     {
         $this->offensive = $offensive;
     }
 
-    /**
-     * @return int
-     */
     public function getDefensive(): int
     {
         return $this->defensive;
     }
 
-    /**
-     * @param int $defensive
-     */
     public function setDefensive(int $defensive): void
     {
         $this->defensive = $defensive;
@@ -131,10 +119,7 @@ class TeamAttributes
         return $this->tactics;
     }
 
-    /**
-     * @param mixed $tactics
-     */
-    public function setTactics($tactics): void
+    public function setTactics(mixed $tactics): void
     {
         $this->tactics = $tactics;
     }
@@ -147,9 +132,6 @@ class TeamAttributes
         return $this->spirit;
     }
 
-    /**
-     * @param int $spirit
-     */
     public function setSpirit(int $spirit): void
     {
         $this->spirit = $spirit;

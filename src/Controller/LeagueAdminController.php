@@ -14,21 +14,10 @@ use Sonata\AdminBundle\Controller\CRUDController;
 
 final class LeagueAdminController extends CRUDController{
 
-    private GenerateEncounterService $generateEncounterService;
-    private GenerateTeamStatisticService $generateTeamStatisticService;
-
-
-    /**
-     * @param GenerateTeamStatisticService $generateTeamStatisticService
-     * @param GenerateEncounterService $generateEncounterService
-     */
-    public function __construct(GenerateTeamStatisticService $generateTeamStatisticService, GenerateEncounterService $generateEncounterService)
+    public function __construct(private readonly GenerateTeamStatisticService $generateTeamStatisticService)
     {
-
-        $this->generateTeamStatisticService = $generateTeamStatisticService;
-        $this->generateEncounterService = $generateEncounterService;
-
     }
+
 
 
     /**
@@ -36,16 +25,20 @@ final class LeagueAdminController extends CRUDController{
      */
     public function generateStatisticAction(Request $request): Response
     {
-        $this->generateTeamStatisticService->show();
+        $league = $this->admin->getSubject();
+        $this->generateTeamStatisticService->calculateStatistic($league);
         return new RedirectResponse('/admin/app/league/list');
     }
 
     /**
+     * @return Response
      * @throws Exception
      */
     public function regenerateStatisticAction(Request $request): Response
     {
-        $this->generateTeamStatisticService->regenerate();
+        $league = $this->admin->getSubject();
+
+        $this->generateTeamStatisticService->regenerateStatistic($league);
         return new RedirectResponse('/admin/app/league/list');
     }
 

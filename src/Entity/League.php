@@ -23,10 +23,10 @@ class League
     private $playdays;
 
     #[ORM\Column(type: 'integer')]
-    private $numberOfTeams = 24;
+    private int $numberOfTeams = 24;
 
     #[ORM\Column(type: 'integer')]
-    private $numberOfPlayDays = 23;
+    private int $numberOfPlayDays = 23;
 
 
     #[ORM\ManyToOne(targetEntity: TeamStatistic::class, inversedBy: 'league')]
@@ -43,11 +43,15 @@ class League
     #[ORM\OneToMany(mappedBy: 'season', targetEntity: TransferHistory::class)]
     private Collection $transferHistories;
 
+    #[ORM\OneToMany(mappedBy: 'league', targetEntity: Encounter::class)]
+    private Collection $encounters;
+
     public function __construct()
     {
         $this->playdays = new ArrayCollection();
         $this->teamStatistics = new ArrayCollection();
         $this->transferHistories = new ArrayCollection();
+        $this->encounters = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -63,10 +67,7 @@ class League
         return $this->seasonName;
     }
 
-    /**
-     * @param mixed $seasonName
-     */
-    public function setSeasonName($seasonName): void
+    public function setSeasonName(mixed $seasonName): void
     {
         $this->seasonName = $seasonName;
     }
@@ -215,6 +216,36 @@ class League
             // set the owning side to null (unless already changed)
             if ($transferHistory->getSeason() === $this) {
                 $transferHistory->setSeason(null);
+            }
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, Encounter>
+     */
+    public function getEncounters(): Collection
+    {
+        return $this->encounters;
+    }
+
+    public function addEncounter(Encounter $encounter): self
+    {
+        if (!$this->encounters->contains($encounter)) {
+            $this->encounters->add($encounter);
+            $encounter->setLeague($this);
+        }
+
+        return $this;
+    }
+
+    public function removeEncounter(Encounter $encounter): self
+    {
+        if ($this->encounters->removeElement($encounter)) {
+            // set the owning side to null (unless already changed)
+            if ($encounter->getLeague() === $this) {
+                $encounter->setLeague(null);
             }
         }
 

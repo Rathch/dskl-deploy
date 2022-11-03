@@ -20,21 +20,11 @@ use Symfony\Component\Security\Core\Authorization\AuthorizationCheckerInterface;
 final class Builder implements ContainerAwareInterface
 {
     use ContainerAwareTrait;
-
-    private $factory;
-    private $security;
-    protected EntityManagerInterface $entityManager;
     protected PageRepository $pageReposetory;
     protected TeamRepository $teamReposetory;
 
-    /**
-     * @param FactoryInterface $factory
-     */
-    public function __construct( FactoryInterface $factory, AuthorizationCheckerInterface $security, EntityManagerInterface $entityManager)
+    public function __construct( private readonly FactoryInterface $factory, private readonly AuthorizationCheckerInterface $security, protected EntityManagerInterface $entityManager)
     {
-        $this->factory = $factory;
-        $this->security = $security;
-        $this->entityManager = $entityManager;
         $this->pageReposetory = $entityManager->getRepository(Page::class);
         $this->teamReposetory = $entityManager->getRepository(Team::class);
     }

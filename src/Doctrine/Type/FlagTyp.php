@@ -5,7 +5,7 @@ use App\Doctrine\Enum\Flag;
 
 class FlagTyp extends AbstractEnumTyp
 {
-    public const NAME = 'flag';
+    final public const NAME = 'flag';
 
     public function getName(): string // the name of the type.
     {

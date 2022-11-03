@@ -15,15 +15,13 @@ use Symfony\Component\Routing\Annotation\Route;
 
 class PageController extends AbstractController
 {
-    protected EntityManagerInterface $entityManager;
     protected PageRepository $pageReposetory;
     protected TeamRepository $teamReposetory;
     protected LeagueRepository $ligaReposetory;
 
 
-    public function __construct( EntityManagerInterface $entityManager)
+    public function __construct( protected EntityManagerInterface $entityManager)
     {
-        $this->entityManager = $entityManager;
         $this->pageReposetory = $entityManager->getRepository(Page::class);
         $this->teamReposetory = $entityManager->getRepository(Team::class);
         $this->ligaReposetory = $entityManager->getRepository(League::class);

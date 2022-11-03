@@ -79,19 +79,16 @@ final class TeamAdmin extends AbstractAdmin
                 ->with('', ['class' => 'col-md-12'])
                 ->add('squads', \Sonata\Form\Type\CollectionType::class, [
                     "label"=>"squads",
-                    'type_options' => array(
+                    'type_options' => [
                         // Prevents the "Delete" option from being displayed
                         'delete' => false,
-                        'delete_options' => array(
+                        'delete_options' => [
                             // You may otherwise choose to put the field but hide it
                             'type'         => 'hidden',
                             // In that case, you need to fill in the options as well
-                            'type_options' => array(
-                                'mapped'   => false,
-                                'required' => false,
-                            )
-                        )
-                    )
+                            'type_options' => ['mapped'   => false, 'required' => false],
+                        ],
+                    ]
                 ], [
                     'edit' => 'inline',
                     'inline' => 'table',
@@ -121,11 +118,11 @@ final class TeamAdmin extends AbstractAdmin
 
     protected function preUpdate(object $object): void
     {
-        $reflectionProperty = new ReflectionProperty("App\Entity\TeamInfo", 'image');
+        $reflectionProperty = new ReflectionProperty(\App\Entity\TeamInfo::class, 'image');
         $teaminfo = $object->getTeamInfo();
         if ($reflectionProperty->isInitialized($teaminfo)) {
             $thumbnailName = $teaminfo->getTeam()->getName();
-            $thumbnailName = strtolower($thumbnailName);
+            $thumbnailName = strtolower((string) $thumbnailName);
             $thumbnailName = trim($thumbnailName);
             $teaminfo->setImageName($thumbnailName .  "." . $teaminfo->getImage()->guessExtension());
 

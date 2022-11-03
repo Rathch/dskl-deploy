@@ -13,7 +13,7 @@ class TeamAttributes
     #[ORM\Column]
     private ?int $id = null;
 
-    #[ORM\OneToOne(cascade: ['persist', 'remove'])]
+    #[ORM\OneToOne(mappedBy: 'teamAttributes',cascade: ['persist', 'remove'])]
     private ?Team $team = null;
 
     #[ORM\Column(type: 'integer')]

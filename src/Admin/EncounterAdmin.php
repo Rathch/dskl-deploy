@@ -80,7 +80,7 @@ final class EncounterAdmin extends AbstractAdmin
                     [
                         'class' => Team::class,
                         'property'=>'name',
-                        'disabled'=>true,
+                        #'disabled'=>true,
                         'btn_add'=>false,
                         "label" => "Team 1"
                     ]
@@ -97,7 +97,7 @@ final class EncounterAdmin extends AbstractAdmin
                     [
                         'class' => Team::class,
                         'property'=>'name',
-                        'disabled'=>true,
+                        #'disabled'=>true,
                         'btn_add'=>false,
                         "label" => "Team 2"
                     ]

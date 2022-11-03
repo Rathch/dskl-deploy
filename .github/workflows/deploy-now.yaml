@@ -67,7 +67,7 @@ jobs:
           php_version: '8.1.0'
           php_extensions: zip
           version: '2'
-          args: --optimize-autoloader --no-dev
+          args: --optimize-autoloader
 
       - name: Deploy to IONOS
         if: ${{ steps.project.outputs.deployment-enabled == 'true' }}

@@ -14,6 +14,7 @@
     {% set gruen ="#6eb493"  %}
     {% set rot ="#cb5858"  %}
     {% set gelb ="#e2b007"  %}
+    {% set weis ="#fff"  %}
     <h2>Gesamtstatistik: {{ liga.seasonName }}</h2>
 
     <table class="table table-striped table-hover table-sm generalStatistic">
@@ -98,6 +99,10 @@
                             {% if encounter.pointsTeam1 > encounter.pointsTeam2 %}
                                 {% set team2color =rot  %}
                                 {% set team1color =gruen  %}
+                            {% endif %}
+                            {% if encounter.pointsTeam1 == 0 or encounter.pointsTeam2 == 0 %}
+                                {% set team2color =weis  %}
+                                {% set team1color =weis  %}
                             {% endif %}
                                     <table  class="table table-striped-columns table-sm generalStatistic text-center justify-content-center">
                                         <tr>

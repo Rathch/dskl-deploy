@@ -44,7 +44,7 @@ deploy:
       - php bin/console assets:install
       - APP_ENV=dev APP_DEBUG=1 php bin/console cache:warmup
       - php bin/console doctrine:schema:update --force
-      - pwd
+      - IMG_PATH=$(pwd)/htdocs/public/img
       #- php bin/console sonata:user:create zeitgeist zeitgeist@rath-ulrich.de 12345678
       #- php bin/console sonata:user:promote zeitgeist --super-admin
 

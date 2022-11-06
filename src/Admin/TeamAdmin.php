@@ -127,9 +127,9 @@ final class TeamAdmin extends AbstractAdmin
             $teaminfo->setImageName($thumbnailName .  "." . $teaminfo->getImage()->guessExtension());
 
             $filesystem= new Filesystem();
-            $filesystem->mkdir("/var/www/html/public/img/teams/".$teaminfo->getTeam()->getId());
+            $filesystem->mkdir($_ENV['IMG_PATH']."/teams/".$teaminfo->getTeam()->getId());
 
-            file_put_contents(  "/var/www/html/public/img/teams/".$teaminfo->getTeam()->getId()."/". $thumbnailName .  "." . $teaminfo->getImage()->guessExtension(), $teaminfo->getImage()->getContent());
+            file_put_contents(  $_ENV['IMG_PATH']."/teams/".$teaminfo->getTeam()->getId()."/". $thumbnailName .  "." . $teaminfo->getImage()->guessExtension(), $teaminfo->getImage()->getContent());
         }
 
     }

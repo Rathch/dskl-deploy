@@ -65,6 +65,9 @@ class Squad
     #[ORM\OneToMany(mappedBy: 'playerOfTheDay', targetEntity: PlayDay::class)]
     private Collection $playerOfTheDay;
 
+    #[ORM\Column(nullable: true)]
+    private ?bool $dead = null;
+
     public function __construct()
     {
         $this->transfers = new ArrayCollection();
@@ -297,6 +300,18 @@ class Squad
     public function getFullname(): ?string
     {
         return $this->getFirstName()." '". $this->getFigthName()."' ". $this->getName();
+    }
+
+    public function isDead(): ?bool
+    {
+        return $this->dead;
+    }
+
+    public function setDead(?bool $dead): self
+    {
+        $this->dead = $dead;
+
+        return $this;
     }
 
 }

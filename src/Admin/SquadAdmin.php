@@ -101,6 +101,7 @@ final class SquadAdmin extends AbstractAdmin
             ->add('value', null, ["label" => "value"])
             ->add('comment', CKEditorType::class, ["label" => "comment", "required"=>false])
             ->add('replacement', null, ["label" => "replacement"])
+            ->add('dead', null, ["label" => "Verstorben"])
             ->add('active', EnumType::class, ["class"=>Flag::class,"label" => "active"])
             ;
     }

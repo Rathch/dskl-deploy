@@ -64,9 +64,9 @@ final class PlayDayAdmin extends AbstractAdmin
                     'years' => range(2080,2099),
                     'format' => 'd MMMM yyyy',
                 ])
-            ->add("teamOfTheDay",null,["label"=>"Team der Spieltages ","choice_label"=>"name", 'expanded' => false, 'by_reference' => false, 'multiple' => false])
+            ->add("teamOfTheDay",null,["label"=>"Team der Spieltages ","choice_label"=>"name", 'expanded' => false, 'by_reference' => true, 'multiple' => false])
 
-            ->add("playerOfTheDay",null,["label"=>"Spieler des Spieltages","choice_label"=>"fullName", 'expanded' => false, 'by_reference' => false, 'multiple' => false])
+            ->add("playerOfTheDay",null,["label"=>"Spieler des Spieltages","choice_label"=>"fullName", 'expanded' => false, 'by_reference' => true, 'multiple' => false])
 
             ->end()
             ->with('Encounters', ['class' => 'col-md-12'])

@@ -11,13 +11,17 @@
     <h2 class="text-center">Team {{ team.name }}</h2>
     {% set active = [] %}
     {% set ersatz = [] %}
+    {% set dead = [] %}
 
     {% for squad in team.squads %}
-
-        {% if squad.replacement != 1 %}
-            {% set active = active|merge([squad]) %}
+        {% if squad.dead == 1 %}
+            {% set dead = dead|merge([squad]) %}
         {% else %}
-            {% set ersatz = ersatz|merge([squad]) %}
+            {% if squad.replacement != 1 %}
+                {% set active = active|merge([squad]) %}
+            {% else %}
+                {% set ersatz = ersatz|merge([squad]) %}
+            {% endif %}
         {% endif %}
     {% endfor %}
 
@@ -74,6 +78,19 @@
             </h2>
             <div id="flush-collapseOne" class="accordion-collapse collapse" aria-labelledby="flush-headingOne" data-bs-parent="#accordionFlushExample">
                 <div class="accordion-body"> {{ team.teamInfo.successes| raw  }}</div>
+                <div class="accordion-body">
+                    <table  class="table table-striped-columns">
+                        <tr>
+                            <th>Bestes Team Des Tages:</th>
+                        </tr>
+                        {% for best in team.teamOfTheDays %}
+                            <tr>
+                                <td>Liga: {{ best.league.seasonName }}</td>
+                                <td>Spieltag: {{ best.date |date('d-M-Y') }}</td>
+                            </tr>
+                        {% endfor %}
+                    </table>
+                </div>
             </div>
         </div>
         <div class="accordion-item">
@@ -135,7 +152,8 @@
                 </button>
             </h2>
             <div id="flush-collapseThree" class="accordion-collapse collapse" aria-labelledby="flush-headingThree" data-bs-parent="#accordionFlushExample">
-                <div class="accordion-body"><div class="card-body">
+                <div class="accordion-body">
+                    <div class="card-body">
                         <table class="table table-hover" id="sortTable">
                             <thead>
                             <tr>
@@ -189,9 +207,39 @@
                             {% endfor %}
                             </tbody>
                         </table>
-                    </div></div>
+                    </div>
+                    <div class="card-body">
+                    <h2>Verstorben:</h2>
+                    <table class="table table-hover" id="sortTable">
+                        <thead>
+                        <tr>
+                            <th>Name</th>
+                            <th>Position</th>
+                            <th>Metatyp</th>
+                            <th>Alter</th>
+                            <th>Wert €</th>
+                            <th>Anmerkung</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+
+                        {% for squad in dead %}
+                            <tr>
+                                <td>{{ squad.firstName }}"{{ squad.figthName }}"{{ squad.name }}</td>
+                                <td>{{ squad.position.value }}</td>
+                                <td>{{ squad.methaTyp.value }}</td>
+                                <td>{{ squad.birthYear }}</td>
+                                <td>{{ squad.value }}</td>
+                                <td>{{ squad.comment | raw }}</td>
+                            </tr>
+                        {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+                </div>
             </div>
         </div>
+
     </div>
     <br>
     <p class="te">

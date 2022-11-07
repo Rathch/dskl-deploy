@@ -34,7 +34,7 @@ final class TeamAdmin extends AbstractAdmin
     {
         $list->add('id', null, ["label" => "id"])
             ->add('name', null, ["label" => "name"])
-            ->add('description', null, ["label" => "description"])
+            ->add('description', FieldDescriptionInterface::TYPE_HTML, ["label" => "description"])
             ->add('active', FieldDescriptionInterface::TYPE_ENUM, ["label" => "active"])
             ->add(ListMapper::NAME_ACTIONS, null, [
                 'actions' => [

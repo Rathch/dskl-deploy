@@ -20,7 +20,7 @@ class Team
     private string $name;
 
     #[ORM\Column(type: 'text', nullable: true)]
-    private string $description;
+    private ?string $description = "";
 
 
     #[ORM\OneToMany(mappedBy: 'team1', targetEntity: Encounter::class)]
@@ -74,7 +74,7 @@ class Team
         return $this->id;
     }
 
-    public function getDescription(): string
+    public function getDescription(): ?string
     {
         return $this->description;
     }

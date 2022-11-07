@@ -2,14 +2,19 @@
 
 {% set active = [] %}
 {% set ersatz = [] %}
+{% set dead = [] %}
 
 {% for squad in object.squads %}
-
-    {% if squad.replacement != 1 %}
-        {% set active = active|merge([squad]) %}
+    {% if squad.dead == 1 %}
+        {% set dead = dead|merge([squad]) %}
     {% else %}
-        {% set ersatz = ersatz|merge([squad]) %}
+        {% if squad.replacement != 1 %}
+            {% set active = active|merge([squad]) %}
+        {% else %}
+            {% set ersatz = ersatz|merge([squad]) %}
+        {% endif %}
     {% endif %}
+
 {% endfor %}
 
 {% set encounters = [] %}
@@ -141,6 +146,34 @@
                     <tbody>
 
                     {% for squad in ersatz %}
+                        <tr>
+                            <td>{{ squad.firstName }}"{{ squad.figthName }}"{{ squad.name }}</td>
+                            <td>{{ squad.position.value }}</td>
+                            <td>{{ squad.methaTyp.value }}</td>
+                            <td>{{ squad.birthYear }}</td>
+                            <td>{{ squad.value }}</td>
+                            <td>{{ squad.comment }}</td>
+                        </tr>
+                    {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+            <div class="card-body">
+                <h2>Verstorben:</h2>
+                <table class="table table-hover" id="sortTable">
+                    <thead>
+                    <tr>
+                        <th>Name</th>
+                        <th>Position</th>
+                        <th>Metatyp</th>
+                        <th>Alter</th>
+                        <th>Wert €</th>
+                        <th>Anmerkung</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+
+                    {% for squad in dead %}
                         <tr>
                             <td>{{ squad.firstName }}"{{ squad.figthName }}"{{ squad.name }}</td>
                             <td>{{ squad.position.value }}</td>

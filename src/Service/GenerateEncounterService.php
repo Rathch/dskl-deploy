@@ -7,29 +7,30 @@ use App\Entity\League;
 use App\Entity\LeagueStatistic;
 use App\Entity\PlayDay;
 use App\Entity\Team;
+use App\Repository\EncounterRepository;
+use App\Repository\PlayDayRepository;
 use App\Repository\TeamRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use ScheduleBuilder;
 
 class GenerateEncounterService
 {
-    protected TeamRepository $teamReposetory;
+    protected TeamRepository $teamRepository;
+    protected EncounterRepository $encounterRepository;
+    protected PlayDayRepository $playDayRepository;
 
     public function __construct(protected EntityManagerInterface $entityManager)
     {
-        $this->teamReposetory = $entityManager->getRepository(Team::class);
+        $this->teamRepository = $entityManager->getRepository(Team::class);
+        $this->encounterRepository = $entityManager->getRepository(Encounter::class);
+        $this->playDayRepository = $entityManager->getRepository(PlayDay::class);
     }
 
     public function generate(League $league)
     {
-        //todo: get only active teams
 
-        $teams = $this->teamReposetory->findBy([],null,1);
-        $teams2 = $this->teamReposetory->findBy([],null,$league->getNumberOfTeams());
-        $matches = [];
-        $counter = $league->getNumberOfTeams()-1;
-        $teams = ['The 1st', '2 Good', 'We 3', '4ward'];
-        $scheduleBuilder = new ScheduleBuilder($teams2);
+
+        $scheduleBuilder = new ScheduleBuilder($league->getActiveTeams()->toArray());
         $schedule = $scheduleBuilder->build();
         foreach ($schedule->full() as $round) {
             $this->mapRoundToPlayday($round, $league);
@@ -58,5 +59,20 @@ class GenerateEncounterService
             $this->entityManager->persist($league);
         }
         $this->entityManager->persist($playDay);
+    }
+
+    public function removeByLeauge($object)
+    {
+        /** @var League $league */
+        $league = $object;
+        $encounters = $league->getEncounters();
+        foreach ($encounters as $encounter) {
+            $this->encounterRepository->remove($encounter);
+        }
+        $playDays = $league->getPlaydays();
+        foreach ($playDays as $playDay) {
+            $this->playDayRepository->remove($playDay);
+        }
+        $this->entityManager->flush();
     }
 }

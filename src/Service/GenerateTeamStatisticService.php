@@ -276,4 +276,17 @@ class GenerateTeamStatisticService
         $this->entityManager->persist($leagueStatistic);
         $this->entityManager->flush();
     }
+
+    public function remove(object $object)
+    {
+        /** @var League $league */
+        $league = $object;
+
+        $this->leagueStatisticReposetory->remove($league->getLeagueStatistic());
+
+        foreach ($league->getTeamStatistics() as $teamStatistic) {
+            $this->teamStatisticReposetory->remove($teamStatistic);
+        }
+        $this->entityManager->flush();
+    }
 }

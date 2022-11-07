@@ -19,7 +19,7 @@ class Team
     #[ORM\Column(type: 'string')]
     private string $name;
 
-    #[ORM\Column(type: 'text')]
+    #[ORM\Column(type: 'text', nullable: true)]
     private string $description;
 
 

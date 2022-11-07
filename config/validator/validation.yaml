@@ -9,4 +9,5 @@ App\Entity\League:
   properties:
     activeTeams:
       - Count:
+          min: 24
           max: 24

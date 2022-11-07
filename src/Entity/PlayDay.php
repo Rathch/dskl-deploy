@@ -25,6 +25,12 @@ class PlayDay
     #[ORM\ManyToOne(targetEntity: League::class, inversedBy: 'playdays')]
     private $league;
 
+    #[ORM\ManyToOne(inversedBy: 'teamOfTheDays')]
+    private ?Team $teamOfTheDay = null;
+
+    #[ORM\ManyToOne(inversedBy: 'playerOfTheDay')]
+    private ?Squad $playerOfTheDay = null;
+
     public function __construct()
     {
         $this->encounters = new ArrayCollection();
@@ -85,6 +91,30 @@ class PlayDay
     public function setLeague(?League $league): self
     {
         $this->league = $league;
+
+        return $this;
+    }
+
+    public function getTeamOfTheDay(): ?Team
+    {
+        return $this->teamOfTheDay;
+    }
+
+    public function setTeamOfTheDay(?Team $teamOfTheDay): self
+    {
+        $this->teamOfTheDay = $teamOfTheDay;
+
+        return $this;
+    }
+
+    public function getPlayerOfTheDay(): ?Squad
+    {
+        return $this->playerOfTheDay;
+    }
+
+    public function setPlayerOfTheDay(?Squad $playerOfTheDay): self
+    {
+        $this->playerOfTheDay = $playerOfTheDay;
 
         return $this;
     }

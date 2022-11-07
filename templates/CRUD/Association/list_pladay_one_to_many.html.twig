@@ -33,7 +33,7 @@ file that was distributed with this source code.
 
 {%- block relation_link -%}
     <a href="{{ field_description.associationadmin.generateObjectUrl("edit", element, route_parameters) }}">
-        <p>{{ element.id }}. Spieltag - {{ element.date|date('d-M-Y') }}</p>
+        <p>{{ loop.index }}. Spieltag - {{ element.date|date('d-M-Y') }}</p>
     </a>
 {%- endblock -%}
 

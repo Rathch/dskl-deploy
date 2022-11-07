@@ -50,6 +50,11 @@ class Team
     #[ORM\ManyToMany(targetEntity: League::class, mappedBy: 'activeTeams')]
     private Collection $activeInLeagues;
 
+    #[ORM\OneToMany(mappedBy: 'teamOfTheDay', targetEntity: PlayDay::class)]
+    private Collection $teamOfTheDays;
+
+
+
 
 
 
@@ -61,6 +66,7 @@ class Team
         $this->squads = new ArrayCollection();
         $this->transferHistories = new ArrayCollection();
         $this->activeInLeagues = new ArrayCollection();
+        $this->teamOfTheDays = new ArrayCollection();
     }
 
     public function getId(): int
@@ -324,6 +330,38 @@ class Team
 
         return $this;
     }
+
+    /**
+     * @return Collection<int, PlayDay>
+     */
+    public function getTeamOfTheDays(): Collection
+    {
+        return $this->teamOfTheDays;
+    }
+
+    public function addTeamOfTheDay(PlayDay $teamOfTheDay): self
+    {
+        if (!$this->teamOfTheDays->contains($teamOfTheDay)) {
+            $this->teamOfTheDays->add($teamOfTheDay);
+            $teamOfTheDay->setTeamOfTheDay($this);
+        }
+
+        return $this;
+    }
+
+    public function removeTeamOfTheDay(PlayDay $teamOfTheDay): self
+    {
+        if ($this->teamOfTheDays->removeElement($teamOfTheDay)) {
+            // set the owning side to null (unless already changed)
+            if ($teamOfTheDay->getTeamOfTheDay() === $this) {
+                $teamOfTheDay->setTeamOfTheDay(null);
+            }
+        }
+
+        return $this;
+    }
+
+
 
 
 }

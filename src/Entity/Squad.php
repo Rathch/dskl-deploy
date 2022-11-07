@@ -59,12 +59,47 @@ class Squad
     #[ORM\Column(nullable: true)]
     private ?int $birthYear = null;
 
+
+    private ?string $fullname = null;
+
+    #[ORM\OneToMany(mappedBy: 'playerOfTheDay', targetEntity: PlayDay::class)]
+    private Collection $playerOfTheDay;
+
     public function __construct()
     {
         $this->transfers = new ArrayCollection();
+        $this->playerOfTheDay = new ArrayCollection();
     }
 
+    /**
+     * @return Collection<int, PlayDay>
+     */
+    public function getPlayerOfTheDay(): Collection
+    {
+        return $this->playerOfTheDay;
+    }
 
+    public function addPlayerOfTheDay(PlayDay $playerOfTheDay): self
+    {
+        if (!$this->playerOfTheDay->contains($playerOfTheDay)) {
+            $this->playerOfTheDay->add($playerOfTheDay);
+            $playerOfTheDay->setPlayerOfTheDay($this);
+        }
+
+        return $this;
+    }
+
+    public function removePlayerOfTheDay(PlayDay $playerOfTheDay): self
+    {
+        if ($this->playerOfTheDay->removeElement($playerOfTheDay)) {
+            // set the owning side to null (unless already changed)
+            if ($playerOfTheDay->getPlayerOfTheDay() === $this) {
+                $playerOfTheDay->setPlayerOfTheDay(null);
+            }
+        }
+
+        return $this;
+    }
 
 
     public function getId(): ?int
@@ -256,7 +291,12 @@ class Squad
         return $this;
     }
 
-
-
+    /**
+     * @return string|null
+     */
+    public function getFullname(): ?string
+    {
+        return $this->getFirstName()." '". $this->getFigthName()."' ". $this->getName();
+    }
 
 }

@@ -92,7 +92,6 @@ final class LeagueAdmin extends AbstractAdmin
 
     protected function configureShowFields(ShowMapper $show): void
     {
-
         $show
             ->add('id',null,["label"=>"id"])
             ->add('seasonName',null,["label"=>"seasonName"])

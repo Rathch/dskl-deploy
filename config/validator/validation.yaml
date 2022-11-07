@@ -5,3 +5,8 @@ App\Entity\TeamInfo:
           maxSize: 4m
           mimeTypes: [image/*]
           mimeTypesMessage: Please upload a valid image
+App\Entity\League:
+  properties:
+    activeTeams:
+      - Count:
+          max: 24

@@ -29,6 +29,7 @@ class League
     private int $numberOfPlayDays = 23;
 
 
+
     #[ORM\ManyToOne(targetEntity: TeamStatistic::class, inversedBy: 'league')]
     #[ORM\OrderBy(['points' => 'DESC'])]
     private $teamStatistic;
@@ -46,12 +47,16 @@ class League
     #[ORM\OneToMany(mappedBy: 'league', targetEntity: Encounter::class)]
     private Collection $encounters;
 
+    #[ORM\ManyToMany(targetEntity: Team::class, inversedBy: 'activeInLeagues')]
+    private Collection $activeTeams;
+
     public function __construct()
     {
         $this->playdays = new ArrayCollection();
         $this->teamStatistics = new ArrayCollection();
         $this->transferHistories = new ArrayCollection();
         $this->encounters = new ArrayCollection();
+        $this->activeTeams = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -248,6 +253,30 @@ class League
                 $encounter->setLeague(null);
             }
         }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, Team>
+     */
+    public function getActiveTeams(): Collection
+    {
+        return $this->activeTeams;
+    }
+
+    public function addActiveTeam(Team $activeTeam): self
+    {
+        if (!$this->activeTeams->contains($activeTeam)) {
+            $this->activeTeams->add($activeTeam);
+        }
+
+        return $this;
+    }
+
+    public function removeActiveTeam(Team $activeTeam): self
+    {
+        $this->activeTeams->removeElement($activeTeam);
 
         return $this;
     }

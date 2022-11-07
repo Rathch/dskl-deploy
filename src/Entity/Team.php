@@ -47,6 +47,9 @@ class Team
     #[ORM\OneToMany(mappedBy: 'oldTeam', targetEntity: TransferHistory::class)]
     private Collection $transferHistories;
 
+    #[ORM\ManyToMany(targetEntity: League::class, mappedBy: 'activeTeams')]
+    private Collection $activeInLeagues;
+
 
 
 
@@ -57,6 +60,7 @@ class Team
         $this->teamStatistics = new ArrayCollection();
         $this->squads = new ArrayCollection();
         $this->transferHistories = new ArrayCollection();
+        $this->activeInLeagues = new ArrayCollection();
     }
 
     public function getId(): int
@@ -289,6 +293,33 @@ class Team
             if ($transferHistory->getNewTeam() === $this) {
                 $transferHistory->setNewTeam(null);
             }
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, League>
+     */
+    public function getActiveInLeagues(): Collection
+    {
+        return $this->activeInLeagues;
+    }
+
+    public function addActiveInLeague(League $activeInLeague): self
+    {
+        if (!$this->activeInLeagues->contains($activeInLeague)) {
+            $this->activeInLeagues->add($activeInLeague);
+            $activeInLeague->addActiveTeam($this);
+        }
+
+        return $this;
+    }
+
+    public function removeActiveInLeague(League $activeInLeague): self
+    {
+        if ($this->activeInLeagues->removeElement($activeInLeague)) {
+            $activeInLeague->removeActiveTeam($this);
         }
 
         return $this;

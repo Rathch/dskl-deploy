@@ -12,6 +12,7 @@ use Sonata\AdminBundle\Datagrid\DatagridMapper;
 use Sonata\AdminBundle\Datagrid\ListMapper;
 use Sonata\AdminBundle\FieldDescription\FieldDescriptionInterface;
 use Sonata\AdminBundle\Form\FormMapper;
+use Sonata\AdminBundle\Form\Type\ModelType;
 use Sonata\Form\Type\CollectionType;
 use Sonata\AdminBundle\Route\RouteCollectionInterface;
 use Symfony\Component\Form\Extension\Core\Type\DateType;
@@ -86,7 +87,7 @@ final class LeagueAdmin extends AbstractAdmin
                     "label"=>"seasonName"
             ]
             )
-            ->add("activeTeams",null,["label"=>"Aktive Teams","choice_label"=>"name", 'expanded' => true, 'by_reference' => false, 'multiple' => true])
+            ->add("activeTeams",ModelType::class,["label"=>"Aktive Teams","property"=>"name", 'expanded' => true, 'by_reference' => false, 'multiple' => true,"btn_add"=>false])
         ;
     }
 

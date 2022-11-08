@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace App\Admin;
 
 
+use App\Entity\Team;
 use App\Service\GenerateEncounterService;
 use App\Service\GenerateTeamStatisticService;
 use Sonata\AdminBundle\Admin\AbstractAdmin;
@@ -87,7 +88,7 @@ final class LeagueAdmin extends AbstractAdmin
                     "label"=>"seasonName"
             ]
             )
-            ->add("activeTeams",ModelType::class,["label"=>"Aktive Teams","property"=>"name", 'expanded' => true, 'by_reference' => false, 'multiple' => true,"btn_add"=>false])
+            ->add("activeTeams",ModelType::class,["label"=>"Aktive Teams","class"=>Team::class,"property"=>"name", 'expanded' => true, 'by_reference' => false, 'multiple' => true,"btn_add"=>false])
         ;
     }
 

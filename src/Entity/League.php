@@ -28,8 +28,6 @@ class League
     #[ORM\Column(type: 'integer')]
     private int $numberOfPlayDays = 23;
 
-
-
     #[ORM\ManyToOne(targetEntity: TeamStatistic::class, inversedBy: 'league')]
     #[ORM\OrderBy(['points' => 'DESC'])]
     private $teamStatistic;

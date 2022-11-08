@@ -56,7 +56,7 @@ services:
     admin.league:
         class: App\Admin\LeagueAdmin
         tags:
-            - { name: sonata.admin, model_class: App\Entity\League, controller: App\Controller\LeagueAdminController, manager_type: orm, group: Season, label: "Season" }
+            - { name: sonata.admin, model_class: App\Entity\League, controller: App\Controller\LeagueAdminController, manager_type: orm, group: Season, label: "Seasons" }
 
     admin.team_attributes:
         class: App\Admin\TeamAttributesAdmin

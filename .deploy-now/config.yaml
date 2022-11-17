@@ -26,6 +26,7 @@ deploy:
     excludes:
       - public/img
       - .ddev
+      - .idea
       - tests
       - node_modules
       - DOCKER_ENV

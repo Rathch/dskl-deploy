@@ -13,6 +13,7 @@ use Sonata\AdminBundle\FieldDescription\FieldDescriptionInterface;
 use Sonata\AdminBundle\Form\FormMapper;
 use Sonata\AdminBundle\Show\ShowMapper;
 use Sonata\Form\Type\CollectionType;
+use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Form\Extension\Core\Type\DateType;
 use Symfony\Component\Form\Extension\Core\Type\HiddenType;
 
@@ -64,9 +65,9 @@ final class PlayDayAdmin extends AbstractAdmin
                     'years' => range(2080,2099),
                     'format' => 'd MMMM yyyy',
                 ])
-            ->add("teamOfTheDay",null,["label"=>"Team der Spieltages ","choice_label"=>"name", 'expanded' => false, 'by_reference' => true, 'multiple' => false])
+            ->add("teamOfTheDay",ChoiceType::class,["label"=>"Team der Spieltages ","choice_label"=>"name", 'expanded' => false, 'by_reference' => true, 'multiple' => false])
 
-            ->add("playerOfTheDay",null,["label"=>"Spieler des Spieltages","choice_label"=>"fullName", 'expanded' => false, 'by_reference' => true, 'multiple' => false])
+            ->add("playerOfTheDay",ChoiceType::class,["label"=>"Spieler des Spieltages","choice_label"=>"fullName", 'expanded' => false, 'by_reference' => true, 'multiple' => false])
 
             ->end()
             ->with('Encounters', ['class' => 'col-md-12'])

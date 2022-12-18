@@ -22,7 +22,7 @@ class AppFixtures extends Fixture
         $faker = \Faker\Factory::create("de_DE");
         // create 24 teams! Bam!
         if (!$manager->getRepository(Team::class)->findAll()) {
-            for ($i = 1; $i <= 24; $i++) {
+            for ($i = 1; $i <= 50; $i++) {
                 $team = new Team();
                 $team->setName('Team '.$i." ".$faker->city);
                 $team->setDescription($faker->word);
@@ -65,6 +65,12 @@ class AppFixtures extends Fixture
             $encounter->setPointsTeam1($faker->numberBetween(1,10));
             $encounter->setPointsTeam2($faker->numberBetween(1,10));
             $encounter->setReport($faker->word);
+            if ($encounter->getPointsTeam2() > $encounter->getPointsTeam1()){
+                $encounter->setWinningTeam($encounter->getTeam2()->getId());
+            }
+            if ($encounter->getPointsTeam1() > $encounter->getPointsTeam2()){
+                $encounter->setWinningTeam($encounter->getTeam1()->getId());
+            }
         }
         $manager->flush();
     }
@@ -94,7 +100,7 @@ class AppFixtures extends Fixture
         $teamInfo->setPresedent($faker->name);
         $teamInfo->setSponsor($faker->company);
         $teamInfo->setTrainer($faker->name);
-        $teamInfo->setSuccesses($faker->sentence);
+        $teamInfo->setSuccesses($faker->word);
         $teamInfo->setTeam($team);
         $team->setTeamInfo($teamInfo);
         $manager->persist($teamInfo);

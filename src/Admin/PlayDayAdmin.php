@@ -5,12 +5,14 @@ declare(strict_types=1);
 namespace App\Admin;
 
 use App\Entity\Encounter;
+use App\Entity\Squad;
 use App\Entity\Team;
 use Sonata\AdminBundle\Admin\AbstractAdmin;
 use Sonata\AdminBundle\Datagrid\DatagridMapper;
 use Sonata\AdminBundle\Datagrid\ListMapper;
 use Sonata\AdminBundle\FieldDescription\FieldDescriptionInterface;
 use Sonata\AdminBundle\Form\FormMapper;
+use Sonata\AdminBundle\Form\Type\ModelType;
 use Sonata\AdminBundle\Show\ShowMapper;
 use Sonata\Form\Type\CollectionType;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
@@ -65,9 +67,28 @@ final class PlayDayAdmin extends AbstractAdmin
                     'years' => range(2080,2099),
                     'format' => 'd MMMM yyyy',
                 ])
-            ->add("teamOfTheDay",ChoiceType::class,["label"=>"Team der Spieltages ","choice_label"=>"name", 'expanded' => false, 'by_reference' => true, 'multiple' => false])
+            ->add(
+                "teamOfTheDay",
+                ModelType::class,
+                [
+                    'class' => Team::class,
+                    'property'=>'name',
+                    #'disabled'=>true,
+                    'btn_add'=>false,
+                    "label" => "Team des Tages"
+                ]
+            )
 
-            ->add("playerOfTheDay",ChoiceType::class,["label"=>"Spieler des Spieltages","choice_label"=>"fullName", 'expanded' => false, 'by_reference' => true, 'multiple' => false])
+            ->add("playerOfTheDay",
+                ModelType::class,
+                [
+                    'class' => Squad::class,
+                    'property'=>'name',
+                    #'disabled'=>true,
+                    'btn_add'=>false,
+                    "label" => "Spieler des Tages"
+                ]
+            )
 
             ->end()
             ->with('Encounters', ['class' => 'col-md-12'])

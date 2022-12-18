@@ -29,8 +29,7 @@ class GenerateTeamStatisticService
 
     public function generate(League $object)
     {
-
-        $teams = $this->teamReposetory->findBy([],null,$object->getNumberOfTeams());
+        $teams = $object->getActiveTeams();
 
         /** @var Team $team */
         foreach ($teams as $team) {

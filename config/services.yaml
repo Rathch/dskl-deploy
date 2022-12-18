@@ -99,3 +99,8 @@ services:
             - [ setTemplate, [ 'edit', 'ck_edit.html.twig' ] ]
         tags:
             - { name: sonata.admin, model_class: App\Entity\ContentElements\Teaser, controller: ~, manager_type: orm, group: Seiten., label: Teaser }
+
+    admin.all_star:
+        class: App\Admin\AllStarAdmin
+        tags:
+            - { name: sonata.admin, model_class: App\Entity\AllStar, controller: ~, manager_type: orm, group: Season., label: "ADL Allstars" }

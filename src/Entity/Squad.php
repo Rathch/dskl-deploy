@@ -69,10 +69,18 @@ class Squad
     #[ORM\Column(nullable: true)]
     private ?bool $dead = null;
 
+    #[ORM\ManyToMany(targetEntity: League::class, mappedBy: 'bestPlayersOfTheDay')]
+    private Collection $bestPlayersOfTheDay;
+
+    #[ORM\ManyToMany(targetEntity: AllStar::class, mappedBy: 'allStarsMambers')]
+    private Collection $allStars;
+
     public function __construct()
     {
         $this->transfers = new ArrayCollection();
         $this->playerOfTheDay = new ArrayCollection();
+        $this->bestPlayersOfTheDay = new ArrayCollection();
+        $this->allStars = new ArrayCollection();
     }
 
     /**
@@ -323,4 +331,54 @@ class Squad
         return $this;
     }
 
+    /**
+     * @return Collection<int, Squad>
+     */
+    public function getBestPlayersOfTheDay(): Collection
+    {
+        return $this->bestPlayersOfTheDay;
+    }
+
+    public function addBestPlayersOfTheDay(Squad $bestPlayersOfTheDay): self
+    {
+        if (!$this->bestPlayersOfTheDay->contains($bestPlayersOfTheDay)) {
+            $this->bestPlayersOfTheDay->add($bestPlayersOfTheDay);
+        }
+
+        return $this;
+    }
+
+    public function removeBestPlayersOfTheDay(Squad $bestPlayersOfTheDay): self
+    {
+        $this->bestPlayersOfTheDay->removeElement($bestPlayersOfTheDay);
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, AllStar>
+     */
+    public function getAllStars(): Collection
+    {
+        return $this->allStars;
+    }
+
+    public function addAllStar(AllStar $allStar): self
+    {
+        if (!$this->allStars->contains($allStar)) {
+            $this->allStars->add($allStar);
+            $allStar->addAllStarsMamber($this);
+        }
+
+        return $this;
+    }
+
+    public function removeAllStar(AllStar $allStar): self
+    {
+        if ($this->allStars->removeElement($allStar)) {
+            $allStar->removeAllStarsMamber($this);
+        }
+
+        return $this;
+    }
 }

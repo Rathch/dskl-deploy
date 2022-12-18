@@ -11,3 +11,9 @@ App\Entity\League:
       - Count:
           min: 24
           max: 24
+App\Entity\PlayDay:
+  properties:
+    bestPlayersOfTheDay:
+      - Count:
+          min: 13
+          max: 13

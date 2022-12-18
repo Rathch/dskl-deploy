@@ -83,7 +83,7 @@ final class PlayDayAdmin extends AbstractAdmin
                 ModelType::class,
                 [
                     'class' => Squad::class,
-                    'property'=>'name',
+                    'property'=>'FullInfo',
                     #'disabled'=>true,
                     'btn_add'=>false,
                     "label" => "Spieler des Tages"

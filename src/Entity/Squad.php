@@ -61,6 +61,7 @@ class Squad
 
 
     private ?string $fullname = null;
+    private ?string $fullInfos = null;
 
     #[ORM\OneToMany(mappedBy: 'playerOfTheDay', targetEntity: PlayDay::class)]
     private Collection $playerOfTheDay;
@@ -300,6 +301,14 @@ class Squad
     public function getFullname(): ?string
     {
         return $this->getFirstName()." '". $this->getFigthName()."' ". $this->getName();
+    }
+
+    /**
+     * @return string|null
+     */
+    public function getFullInfo(): ?string
+    {
+        return $this->getFirstName()." '". $this->getFigthName()."' ". $this->getName()." - ". $this->getTeam()->getName() ." - ". $this->getPosition()->value;
     }
 
     public function isDead(): ?bool

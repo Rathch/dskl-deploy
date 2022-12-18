@@ -14,7 +14,10 @@ $theme-colors: (
         "light":      $light,
         "dark":       $dark
 );
-
+.custom-figure {
+  max-height: 350px;
+  max-width: 350px;
+}
 .btn-primary{
   background-color:$ionosBlue;
 }
@@ -43,6 +46,7 @@ $theme-colors: (
 .card-img-top {
   max-height: 200px;
   max-width: 200px;
+  height: 200px;
 }
 .mynav {
   background: $ionosBlue;

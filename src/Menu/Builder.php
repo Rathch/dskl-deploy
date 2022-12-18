@@ -36,7 +36,7 @@ final class Builder implements ContainerAwareInterface
         $menu = $this->factory->createItem('root');
         $menu->addChild('Home', ['route' => 'home']);
         $menu->addChild('Teams', ['route' => 'list_teams']);
-        $menu->addChild('Liga', ['route' => 'list_liga']);
+        $menu->addChild('Sesson', ['route' => 'list_liga']);
         foreach ($pages as $page) {
             $menu->addChild($page->getTitle(), ['route' => 'page', 'routeParameters' => ['title' => $page->getSlag()]]);
         }

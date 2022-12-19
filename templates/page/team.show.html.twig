@@ -42,13 +42,12 @@
     {% endfor %}
 
     <figure class="figure mx-auto d-block">
-    {% if team.teaminfo.imageName %}
-                        <img src="/img/teams/{{ team.id }}/{{ team.teamInfo.imageName }}" class="figure-img img-fluid rounded mx-auto d-block custom-figure"
-                                     alt="{{ team.name }}">
-                    {% else %}
-                        <img src="https://placeholder.pics/svg/500" class="figure-img img-fluid rounded mx-auto d-block custom-figure" alt="{{ team.name }}">
-                    {% endif %}
-
+        {% if team.teaminfo.imageName %}
+            <img src="/img/teams/{{ team.id }}/{{ team.teamInfo.imageName }}" class="figure-img img-fluid rounded mx-auto d-block custom-figure"
+                         alt="{{ team.name }}">
+        {% else %}
+            <img src="https://placeholder.pics/svg/500" class="figure-img img-fluid rounded mx-auto d-block custom-figure" alt="{{ team.name }}">
+        {% endif %}
         <figcaption class="figure-caption">{{ team.name }}</figcaption>
     </figure>
     <h2 class="mb-0">VEREINSINFO</h2>

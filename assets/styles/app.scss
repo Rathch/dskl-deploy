@@ -18,6 +18,13 @@ $theme-colors: (
   max-height: 350px;
   max-width: 350px;
 }
+.squqdTable{
+  font-size:15px;
+  .fs-6{
+    font-size:12px!important;
+  }
+}
+
 .btn-primary{
   background-color:$ionosBlue;
 }

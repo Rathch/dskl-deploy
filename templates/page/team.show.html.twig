@@ -234,6 +234,17 @@
                         </table>
                         </div>
                     </div>
+                </div>
+            </div>
+        </div>
+        <div class="accordion-item">
+            <h2 class="accordion-header" id="flush-headingThreeERSATZ">
+                <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#flush-collapseThreeERSATZ" aria-expanded="false" aria-controls="flush-collapseThree">
+                    <h2 class="mb-0">ERSATZ KADER</h2>
+                </button>
+            </h2>
+            <div id="flush-collapseThreeERSATZ" class="accordion-collapse collapse" aria-labelledby="flush-headingThreeERSATZ" data-bs-parent="#accordionFlushExample">
+                <div class="accordion-body">
                     <div class="card-body">
                         <h2>Ersatzspieler:</h2>
                         <table class="table table-hover w-auto squqdTable" id="sortTable">
@@ -262,41 +273,51 @@
                             </tbody>
                         </table>
                     </div>
-                    <div class="card-body">
-                    <h2>Verstorben:</h2>
-                    <table class="table table-hover" id="sortTable">
-                        <thead>
-                        <tr>
-                            <th>Name</th>
-                            <th>Position</th>
-                            <th>Metatyp</th>
-                            <th>Alter</th>
-                            <th>Wert €</th>
-                            <th>Anmerkung</th>
-                        </tr>
-                        </thead>
-                        <tbody>
-
-                        {% for squad in dead %}
-                            <tr>
-                                <td>{{ squad.firstName }}"{{ squad.figthName }}"{{ squad.name }}</td>
-                                <td>{{ squad.position.value }}</td>
-                                <td>{{ squad.methaTyp.value }}</td>
-                                <td>{{ squad.birthYear }}</td>
-                                <td>{{ squad.value }}</td>
-                                <td>{{ squad.comment | raw }}</td>
-                            </tr>
-                        {% endfor %}
-                        </tbody>
-                    </table>
                 </div>
+            </div>
+        </div>
+        <div class="accordion-item">
+            <h2 class="accordion-header" id="flush-headingThree">
+                <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#flush-collapseThreeVERSTORBEN" aria-expanded="false" aria-controls="flush-collapseThreeVERSTORBEN">
+                    <h2 class="mb-0">VERSTORBEN</h2>
+                </button>
+            </h2>
+            <div id="flush-collapseThreeVERSTORBEN" class="accordion-collapse collapse" aria-labelledby="flush-headingThreeVERSTORBEN" data-bs-parent="#accordionFlushExample">
+                <div class="accordion-body">
+                    <div class="card-body">
+                        <h2>Verstorben:</h2>
+                        <table class="table table-hover" id="sortTable">
+                            <thead>
+                            <tr>
+                                <th>Name</th>
+                                <th>Position</th>
+                                <th>Metatyp</th>
+                                <th>Alter</th>
+                                <th>Wert €</th>
+                                <th>Anmerkung</th>
+                            </tr>
+                            </thead>
+                            <tbody>
+
+                            {% for squad in dead %}
+                                <tr>
+                                    <td>{{ squad.firstName }}"{{ squad.figthName }}"{{ squad.name }}</td>
+                                    <td>{{ squad.position.value }}</td>
+                                    <td>{{ squad.methaTyp.value }}</td>
+                                    <td>{{ squad.birthYear }}</td>
+                                    <td>{{ squad.value }}</td>
+                                    <td>{{ squad.comment | raw }}</td>
+                                </tr>
+                            {% endfor %}
+                            </tbody>
+                        </table>
+                    </div>
                 </div>
             </div>
         </div>
 
-    </div>
+
     <br>
-    <p class="te">
     <h3>weitere Teams</h3>
     {{ knp_menu_render('team') }}
     </p>

@@ -80,11 +80,13 @@
         </tr>
         <tr>
             <th scope="row">Erfolge</th>
+            <td colspan="2">{{ team.teamInfo.successes|raw }}</td>
+
+        </tr>
+        <tr>
+            <th scope="row">Bestes Team Des Tages:</th>
             <td colspan="2">
                 <table  class="table table-striped-columns">
-                    <tr>
-                        <th>Bestes Team Des Tages:</th>
-                    </tr>
                     {% for best in team.teamOfTheDays %}
                         <tr>
                             <td>Liga: {{ best.league.seasonName }}</td>
@@ -92,7 +94,9 @@
                         </tr>
                     {% endfor %}
                 </table>
+
             </td>
+
         </tr>
         </tbody>
     </table>

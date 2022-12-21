@@ -39,7 +39,7 @@ final class AllStarAdmin extends AbstractAdmin
     protected function configureFormFields(FormMapper $form): void
     {
         $form
-            ->add('league',
+       /*     ->add('league',
                 ModelType::class,
                 [
                     "label"=>"Sesson",
@@ -50,7 +50,7 @@ final class AllStarAdmin extends AbstractAdmin
                     'multiple' => false,
                     "btn_add"=>false
                 ]
-            )
+            )*/
             ->add('allStarsMambers',
                 ModelType::class,
                 [

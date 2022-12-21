@@ -13,6 +13,7 @@ use Sonata\AdminBundle\Datagrid\DatagridMapper;
 use Sonata\AdminBundle\Datagrid\ListMapper;
 use Sonata\AdminBundle\FieldDescription\FieldDescriptionInterface;
 use Sonata\AdminBundle\Form\FormMapper;
+use Sonata\AdminBundle\Form\Type\AdminType;
 use Sonata\AdminBundle\Form\Type\ModelType;
 use Sonata\Form\Type\CollectionType;
 use Sonata\AdminBundle\Route\RouteCollectionInterface;
@@ -89,6 +90,7 @@ final class LeagueAdmin extends AbstractAdmin
             ]
             )
             ->add("activeTeams",ModelType::class,["label"=>"Aktive Teams","class"=>Team::class,"property"=>"name", 'expanded' => true, 'by_reference' => false, 'multiple' => true,"btn_add"=>false])
+            ->add('allStars',AdminType::class,["label"=>"ADL Allstars"])
         ;
     }
 
@@ -97,6 +99,7 @@ final class LeagueAdmin extends AbstractAdmin
         $show
             ->add('id',null,["label"=>"id"])
             ->add('seasonName',null,["label"=>"seasonName"])
+
             ;
     }
 

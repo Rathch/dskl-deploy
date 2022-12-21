@@ -35,6 +35,9 @@ class League
     #[ORM\OneToOne(mappedBy: 'league', targetEntity: LeagueStatistic::class, cascade: ['persist', 'remove'])]
     private $leagueStatistic;
 
+    #[ORM\OneToOne(mappedBy: 'league', targetEntity: AllStar::class, cascade: ['persist', 'remove'])]
+    private $allStars;
+
     #[ORM\OneToMany(mappedBy: 'league', targetEntity: TeamStatistic::class)]
     #[ORM\OrderBy(['points' => 'DESC'])]
     private $teamStatistics;
@@ -61,6 +64,23 @@ class League
     {
         return $this->id;
     }
+
+    /**
+     * @return mixed
+     */
+    public function getAllStars()
+    {
+        return $this->allStars;
+    }
+
+    /**
+     * @param mixed $allStars
+     */
+    public function setAllStars($allStars): void
+    {
+        $this->allStars = $allStars;
+    }
+
 
     /**
      * @return mixed

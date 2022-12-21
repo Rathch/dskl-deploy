@@ -89,6 +89,41 @@
                 </h2>
                 <div id="collapse-{{loop.index}}" class="accordion-collapse collapse" aria-labelledby="headingTwo" data-bs-parent="#accordionExample">
                     <div class="accordion-body">
+                        <div class="row m-2">
+                            <div class=" col-6">
+                                <b>Spieler des Spieltages:</b>
+                            </div>
+                            <div class=" col-6">
+                                {{ playday.playerOfTheDay.fullname }}
+                            </div>
+                            <div class=" col-6">
+                                <b>Team des Spieltages:</b>
+                            </div>
+                            <div class=" col-6">
+                                <a href="/team/show/{{ playday.teamOfTheDay.id }}" >{{ playday.teamOfTheDay.name }}</a>
+                            </div>
+                            <div class=" col-6">
+                                <b>Mannschaft des Spieltages:</b>
+                            </div>
+                            <div class=" col-12">
+                                <table  class="table table-striped-columns">
+                                    <tr>
+                                        <th class="fs-6">Name</th>
+                                        <th class="fs-6">Position</th>
+                                        <th class="fs-6">Team</th>
+                                    </tr>
+                                    {% for best in playday.bestPlayersOfTheDay %}
+
+                                        <tr>
+                                            <td class="fs-6">{{ best.fullname }}</td>
+                                            <td class="fs-6">{{ best.position.value }}</td>
+                                            <td class="fs-6">{{ best.team.name }}</td>
+                                        </tr>
+                                    {% endfor %}
+                                </table>
+                            </div>
+                        </div>
+
                         {% for encounter in playday.encounters %}
                                         {% set team2color =gelb  %}
                                         {% set team1color =gelb  %}
@@ -104,6 +139,7 @@
                                 {% set team2color =weis  %}
                                 {% set team1color =weis  %}
                             {% endif %}
+
                                     <table  class="table table-striped-columns table-sm generalStatistic text-center justify-content-center">
                                         <tr>
                                             <td class="spacialtd fs-2" style="background-color:{{ team1color }}"><b><a href="/team/show/{{ encounter.team1.id }}">{{ encounter.team1.name }}</a></b></td>

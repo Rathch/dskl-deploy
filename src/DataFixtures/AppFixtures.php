@@ -7,6 +7,7 @@ use App\Doctrine\Enum\Flag;
 use App\Doctrine\Enum\MethaTyp;
 use App\Doctrine\Enum\Position;
 use App\Entity\Encounter;
+use App\Entity\PlayDay;
 use App\Entity\Squad;
 use App\Entity\Team;
 use App\Entity\TeamAttributes;
@@ -45,6 +46,15 @@ class AppFixtures extends Fixture
         }
 
 
+        $playdayReposetory = $manager->getRepository(PlayDay::class);
+
+
+        $playdays = $playdayReposetory->findAll();
+
+        foreach ($playdays as $playday) {
+            $playday->setTeamOfTheDay($manager->getRepository(Team::class)->findOneById($faker->numberBetween(1,3)));
+            $playday->setPlayerOfTheDay($manager->getRepository(Squad::class)->findOneById($faker->numberBetween(27,33)));
+        }
 
         $encounterReposetory = $manager->getRepository(Encounter::class);
 

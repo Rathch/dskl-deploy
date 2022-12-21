@@ -32,8 +32,6 @@ class Squad
     #[ORM\Column(length: 255, nullable: true)]
     private ?string $value = null;
 
-    #[ORM\Column(type: "flag")]
-    private ?Flag $active = null;
 
     #[ORM\Column(type: Types::TEXT, nullable: true)]
     private ?string $comment = null;
@@ -174,20 +172,6 @@ class Squad
     {
         $this->position = $position;
     }
-
-    public function getActive(): ?Flag
-    {
-        return $this->active;
-    }
-
-    public function setActive(?Flag $active): void
-    {
-        $this->active = $active;
-    }
-
-
-
-
 
     public function getComment(): ?string
     {

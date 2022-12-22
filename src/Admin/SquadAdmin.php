@@ -28,7 +28,6 @@ final class SquadAdmin extends AbstractAdmin
     {
         $filter
             ->add('id')
-            ->add('active')
             ->add('firstName')
             ->add('figthName')
             ->add('name')

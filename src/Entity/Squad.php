@@ -57,6 +57,9 @@ class Squad
     #[ORM\Column(nullable: true)]
     private ?int $birthYear = null;
 
+    #[ORM\Column(nullable: true)]
+    private $active = null;
+
 
     private ?string $fullname = null;
     private ?string $fullInfos = null;

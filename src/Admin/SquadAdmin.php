@@ -55,7 +55,6 @@ final class SquadAdmin extends AbstractAdmin
     {
         $list
             ->add('id', null, ["label" => "id"])
-            ->add('active', FieldDescriptionInterface::TYPE_ENUM, ["label" => "active"])
             ->add('firstName', null, ["label" => "firstName"])
             ->add('figthName', null, ["label" => "figthName"])
             ->add('name', null, ["label" => "name"])

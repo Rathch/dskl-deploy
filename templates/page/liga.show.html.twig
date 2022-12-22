@@ -78,6 +78,29 @@
         </tbody>
     </table>
     <br>
+    <div class="row m-2">
+        <div class=" col-6">
+            <b>ADL Allstars:</b>
+        </div>
+        <div class=" col-12">
+            <table  class="table table-striped-columns">
+                <tr>
+                    <th class="fs-6">Name</th>
+                    <th class="fs-6">Position</th>
+                    <th class="fs-6">Team</th>
+                </tr>
+                {% for best in liga.allStars.allStarsMambers %}
+
+                    <tr>
+                        <td class="fs-6">{{ best.fullname }}</td>
+                        <td class="fs-6">{{ best.position.value }}</td>
+                        <td class="fs-6">{{ best.team.name }}</td>
+                    </tr>
+                {% endfor %}
+            </table>
+        </div>
+    </div>
+    <br>
     <h2>Spieltage:</h2>
     {% for playday in liga.playdays %}
         <div class="accordion" id="accordionExample-{{loop.index}}">

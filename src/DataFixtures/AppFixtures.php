@@ -124,7 +124,6 @@ class AppFixtures extends Fixture
             $position = $faker->randomElement([Position::attaker, Position::breacher, Position::hunter, Position::sani, Position::scout, Position::shooter]);
             $squad = new Squad();
             $squad->setTeam($team);
-            $squad->setActive(Flag::Active);
             $squad->setFirstName($faker->firstName);
             $squad->setFigthName($faker->userName);
             $squad->setName($faker->lastName);

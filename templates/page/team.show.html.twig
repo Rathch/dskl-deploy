@@ -145,10 +145,6 @@
                                                             {% set team2color =rot  %}
                                                             {% set team1color =gruen  %}
                                                         {% endif %}
-                                                        {% if encounter.pointsTeam1 == 0 or encounter.pointsTeam2 == 0 %}
-                                                            {% set team2color =weis  %}
-                                                            {% set team1color =weis  %}
-                                                        {% endif %}
                                                         {% if encounter.playday.league.seasonName == league %}
                                                             {% set count = count + 1 %}
                                                             <table  class="table table-striped-columns table-sm generalStatistic text-center justify-content-center">

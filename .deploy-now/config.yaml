@@ -43,9 +43,12 @@ deploy:
       - find $(pwd) -type f -not -path "$(pwd)/logs/*" -exec chmod 664 {} \;
       - find $(pwd) -type d -not -name "logs" -exec chmod 775 {} \;
       - chmod -R o+w var
-      - APP_ENV=dev APP_DEBUG=1 php bin/console cache:clear
+      - APP_ENV=prod APP_DEBUG=0 php bin/console cache:clear
       - php bin/console assets:install
-      - APP_ENV=dev APP_DEBUG=1 php bin/console cache:warmup
+      - APP_ENV=prod APP_DEBUG=0 php bin/console cache:warmup
+      #- APP_ENV=dev APP_DEBUG=1 php bin/console cache:clear
+      #- php bin/console assets:install
+      #- APP_ENV=dev APP_DEBUG=1 php bin/console cache:warmup
       - php bin/console doctrine:schema:update --force
       - php bin/console cache:clear
       - php bin/console cache:warmup

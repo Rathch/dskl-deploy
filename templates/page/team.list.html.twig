@@ -9,14 +9,16 @@
 
         <div class=" col-3 m-2 p-0 ">
             <div class="card p-2">
-                {% if team.teaminfo.imageName %}
-                    <img src="/img/teams/{{ team.id }}/{{ team.teamInfo.imageName }}" class="card-img-top"  alt="{{ team.name }}">
-                {% else %}
-                    <img src="https://placeholder.pics/svg/200" class="card-img-top" alt="{{ team.name }}">
-                {% endif %}
+
 
                 <div class="card-body">
-                    <a href="/team/show/{{ team.id }}" ><h5 class="card-title">{{ team.name }}</h5></a>
+                    <a href="/team/show/{{ team.id }}" >
+                        {% if team.teaminfo.imageName %}
+                            <img src="/img/teams/{{ team.id }}/{{ team.teamInfo.imageName }}" class="card-img-top"  alt="{{ team.name }}">
+                        {% else %}
+                            <img src="https://placeholder.pics/svg/200" class="card-img-top" alt="{{ team.name }}">
+                        {% endif %}
+                        <h5 class="card-title text-center">{{ team.name }}</h5></a>
                 </div>
             </div>
         </div>

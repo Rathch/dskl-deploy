@@ -79,10 +79,12 @@ $theme-colors: (
   padding: 30px;
 }
 .content-wrapper{
-  background-image: url('../img/bg.jpg');
+  background-attachment: fixed;
+  background-image: url('../img/bg2.png');
 }
 body {
-  background-image: url('../img/bg.jpg');
+  background-attachment: fixed;
+  background-image: url('../img/bg2.png');
   min-height: 100vh;
   color: $ionosBlue;
   font: 16px/1.5 sans-serif;

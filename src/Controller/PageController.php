@@ -2,9 +2,11 @@
 
 namespace App\Controller;
 
+use App\Entity\Encounter;
 use App\Entity\League;
 use App\Entity\Page;
 use App\Entity\Team;
+use App\Repository\EncounterRepository;
 use App\Repository\LeagueRepository;
 use App\Repository\PageRepository;
 use App\Repository\TeamRepository;
@@ -18,6 +20,7 @@ class PageController extends AbstractController
     protected PageRepository $pageReposetory;
     protected TeamRepository $teamReposetory;
     protected LeagueRepository $ligaReposetory;
+    protected EncounterRepository $encounterRepository;
 
 
     public function __construct( protected EntityManagerInterface $entityManager)
@@ -25,6 +28,7 @@ class PageController extends AbstractController
         $this->pageReposetory = $entityManager->getRepository(Page::class);
         $this->teamReposetory = $entityManager->getRepository(Team::class);
         $this->ligaReposetory = $entityManager->getRepository(League::class);
+        $this->encounterRepository = $entityManager->getRepository(Encounter::class);
     }
 
 
@@ -91,6 +95,16 @@ class PageController extends AbstractController
     {
         $ligas = $this->ligaReposetory->findAll();
         return $this->render('page/liga.list.html.twig', [
+            'ligas' => $ligas,
+            'controller_name' => 'PageController',
+        ]);
+    }
+
+    #[Route(path: '/statistics', name: 'statistics')]
+    public function statistics(): Response
+    {
+        $ligas = $this->encounterRepository->findBy("kills",10);
+        return $this->render('page/statistics.html.twig', [
             'ligas' => $ligas,
             'controller_name' => 'PageController',
         ]);

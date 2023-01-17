@@ -28,10 +28,12 @@
             <th></th>
             <th></th>
             <th></th>
+            <th></th>
             <th colspan="4" style="background-color:{{ gruen }}">Verletzungen verursacht</th>
             <th colspan="4" style="background-color:{{ rot }}">Verletzungen erlitten</th>
         </tr>
         <tr>
+            <th class="fa-rotate-90">#</th>
             <th class="fa-rotate-90 text-start">Mannschaft</th>
             <th class="fa-rotate-90">Punkte</th>
             <th class="fa-rotate-90" style="background-color:{{ gruen }}">S</th>
@@ -53,8 +55,10 @@
         </tr>
         </thead>
         <tbody>
+
         {% for statistic in liga.teamStatistics %}
             <tr class="{{ loop.index is  even ? 'lightBlue' }}">
+                <td >{{ loop.index }}</td>
                 <td class="text-start"><a href="/team/show/{{ statistic.team.id }}">{{ statistic.team.name }}</a></td>
                 <td>{{ statistic.points }}</td>
                 <td style="background-color:{{ gruen }}">{{ statistic.wins }}</td>

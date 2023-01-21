@@ -34,12 +34,19 @@ final class Builder implements ContainerAwareInterface
         $teams = $this->teamReposetory->findAll();
         $pages = $this->pageReposetory->findAll();
         $menu = $this->factory->createItem('root');
-        $menu->addChild('Home', ['route' => 'home']);
+        //$menu->addChild('Home', ['route' => 'home']);
+        foreach ($pages as $page) {
+            if ($page->getSlag() == "startseite") {
+                $menu->addChild($page->getTitle(), ['route' => 'page', 'routeParameters' => ['title' => $page->getSlag()]]);
+            }
+        }
         $menu->addChild('Teams', ['route' => 'list_teams']);
         $menu->addChild('Saison', ['route' => 'list_liga']);
         //$menu->addChild('Statistiken', ['route' => 'statistics']);
         foreach ($pages as $page) {
-            $menu->addChild($page->getTitle(), ['route' => 'page', 'routeParameters' => ['title' => $page->getSlag()]]);
+            if ($page->getSlag() != "startseite") {
+                $menu->addChild($page->getTitle(), ['route' => 'page', 'routeParameters' => ['title' => $page->getSlag()]]);
+            }
         }
         foreach ($teams as $team) {
             $menu['Teams']->addChild($team->getName(), ['route' => 'show_team', 'routeParameters' => ['id' => $team->getId()]]);

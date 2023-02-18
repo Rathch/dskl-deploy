@@ -82,6 +82,7 @@
         </tbody>
     </table>
     <br>
+    {% if liga.allStars %}
     <div class="row m-2">
         <div class=" col-6">
             <b>ADL Allstars:</b>
@@ -104,8 +105,10 @@
         </div>
     </div>
     <br>
+    {% endif %}
     <h2>Spieltage:</h2>
     {% for playday in liga.playdays %}
+        {% if playday.date %}
         <div class="accordion" id="accordionExample-{{loop.index}}">
             <div class="accordion-item">
                 <h2 class="accordion-header" id="headingTwo">
@@ -202,5 +205,6 @@
             </div>
         </div>
         <br>
+        {% endif %}
     {% endfor %}
 {% endblock %}

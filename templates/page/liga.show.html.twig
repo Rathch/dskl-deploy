@@ -113,8 +113,10 @@
                         {{loop.index}} - {{ playday.date | date("d-M-Y") }}
                     </button>
                 </h2>
+
                 <div id="collapse-{{loop.index}}" class="accordion-collapse collapse" aria-labelledby="headingTwo" data-bs-parent="#accordionExample">
                     <div class="accordion-body">
+                        {% if playday.playerOfTheDay %}
                         <div class="row m-2">
                             <div class=" col-6">
                                 <b>Spieler des Spieltages:</b>
@@ -149,7 +151,7 @@
                                 </table>
                             </div>
                         </div>
-
+                        {% endif %}
                         {% for encounter in playday.encounters %}
                                         {% set team2color =gelb  %}
                                         {% set team1color =gelb  %}

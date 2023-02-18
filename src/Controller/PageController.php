@@ -36,7 +36,11 @@ class PageController extends AbstractController
     #[Route('/', name: 'home')]
     public function index(): Response
     {
-        return $this->render('page/index.html.twig', [
+        $title = "startseite";
+        $page = $this->pageReposetory->findOneBy(["slag"=>$title]);
+
+        return $this->render('page/content.html.twig', [
+            'page' => $page,
             'controller_name' => 'PageController',
         ]);
     }

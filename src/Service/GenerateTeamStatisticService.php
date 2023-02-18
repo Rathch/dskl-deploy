@@ -81,7 +81,7 @@ class GenerateTeamStatisticService
         /** @var TeamStatistic $teamStatistic2 */
         $teamStatistic2 = $teamStatistic2[0];
 
-        $this->checkWinningTeam($encounter);
+
         if ($this->checkWinningTeam($encounter) != $encounter->getWinningTeam())  {
             if ($encounter->getPointsTeam1() > $encounter->getPointsTeam2()) {
                 $teamStatistic1->setWins($teamStatistic1->getWins()+1);
@@ -145,7 +145,7 @@ class GenerateTeamStatisticService
                         if ( $encounter->getPointsTeam1() < $encounter->getPointsTeam2()) {
                             $statistic->setLoss($statistic->getLoss()+1);
                         }
-                        if ($encounter->getPointsTeam1() === $encounter->getPointsTeam2() && $encounter->getPointsTeam1() != 0 && $encounter->getPointsTeam2() != 0) {
+                        if ($encounter->getPointsTeam1() === $encounter->getPointsTeam2()) {
                             $statistic->setDrows($statistic->getDrows()+1);
                             $statistic->setPoints($statistic->getPoints()+1);
                         }

@@ -15,5 +15,5 @@ App\Entity\PlayDay:
   properties:
     bestPlayersOfTheDay:
       - Count:
-          min: 13
+          min: 0
           max: 13

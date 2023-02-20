@@ -40,8 +40,8 @@ final class Builder implements ContainerAwareInterface
                 $menu->addChild($page->getTitle(), ['route' => 'page', 'routeParameters' => ['title' => $page->getSlag()]]);
             }
         }
-        $menu->addChild('Teams', ['route' => 'list_teams']);
-        $menu->addChild('Saison', ['route' => 'list_liga']);
+        $menu->addChild('Teams', ['route' => 'list_teams','routeParameters' => ['title' => "Teams"]]);
+        $menu->addChild('Sessons', ['route' => 'list_liga','routeParameters' => ['title' => "Sessons"]]);
         //$menu->addChild('Statistiken', ['route' => 'statistics']);
         foreach ($pages as $page) {
             if ($page->getSlag() != "startseite") {

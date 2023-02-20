@@ -145,7 +145,7 @@ class GenerateTeamStatisticService
                         if ( $encounter->getPointsTeam1() < $encounter->getPointsTeam2()) {
                             $statistic->setLoss($statistic->getLoss()+1);
                         }
-                        if ($encounter->getPointsTeam1() === $encounter->getPointsTeam2()) {
+                        if ($encounter->getPointsTeam1() === $encounter->getPointsTeam2() && ($encounter->getChanceTeam1() > 0 || $encounter->getChanceTeam2() > 0)) {
                             $statistic->setDrows($statistic->getDrows()+1);
                             $statistic->setPoints($statistic->getPoints()+1);
                         }
@@ -179,7 +179,7 @@ class GenerateTeamStatisticService
                             $statistic->setLoss($statistic->getLoss()+1);
 
                         }
-                        if ($encounter->getPointsTeam1() === $encounter->getPointsTeam2() && $encounter->getPointsTeam1() != 0 && $encounter->getPointsTeam2() != 0) {
+                        if ($encounter->getPointsTeam1() === $encounter->getPointsTeam2() && ($encounter->getChanceTeam1() > 0 || $encounter->getChanceTeam2() > 0)) {
                             $statistic->setDrows($statistic->getDrows()+1);
                             $statistic->setPoints($statistic->getPoints()+1);
                         }

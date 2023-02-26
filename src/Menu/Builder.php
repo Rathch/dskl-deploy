@@ -41,7 +41,7 @@ final class Builder implements ContainerAwareInterface
             }
         }
         $menu->addChild('Teams', ['route' => 'list_teams','routeParameters' => ['title' => "Teams"]]);
-        $menu->addChild('Sessions', ['route' => 'list_liga','routeParameters' => ['title' => "Sessions"]]);
+        $menu->addChild('Saison', ['route' => 'list_liga','routeParameters' => ['title' => "Saison"]]);
         //$menu->addChild('Statistiken', ['route' => 'statistics']);
         foreach ($pages as $page) {
             if ($page->getSlag() != "startseite") {

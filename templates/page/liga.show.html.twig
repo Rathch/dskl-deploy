@@ -57,6 +57,7 @@
         <tbody>
 
         {% for statistic in liga.teamStatistics %}
+
             <tr class="{{ loop.index is  even ? 'lightBlue' }}">
                 <td >{{ loop.index }}</td>
                 <td class="text-start"><a href="/team/show/{{ statistic.team.id }}">{{ statistic.team.name }}</a></td>
@@ -195,7 +196,7 @@
                                             <td class="spacialtd">{{ encounter.chanceTeam2 }}</td>
                                         </tr>
                                         <tr>
-                                            <td colspan="3"><p>{{ encounter.report | raw}}</p></td>
+                                            <td colspan="3" class="report-text">{{ encounter.report | raw}}</td>
                                         </tr>
                                     </table>
 

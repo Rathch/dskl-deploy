@@ -83,6 +83,7 @@
             <td colspan="2">{{ team.teamInfo.successes|raw }}</td>
 
         </tr>
+        {% if team.teamOfTheDays| length > 0  %}
         <tr>
             <th scope="row">Bestes Team Des Tages:</th>
             <td colspan="2">
@@ -98,6 +99,7 @@
             </td>
 
         </tr>
+        {% endif %}
         </tbody>
     </table>
     <div class="accordion accordion-flush" id="accordionFlushExample">

@@ -6,10 +6,12 @@ use App\Entity\Encounter;
 use App\Entity\League;
 use App\Entity\Page;
 use App\Entity\Team;
+use App\Entity\TeamStatistic;
 use App\Repository\EncounterRepository;
 use App\Repository\LeagueRepository;
 use App\Repository\PageRepository;
 use App\Repository\TeamRepository;
+use App\Repository\TeamStatisticRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
@@ -19,6 +21,7 @@ class PageController extends AbstractController
 {
     protected PageRepository $pageReposetory;
     protected TeamRepository $teamReposetory;
+    protected TeamStatisticRepository $teamStatisticReposetory;
     protected LeagueRepository $ligaReposetory;
     protected EncounterRepository $encounterRepository;
 
@@ -27,6 +30,7 @@ class PageController extends AbstractController
     {
         $this->pageReposetory = $entityManager->getRepository(Page::class);
         $this->teamReposetory = $entityManager->getRepository(Team::class);
+        $this->teamStatisticReposetory = $entityManager->getRepository(TeamStatistic::class);
         $this->ligaReposetory = $entityManager->getRepository(League::class);
         $this->encounterRepository = $entityManager->getRepository(Encounter::class);
     }
@@ -118,9 +122,21 @@ class PageController extends AbstractController
     public function showLiga($id): Response
     {
         $liga = $this->ligaReposetory->findOneBy(["id"=>$id]);
+        //find and sort teamstatistics
+        $statistics = $this->teamStatisticReposetory->findBy(
+            [
+                "league"=>$liga
+            ],
+            [
+                "points"=>"DESC",
+                "goaleDifference"=>"DESC",
+                "goales"=>"DESC"
+            ]
+        );
         return $this->render('page/liga.show.html.twig', [
             'controller_name' => 'PageController',
             'liga' => $liga,
+            'statistics'=>$statistics,
         ]);
     }
 }

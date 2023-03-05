@@ -107,7 +107,7 @@ class AppFixtures extends Fixture
         $teamInfo->setCity($faker->city);
         $teamInfo->setColor($faker->colorName);
         $teamInfo->setFoundingYear($faker->year);
-        $teamInfo->setpresedent($faker->name);
+        $teamInfo->setpresident($faker->name);
         $teamInfo->setSponsor($faker->company);
         $teamInfo->setTrainer($faker->name);
         $teamInfo->setSuccesses($faker->word);

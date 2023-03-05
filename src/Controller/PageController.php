@@ -2,11 +2,13 @@
 
 namespace App\Controller;
 
+use App\Entity\Article;
 use App\Entity\Encounter;
 use App\Entity\League;
 use App\Entity\Page;
 use App\Entity\Team;
 use App\Entity\TeamStatistic;
+use App\Repository\ArticleRepository;
 use App\Repository\EncounterRepository;
 use App\Repository\LeagueRepository;
 use App\Repository\PageRepository;
@@ -23,6 +25,7 @@ class PageController extends AbstractController
     protected TeamRepository $teamReposetory;
     protected TeamStatisticRepository $teamStatisticReposetory;
     protected LeagueRepository $ligaReposetory;
+    protected ArticleRepository $articleReposetory;
     protected EncounterRepository $encounterRepository;
 
 
@@ -32,6 +35,7 @@ class PageController extends AbstractController
         $this->teamReposetory = $entityManager->getRepository(Team::class);
         $this->teamStatisticReposetory = $entityManager->getRepository(TeamStatistic::class);
         $this->ligaReposetory = $entityManager->getRepository(League::class);
+        $this->articleReposetory = $entityManager->getRepository(Article::class);
         $this->encounterRepository = $entityManager->getRepository(Encounter::class);
     }
 
@@ -104,6 +108,16 @@ class PageController extends AbstractController
         $ligas = $this->ligaReposetory->findAll();
         return $this->render('page/liga.list.html.twig', [
             'ligas' => $ligas,
+            'controller_name' => 'PageController',
+        ]);
+    }
+
+    #[Route(path: '/Wipeout-Magazin', name: 'list_article')]
+    public function listarticle(): Response
+    {
+        $article = $this->articleReposetory->findAll();
+        return $this->render('page/list.article.html.twig', [
+            'articles' => $article,
             'controller_name' => 'PageController',
         ]);
     }

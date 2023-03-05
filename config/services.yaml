@@ -109,3 +109,8 @@ services:
         class: App\Admin\RetrospectiveAdmin
         tags:
             - { name: sonata.admin, model_class: App\Entity\Retrospective, controller: ~, manager_type: orm, group: admin, label: Retrospective }
+
+    admin.article:
+        class: App\Admin\ArticleAdmin
+        tags:
+            - { name: sonata.admin, model_class: App\Entity\Article, controller: ~, manager_type: orm, group: Seiten., label: Wipeout!-Magazin }

@@ -29,7 +29,7 @@ final class TeamInfoAdmin extends AbstractAdmin
             ->add('color',null,["label"=>"color"])
             ->add('foundingYear',null,["label"=>"foundingYear"])
             ->add('sponsor',null,["label"=>"sponsor"])
-            ->add('president',null,["label"=>"president"])
+            ->add('presedent',null,["label"=>"presedent"])
             ->add('trainer',null,["label"=>"trainer"])
             ->add('successes',null,["label"=>"successes"])
             ;
@@ -44,7 +44,7 @@ final class TeamInfoAdmin extends AbstractAdmin
             ->add('color',null,["label"=>"color"])
             ->add('foundingYear',null,["label"=>"foundingYear"])
             ->add('sponsor',null,["label"=>"sponsor"])
-            ->add('president',null,["label"=>"president"])
+            ->add('presedent',null,["label"=>"presedent"])
             ->add('trainer',null,["label"=>"trainer"])
             ->add(ListMapper::NAME_ACTIONS, null, [
                 'actions' => [
@@ -67,7 +67,7 @@ final class TeamInfoAdmin extends AbstractAdmin
             ->add('color',null,["label"=>"color"])
             ->add('foundingYear',null,["label"=>"foundingYear"])
             ->add('sponsor',null,["label"=>"sponsor"])
-            ->add('president',null,["label"=>"president"])
+            ->add('presedent',null,["label"=>"presedent"])
             ->add('trainer',null,["label"=>"trainer"])
             ->add('successes',CKEditorType::class,["label"=>"successes", "required"=>false])
             ->add('info',CKEditorType::class,["label"=>"info", "required"=>false])
@@ -91,7 +91,7 @@ final class TeamInfoAdmin extends AbstractAdmin
             ->add('color',null,["label"=>"color"])
             ->add('foundingYear',null,["label"=>"foundingYear"])
             ->add('sponsor',null,["label"=>"sponsor"])
-            ->add('president',null,["label"=>"president"])
+            ->add('presedent',null,["label"=>"presedent"])
             ->add('trainer',null,["label"=>"trainer"])
             ->add('successes',null,["label"=>"successes"])
             ;

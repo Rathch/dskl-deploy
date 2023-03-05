@@ -35,7 +35,7 @@ class TeamInfo
     private ?string $sponsor;
 
     #[ORM\Column(type: 'string', length: 255, nullable: true)]
-    private ?string $president;
+    private ?string $presedent;
 
     #[ORM\Column(type: 'string', length: 255, nullable: true)]
     private ?string $trainer;
@@ -155,14 +155,14 @@ class TeamInfo
         return $this;
     }
 
-    public function getPresident(): ?string
+    public function getpresedent(): ?string
     {
-        return $this->president;
+        return $this->presedent;
     }
 
-    public function setPresident(?string $president): self
+    public function setpresedent(?string $presedent): self
     {
-        $this->president = $president;
+        $this->presedent = $presedent;
 
         return $this;
     }

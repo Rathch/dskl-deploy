@@ -6,5 +6,5 @@
 ## Example: "ddev sconsole"
 
 
-cd /var/www/html/rdagBackend
+
 bin/console d:s:u --force

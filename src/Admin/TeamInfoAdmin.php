@@ -4,12 +4,17 @@ declare(strict_types=1);
 
 namespace App\Admin;
 
+use App\Entity\Retrospective;
+use App\Entity\Squad;
 use FOS\CKEditorBundle\Form\Type\CKEditorType;
 use Sonata\AdminBundle\Admin\AbstractAdmin;
 use Sonata\AdminBundle\Datagrid\DatagridMapper;
 use Sonata\AdminBundle\Datagrid\ListMapper;
 use Sonata\AdminBundle\Form\FormMapper;
+use Sonata\Form\Type\CollectionType;
+use Sonata\AdminBundle\Form\Type\ModelType;
 use Sonata\AdminBundle\Show\ShowMapper;
+use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Filesystem\Filesystem;
 use Symfony\Component\Form\Extension\Core\Type\FileType;
 
@@ -24,7 +29,7 @@ final class TeamInfoAdmin extends AbstractAdmin
             ->add('color',null,["label"=>"color"])
             ->add('foundingYear',null,["label"=>"foundingYear"])
             ->add('sponsor',null,["label"=>"sponsor"])
-            ->add('presedent',null,["label"=>"presedent"])
+            ->add('president',null,["label"=>"president"])
             ->add('trainer',null,["label"=>"trainer"])
             ->add('successes',null,["label"=>"successes"])
             ;
@@ -39,9 +44,8 @@ final class TeamInfoAdmin extends AbstractAdmin
             ->add('color',null,["label"=>"color"])
             ->add('foundingYear',null,["label"=>"foundingYear"])
             ->add('sponsor',null,["label"=>"sponsor"])
-            ->add('presedent',null,["label"=>"presedent"])
+            ->add('president',null,["label"=>"president"])
             ->add('trainer',null,["label"=>"trainer"])
-            ->add('successes',null,["label"=>"successes"])
             ->add(ListMapper::NAME_ACTIONS, null, [
                 'actions' => [
                     'show' => [],
@@ -63,9 +67,18 @@ final class TeamInfoAdmin extends AbstractAdmin
             ->add('color',null,["label"=>"color"])
             ->add('foundingYear',null,["label"=>"foundingYear"])
             ->add('sponsor',null,["label"=>"sponsor"])
-            ->add('presedent',null,["label"=>"presedent"])
+            ->add('president',null,["label"=>"president"])
             ->add('trainer',null,["label"=>"trainer"])
             ->add('successes',CKEditorType::class,["label"=>"successes", "required"=>false])
+            ->add('info',CKEditorType::class,["label"=>"info", "required"=>false])
+            ->add('retrospectives',CollectionType::class,[
+                "label"=>"Rückblick",
+                "required"=>false,
+                'by_reference' => false,
+            ], [
+                'edit' => 'inline',
+                'inline' => 'table',
+            ])
             ;
     }
 
@@ -78,7 +91,7 @@ final class TeamInfoAdmin extends AbstractAdmin
             ->add('color',null,["label"=>"color"])
             ->add('foundingYear',null,["label"=>"foundingYear"])
             ->add('sponsor',null,["label"=>"sponsor"])
-            ->add('presedent',null,["label"=>"presedent"])
+            ->add('president',null,["label"=>"president"])
             ->add('trainer',null,["label"=>"trainer"])
             ->add('successes',null,["label"=>"successes"])
             ;
@@ -106,11 +119,12 @@ final class TeamInfoAdmin extends AbstractAdmin
 
     private function manageFileUpload(object $object): void
     {
-
         if ($object->getImage() !== null) {
             $thumbnailName = $object->getTeam()->getName();
             $thumbnailName = strtolower((string) $thumbnailName);
             $thumbnailName = trim($thumbnailName);
+            $thumbnailName = str_replace(" ", "-", $thumbnailName);
+
             $object->setImageName($thumbnailName .  "." . $object->getImage()->guessExtension());
 
             $filesystem= new Filesystem();

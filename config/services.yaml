@@ -104,3 +104,8 @@ services:
         class: App\Admin\AllStarAdmin
         tags:
             - { name: sonata.admin, model_class: App\Entity\AllStar, controller: ~, manager_type: orm, group: Season., label: "ADL Allstars" }
+
+    admin.retrospective:
+        class: App\Admin\RetrospectiveAdmin
+        tags:
+            - { name: sonata.admin, model_class: App\Entity\Retrospective, controller: ~, manager_type: orm, group: admin, label: Retrospective }

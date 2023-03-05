@@ -17,45 +17,66 @@ class TeamInfo
     private $id;
 
 
-    private UploadedFile $image;
+    private  $image;
 
     #[ORM\Column(type: 'string', length: 255, nullable: true)]
     private ?string $imageName = null;
 
     #[ORM\Column(type: 'string', length: 255, nullable: true)]
-    private $city;
+    private ?string $city;
 
     #[ORM\Column(type: 'string', length: 255, nullable: true)]
-    private $color;
+    private ?string $color;
 
     #[ORM\Column(type: 'string', length: 255, nullable: true)]
-    private $foundingYear;
+    private ?string $foundingYear;
 
     #[ORM\Column(type: 'string', length: 255, nullable: true)]
-    private $sponsor;
+    private ?string $sponsor;
 
     #[ORM\Column(type: 'string', length: 255, nullable: true)]
-    private $presedent;
+    private ?string $president;
 
     #[ORM\Column(type: 'string', length: 255, nullable: true)]
-    private $trainer;
+    private ?string $trainer;
 
     #[ORM\Column(type: 'string', length: 255, nullable: true)]
-    private $successes;
+    private ?string $successes;
 
-    #[ORM\OneToOne(targetEntity: Team::class, mappedBy: 'teamInfo', cascade: ['persist', 'remove'])]
-    private $team;
+    #[ORM\Column(type: 'string', length: 255, nullable: true)]
+    private ?string $info;
 
-    #[ORM\OneToMany(targetEntity: TeamStatistic::class, mappedBy: 'teams')]
+    #[ORM\OneToOne(mappedBy: 'teamInfo', targetEntity: Team::class, cascade: ['persist', 'remove'])]
+    private ?Team $team;
+
+    #[ORM\OneToMany(mappedBy: 'teams', targetEntity: TeamStatistic::class)]
     private $teamStatistics;
 
-
-
     private ?string $name = null;
+
+    #[ORM\OneToMany(mappedBy: 'teamInfo', targetEntity: Retrospective::class, cascade: ['persist', 'remove'])]
+    private Collection $retrospectives;
 
     public function __construct()
     {
         $this->teamStatistics = new ArrayCollection();
+        $this->retrospectives = new ArrayCollection();
+    }
+
+    /**
+     * @return string|null
+     */
+    public function getInfo(): ?string
+    {
+        return $this->info;
+    }
+
+    /**
+     * @param string|null $info
+     */
+    public function setInfo(?string $info): void
+    {
+        $this->info = $info;
     }
 
 
@@ -134,14 +155,14 @@ class TeamInfo
         return $this;
     }
 
-    public function getPresedent(): ?string
+    public function getPresident(): ?string
     {
-        return $this->presedent;
+        return $this->president;
     }
 
-    public function setPresedent(?string $presedent): self
+    public function setPresident(?string $president): self
     {
-        $this->presedent = $presedent;
+        $this->president = $president;
 
         return $this;
     }
@@ -225,5 +246,35 @@ class TeamInfo
     public function getName(): ?string
     {
         return $this->getTeam()->getName();
+    }
+
+    /**
+     * @return Collection<int, Retrospective>
+     */
+    public function getRetrospectives(): Collection
+    {
+        return $this->retrospectives;
+    }
+
+    public function addRetrospective(Retrospective $retrospective): self
+    {
+        if (!$this->retrospectives->contains($retrospective)) {
+            $this->retrospectives->add($retrospective);
+            $retrospective->setTeamInfo($this);
+        }
+
+        return $this;
+    }
+
+    public function removeRetrospective(Retrospective $retrospective): self
+    {
+        if ($this->retrospectives->removeElement($retrospective)) {
+            // set the owning side to null (unless already changed)
+            if ($retrospective->getTeamInfo() === $this) {
+                $retrospective->setTeamInfo(null);
+            }
+        }
+
+        return $this;
     }
 }

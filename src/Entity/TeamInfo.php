@@ -38,9 +38,6 @@ class TeamInfo
     private ?string $president;
 
     #[ORM\Column(type: 'string', length: 255, nullable: true)]
-    private ?string $presedent;
-
-    #[ORM\Column(type: 'string', length: 255, nullable: true)]
     private ?string $trainer;
 
     #[ORM\Column(type: 'string', length: 255, nullable: true)]

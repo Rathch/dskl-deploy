@@ -6,13 +6,11 @@
     <h2 class="text-center">Saison-Liste</h2>
     <div class="row justify-content-center">
         {% for liga in ligas %}
-
             <div class=" col-3 m-2 p-0 ">
                 <div class="card p-2">
                         <a href="/liga/show/{{ liga.id }}" ><h5 class="card-title">{{ liga.seasonName }}</h5></a>
                 </div>
             </div>
-
         {% endfor %}
     </div>
 {% endblock %}

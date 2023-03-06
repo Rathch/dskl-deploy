@@ -45,7 +45,7 @@ class TeamInfo
     #[ORM\Column(type: 'string', length: 255, nullable: true)]
     private ?string $successes;
 
-    #[ORM\Column(type: 'string', length: 255, nullable: true)]
+    #[ORM\Column(type: 'text', nullable: true)]
     private ?string $info;
 
     #[ORM\OneToOne(mappedBy: 'teamInfo', targetEntity: Team::class, cascade: ['persist', 'remove'])]

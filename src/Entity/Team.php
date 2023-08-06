@@ -42,6 +42,7 @@ class Team
     private $teamAttributes;
 
     #[ORM\OneToMany(mappedBy: 'team', targetEntity: Squad::class, cascade: ['persist', 'remove'])]
+    #[ORM\OrderBy(['position' => 'DESC'])]
     private Collection $squads;
 
     #[ORM\OneToMany(mappedBy: 'oldTeam', targetEntity: TransferHistory::class)]

@@ -1,7 +1,12 @@
 twig:
     default_path: '%kernel.project_dir%/templates'
+    auto_reload: true
     form_themes:
         - '@FOSCKEditor/Form/ckeditor_widget.html.twig'
 when@test:
     twig:
+        auto_reload: true
         strict_variables: true
+when@dev:
+    twig:
+        auto_reload: true

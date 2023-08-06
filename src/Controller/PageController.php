@@ -8,12 +8,14 @@ use App\Entity\League;
 use App\Entity\Page;
 use App\Entity\Team;
 use App\Entity\TeamStatistic;
+use App\Entity\TransferHistory;
 use App\Repository\ArticleRepository;
 use App\Repository\EncounterRepository;
 use App\Repository\LeagueRepository;
 use App\Repository\PageRepository;
 use App\Repository\TeamRepository;
 use App\Repository\TeamStatisticRepository;
+use App\Repository\TransferHistoryRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
@@ -27,6 +29,7 @@ class PageController extends AbstractController
     protected LeagueRepository $ligaReposetory;
     protected ArticleRepository $articleReposetory;
     protected EncounterRepository $encounterRepository;
+    protected TransferHistoryRepository $transferHistoryRepository;
 
 
     public function __construct( protected EntityManagerInterface $entityManager)
@@ -37,6 +40,7 @@ class PageController extends AbstractController
         $this->ligaReposetory = $entityManager->getRepository(League::class);
         $this->articleReposetory = $entityManager->getRepository(Article::class);
         $this->encounterRepository = $entityManager->getRepository(Encounter::class);
+        $this->transferHistoryRepository = $entityManager->getRepository(TransferHistory::class);
     }
 
 
@@ -79,9 +83,6 @@ class PageController extends AbstractController
             'controller_name' => 'PageController',
         ]);
     }
-
-
-
     #[Route(path: '/team/list', name: 'list_teams')]
     public function listTeam(): Response
     {
@@ -96,9 +97,11 @@ class PageController extends AbstractController
     public function showTeam($id): Response
     {
         $team = $this->teamReposetory->findOneBy(["id"=>$id]);
+        $transferHistory = $this->transferHistoryRepository->findAll();
         return $this->render('page/team.show.html.twig', [
             'controller_name' => 'PageController',
             'team' => $team,
+            'transfers' => $transferHistory,
         ]);
     }
 

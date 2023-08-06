@@ -48,7 +48,8 @@ final class Builder implements ContainerAwareInterface
         }
         $menu->addChild('Teams', ['route' => 'list_teams','routeParameters' => ['title' => "Teams"]]);
         $menu->addChild('Saison', ['route' => 'list_liga','routeParameters' => ['title' => "Saison"]]);
-        
+        $menu->addChild('Statistiken', ['route' => 'statistics','routeParameters' => ['title' => "Statistiken"]]);
+
         if ($articles) {
             $menu->addChild('Wipeout!-Magazin', ['route' => 'list_article','routeParameters' => ['title' => "Wipeout!-Magazin"]]);
         }

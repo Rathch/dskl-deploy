@@ -3,16 +3,105 @@
 {% block title %}Blog Index{% endblock %}
 
 {% block page_contents %}
-    <h2 class="text-center">Sesson Liste</h2>
+    <h2 class="text-center">Statistiken</h2>
     <div class="row justify-content-center">
-        {% for liga in ligas %}
-
-            <div class=" col-3 m-2 p-0 ">
-                <div class="card p-2">
-                    <a href="/liga/show/{{ liga.id }}" ><h5 class="card-title">{{ liga.seasonName }}</h5></a>
+        <div class="row">
+            <div class="col">
+                <div class="card">
+                    <div class="card-body">
+                        <h3 class="card-title text-center">10 Wertvollsten Kader</h3>
+                        <table class="table table-hover table-responsive">
+                            <tr>
+                                <th>#</th>
+                                <th>Team</th>
+                                <th>Kaderwert</th>
+                            </tr>
+                            {% for MostValue in MostValuesByTeam %}
+                                <tr>
+                                    <td>{{ loop.index }}</td>
+                                    <td>{{ MostValue.team.name }}</td>
+                                    <td>{{ MostValue.value | format_currency('EUR')  }}</td>
+                                </tr>
+                            {% endfor %}
+                        </table>
+                    </div>
                 </div>
             </div>
-
-        {% endfor %}
+            <div class="col">
+                <div class="card">
+                    <div class="card-body">
+                        <h3 class="card-title text-center">Meisten Kills</h3>
+                        <table class="table table-hover table-responsive">
+                            <tr>
+                                <th>#</th>
+                                <th>Team</th>
+                                <th>Kills</th>
+                            </tr>
+                            {% for TopTenKill in TopTenKills %}
+                                <tr>
+                                    <td>{{ loop.index }}</td>
+                                    <td>{{ TopTenKill.team.name }}</td>
+                                    <td>{{ TopTenKill.kills  }}</td>
+                                </tr>
+                            {% endfor %}
+                        </table>
+                    </div>
+                </div>
+            </div>
+            {% for MostValueByPossition in MostValuesByPossition %}
+            <div class="col-12 mt-2 mb-2">
+                <div class="card">
+                    <div class="card-body">
+                        <h3 class="card-title text-center">Top 10 der Teuersten {{ MostValueByPossition.0.position }}</h3>
+                        <table class="table table-hover table-responsive">
+                            <tr>
+                                <th>#</th>
+                                <th>Spielername</th>
+                                <th>Wert</th>
+                                <th>Team</th>
+                            </tr>
+                            {% for MostValue in MostValueByPossition %}
+                                <tr>
+                                    <td>{{ loop.index }}</td>
+                                    <td>{{ MostValue.name }}</td>
+                                    <td>{{ MostValue.value | format_currency('EUR') }}</td>
+                                    <td>{{ MostValue.team.name }}</td>
+                                </tr>
+                            {% endfor %}
+                        </table>
+                    </div>
+                </div>
+            </div>
+            {% endfor %}
+            {% for MethaTyps in TopTenMethaTyp %}
+            <div class="col-12 mt-2 mb-2">
+                <div class="card">
+                    <div class="card-body">
+                        <h3 class="card-title text-center">Team mit den meisten {{ MethaTyps.0.methaTyp }}</h3>
+                        <table class="table table-hover table-responsive">
+                            <tr>
+                                <th>#</th>
+                                <th>Anzahl</th>
+                                <th>Team</th>
+                            </tr>
+                            {% for MethaTyp in MethaTyps %}
+                                <tr>
+                                    <td>{{ loop.index }}</td>
+                                    <td>{{ MethaTyp.methaTypAmount }}</td>
+                                    <td>
+                                        {% for team in teams %}
+                                            {% if MethaTyp.team_id == team.id %}
+                                                {{ team.name }}
+                                            {% endif %}
+                                        {% endfor %}
+                                    </td>
+                                </tr>
+                            {% endfor %}
+                        </table>
+                    </div>
+                </div>
+            </div>
+            {% endfor %}
+        </div>
     </div>
 {% endblock %}

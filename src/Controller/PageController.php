@@ -6,6 +6,7 @@ use App\Entity\Article;
 use App\Entity\Encounter;
 use App\Entity\League;
 use App\Entity\Page;
+use App\Entity\Squad;
 use App\Entity\Team;
 use App\Entity\TeamStatistic;
 use App\Entity\TransferHistory;
@@ -20,6 +21,7 @@ use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
+use Doctrine\Common\Collections\Criteria;
 
 class PageController extends AbstractController
 {
@@ -30,12 +32,14 @@ class PageController extends AbstractController
     protected ArticleRepository $articleReposetory;
     protected EncounterRepository $encounterRepository;
     protected TransferHistoryRepository $transferHistoryRepository;
+    protected SquadRepository $squadRepository;
 
 
     public function __construct( protected EntityManagerInterface $entityManager)
     {
         $this->pageReposetory = $entityManager->getRepository(Page::class);
         $this->teamReposetory = $entityManager->getRepository(Team::class);
+        $this->squadReposetory = $entityManager->getRepository(Squad::class);
         $this->teamStatisticReposetory = $entityManager->getRepository(TeamStatistic::class);
         $this->ligaReposetory = $entityManager->getRepository(League::class);
         $this->articleReposetory = $entityManager->getRepository(Article::class);
@@ -128,9 +132,38 @@ class PageController extends AbstractController
     #[Route(path: '/statistics', name: 'statistics')]
     public function statistics(): Response
     {
-        $ligas = $this->encounterRepository->findBy("kills",10);
+        $possitions = [
+            "Brecher",
+            "Jäger",
+            "Sani",
+            "Schütze",
+            "Scout",
+            "Stürmer"
+        ];
+
+        $methaTyps = [
+            "Elf"
+        ];
+        $methaTyps = $this->squadReposetory->findAllMethaTyps();
+
+        foreach ($methaTyps as $methaTyp){
+            $methaTypArray[$methaTyp['methaTyp']] = $this->squadReposetory->findMostByMethaAndTeam($methaTyp['methaTyp']);
+        }
+
+        $topTenKills = $this->teamStatisticReposetory->findTopTenKills();
+        $mostValuesByTeam = $this->squadReposetory->findMostValueByTeam();
+        $newMostValuesByTeam = $this->getNewMostValuesByTeam($mostValuesByTeam);
+        $newTopTenKills = $this->getNewTopTenKills($topTenKills);
+
+        foreach ($possitions as $possition) {
+            $newMostValuesByPossition[$possition] = $this->getNewMostValuesByPossition($possition);
+            }
         return $this->render('page/statistics.html.twig', [
-            'ligas' => $ligas,
+            'teams' => $this->teamReposetory->findAll(),
+            'TopTenMethaTyp' => $methaTypArray,
+            'TopTenKills' => $newTopTenKills,
+            'MostValuesByTeam' => $newMostValuesByTeam,
+            'MostValuesByPossition' => $newMostValuesByPossition,
             'controller_name' => 'PageController',
         ]);
     }
@@ -155,5 +188,52 @@ class PageController extends AbstractController
             'liga' => $liga,
             'statistics'=>$statistics,
         ]);
+    }
+
+    /**
+     * @param $mostValuesByTeam
+     * @return array
+     */
+    public function getNewMostValuesByTeam($mostValuesByTeam): array
+    {
+        foreach ($mostValuesByTeam as $mostValue) {
+            $newMostValuesByTeam[] = [
+                'team' => $this->teamReposetory->findOneBy(["id" => $mostValue['team_id']]),
+                'value' => $mostValue['value']
+            ];
+        }
+        return $newMostValuesByTeam;
+    }
+
+    /**
+     * @param array $topTenKills
+     * @return array
+     */
+    public function getNewTopTenKills(array $topTenKills): array
+    {
+        foreach ($topTenKills as $topTenKill) {
+            $newTopTenKills[] = [
+                'team' => $this->teamReposetory->findOneBy(["id" => $topTenKill['team_id']]),
+                'kills' => $topTenKill['kills']
+            ];
+        }
+        return $newTopTenKills;
+    }
+
+    /**
+     * @return array
+     */
+    public function getNewMostValuesByPossition($position): array
+    {
+        $mostValuesByPossition = $this->squadReposetory->findMostValueByPossition($position);
+        foreach ($mostValuesByPossition as $mostValue) {
+            $newMostValuesByPossition[] = [
+                'team' => $this->teamReposetory->findOneBy(["id" => $mostValue['team_id']]),
+                'value' => $mostValue['value'],
+                'position' => $mostValue['position'],
+                'name' => $mostValue['firstName'] .' "'. $mostValue['figthName'] .'" '. $mostValue['name'],
+            ];
+        }
+        return $newMostValuesByPossition;
     }
 }

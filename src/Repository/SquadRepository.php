@@ -75,6 +75,21 @@ class SquadRepository extends ServiceEntityRepository
         return $resultSet->fetchAll();
     }
 
+    public function findAvrageAgeByTeam($team) {
+        $conn = $this->getEntityManager()->getConnection();
+
+        $sql = '
+            SELECT AVG(s.birthYear) avrageAge,s.team_id  FROM Squad s
+            WHERE s.team_id = :team 
+            order by avrageAge  DESC
+            ';
+        $stmt = $conn->prepare($sql);
+        $resultSet = $stmt->executeQuery(['team' => $team->getId()]);
+
+        // returns an array of arrays (i.e. a raw data set)
+        return $resultSet->fetchAssociative();
+    }
+
     public function findAllMethaTyps(): array
     {
         $conn = $this->getEntityManager()->getConnection();

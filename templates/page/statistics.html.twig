@@ -3,10 +3,11 @@
 {% block title %}Blog Index{% endblock %}
 
 {% block page_contents %}
+    {% set currentYear = 2082 %}
     <h2 class="text-center">Statistiken</h2>
-    <div class="row justify-content-center">
+    <div class="row justify-content-md-center">
         <div class="row">
-            <div class="col">
+            <div class="col-6">
                 <div class="card">
                     <div class="card-body">
                         <h3 class="card-title text-center">10 Wertvollsten Kader</h3>
@@ -27,7 +28,7 @@
                     </div>
                 </div>
             </div>
-            <div class="col">
+            <div class="col-6">
                 <div class="card">
                     <div class="card-body">
                         <h3 class="card-title text-center">Meisten Kills</h3>
@@ -49,7 +50,7 @@
                 </div>
             </div>
             {% for MostValueByPossition in MostValuesByPossition %}
-            <div class="col-12 mt-2 mb-2">
+            <div class="col-6 mt-2 mb-2">
                 <div class="card">
                     <div class="card-body">
                         <h3 class="card-title text-center">Top 10 der Teuersten {{ MostValueByPossition.0.position }}</h3>
@@ -74,7 +75,7 @@
             </div>
             {% endfor %}
             {% for MethaTyps in TopTenMethaTyp %}
-            <div class="col-12 mt-2 mb-2">
+            <div class="col-6 mt-2 mb-2">
                 <div class="card">
                     <div class="card-body">
                         <h3 class="card-title text-center">Team mit den meisten {{ MethaTyps.0.methaTyp }}</h3>
@@ -102,6 +103,27 @@
                 </div>
             </div>
             {% endfor %}
+            <div class="col-6 mt-2 mb-2">
+                <div class="card">
+                    <div class="card-body">
+                        <h3 class="card-title text-center">Durchschnitsalter pro Team</h3>
+                        <table class="table table-hover table-responsive">
+                            <tr>
+                                <th>#</th>
+                                <th>Durchschnitsalter</th>
+                                <th>Team</th>
+                            </tr>
+                            {% for AverageAge in AverageAgeByTeam %}
+                                <tr>
+                                    <td>{{ loop.index }}</td>
+                                    <td>{{ (currentYear-AverageAge.avrageAge) | format_number({fraction_digit: 0})  }}</td>
+                                    <td>{{ AverageAge.team.name }}</td>
+                                </tr>
+                            {% endfor %}
+                        </table>
+                    </div>
+                </div>
+            </div>
         </div>
     </div>
 {% endblock %}

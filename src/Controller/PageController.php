@@ -154,7 +154,8 @@ class PageController extends AbstractController
         $mostValuesByTeam = $this->squadReposetory->findMostValueByTeam();
         $newMostValuesByTeam = $this->getNewMostValuesByTeam($mostValuesByTeam);
         $newTopTenKills = $this->getNewTopTenKills($topTenKills);
-
+        $averageAgeByTeam = $this->averageAgeByTeam();
+        dump($averageAgeByTeam);
         foreach ($possitions as $possition) {
             $newMostValuesByPossition[$possition] = $this->getNewMostValuesByPossition($possition);
             }
@@ -164,6 +165,7 @@ class PageController extends AbstractController
             'TopTenKills' => $newTopTenKills,
             'MostValuesByTeam' => $newMostValuesByTeam,
             'MostValuesByPossition' => $newMostValuesByPossition,
+            'AverageAgeByTeam' => $averageAgeByTeam,
             'controller_name' => 'PageController',
         ]);
     }
@@ -188,6 +190,17 @@ class PageController extends AbstractController
             'liga' => $liga,
             'statistics'=>$statistics,
         ]);
+    }
+
+    public function averageAgeByTeam() {
+        $teams = $this->teamReposetory->findAll();
+        foreach ($teams as $team) {
+            $averageAgeByTeam[$team->getName()] = [
+                "team" => $this->teamReposetory->findOneBy(["id" => $this->squadReposetory->findAvrageAgeByTeam($team)["team_id"]]),
+                "avrageAge" => $this->squadReposetory->findAvrageAgeByTeam($team)["avrageAge"],
+            ];
+        }
+        return $averageAgeByTeam;
     }
 
     /**

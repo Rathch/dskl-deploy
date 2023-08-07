@@ -65,7 +65,7 @@ class SquadRepository extends ServiceEntityRepository
         $sql = '
             SELECT s.value,s.position,s.team_id, s.firstName,s.figthName,s.name  FROM Squad s
             WHERE s.position = :position 
-            order by value  DESC 
+            order by s.value  DESC 
             LIMIT 10
             ';
         $stmt = $conn->prepare($sql);

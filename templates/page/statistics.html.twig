@@ -20,7 +20,7 @@
                                 <tr>
                                     <td>{{ loop.index }}</td>
                                     <td>{{ MostValue.team.name }}</td>
-                                    <td>{{ MostValue.value | format_currency('EUR')  }}</td>
+                                    <td>{{ MostValue.value | format_currency('EUR', {fraction_digit: 0})  }}</td>
                                 </tr>
                             {% endfor %}
                         </table>
@@ -64,7 +64,7 @@
                                 <tr>
                                     <td>{{ loop.index }}</td>
                                     <td>{{ MostValue.name }}</td>
-                                    <td>{{ MostValue.value | format_currency('EUR') }}</td>
+                                    <td>{{ MostValue.value | format_currency('EUR', {fraction_digit: 0}) }}</td>
                                     <td>{{ MostValue.team.name }}</td>
                                 </tr>
                             {% endfor %}

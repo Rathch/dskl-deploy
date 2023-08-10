@@ -133,35 +133,66 @@ class PageController extends AbstractController
     public function statistics(): Response
     {
         $possitions = [
-            "Brecher",
-            "Jäger",
-            "Sani",
-            "Schütze",
-            "Scout",
-            "Stürmer"
+            "Brecher"=>"Brecher",
+            "Jäger"=>"Jäger",
+            "Sani"=>"Sanis",
+            "Schütze"=>"Schützen",
+            "Scout"=>"Scouts",
+            "Stürmer"=>"Stürmer"
         ];
 
-        $methaTyps = [
-            "Elf"
-        ];
         $methaTyps = $this->squadReposetory->findAllMethaTyps();
-
         foreach ($methaTyps as $methaTyp){
-            $methaTypArray[$methaTyp['methaTyp']] = $this->squadReposetory->findMostByMethaAndTeam($methaTyp['methaTyp']);
-        }
+            if (
+                $methaTyp['methaTyp'] == "Fomori" ||
+                $methaTyp['methaTyp'] == "Nartaki"||
+                $methaTyp['methaTyp'] == "Hobgoblin"||
+                $methaTyp['methaTyp'] == "Oger"||
+                $methaTyp['methaTyp'] == "Oni"||
+                $methaTyp['methaTyp'] == "Satyrn"||
+                $methaTyp['methaTyp'] == "Gnom" ||
+                $methaTyp['methaTyp'] == "Querx"||
+                $methaTyp['methaTyp'] == "Nächtliche" ||
+                $methaTyp['methaTyp'] == "Xapiri Thëpë" ||
+                $methaTyp['methaTyp'] == "Wakyambi"||
+                $methaTyp['methaTyp'] == "Minotaurus" ||
+                $methaTyp['methaTyp'] == "Riese" ||
+                $methaTyp['methaTyp'] == "Zyklop"
+            ) {
+                $otherMethaTypArray [$methaTyp['methaTyp']] = $this->squadReposetory->findMostByMethaAndTeam($methaTyp['methaTyp']);
+            } else {
+                if ($methaTyp['methaTyp'] == "Elf") {
+                    $methaTypArray["Elfen"] = $this->squadReposetory->findMostByMethaAndTeam($methaTyp['methaTyp']);
+                }
+                if ($methaTyp['methaTyp'] == "Mensch") {
+                    $methaTypArray["Menschen"] = $this->squadReposetory->findMostByMethaAndTeam($methaTyp['methaTyp']);
+                }
+                if ($methaTyp['methaTyp'] == "Ork") {
+                    $methaTypArray["Orks"] = $this->squadReposetory->findMostByMethaAndTeam($methaTyp['methaTyp']);
+                }
+                if ($methaTyp['methaTyp'] == "Troll") {
+                    $methaTypArray["Trolle"] = $this->squadReposetory->findMostByMethaAndTeam($methaTyp['methaTyp']);
+                }
+                if ($methaTyp['methaTyp'] == "Zwerg") {
+                    $methaTypArray["Zwerge"] = $this->squadReposetory->findMostByMethaAndTeam($methaTyp['methaTyp']);
+                }
 
+            }
+
+        }
         $topTenKills = $this->teamStatisticReposetory->findTopTenKills();
         $mostValuesByTeam = $this->squadReposetory->findMostValueByTeam();
         $newMostValuesByTeam = $this->getNewMostValuesByTeam($mostValuesByTeam);
         $newTopTenKills = $this->getNewTopTenKills($topTenKills);
         $averageAgeByTeam = $this->averageAgeByTeam();
-        dump($averageAgeByTeam);
-        foreach ($possitions as $possition) {
-            $newMostValuesByPossition[$possition] = $this->getNewMostValuesByPossition($possition);
+        $totaleGoalesPerSeason = $this->totaleGoalesPerSeason();
+        foreach ($possitions as $possition => $plural) {
+            $newMostValuesByPossition[$possition] = $this->getNewMostValuesByPossition($possition,$plural);
             }
         return $this->render('page/statistics.html.twig', [
             'teams' => $this->teamReposetory->findAll(),
             'TopTenMethaTyp' => $methaTypArray,
+            'TopTenOtherMethaTyp' => $otherMethaTypArray,
             'TopTenKills' => $newTopTenKills,
             'MostValuesByTeam' => $newMostValuesByTeam,
             'MostValuesByPossition' => $newMostValuesByPossition,
@@ -193,6 +224,17 @@ class PageController extends AbstractController
     }
 
     public function averageAgeByTeam() {
+        $teams = $this->teamReposetory->findAll();
+        foreach ($teams as $team) {
+            $averageAgeByTeam[$team->getName()] = [
+                "team" => $this->teamReposetory->findOneBy(["id" => $this->squadReposetory->findAvrageAgeByTeam($team)["team_id"]]),
+                "avrageAge" => $this->squadReposetory->findAvrageAgeByTeam($team)["avrageAge"],
+            ];
+        }
+        return $averageAgeByTeam;
+    }
+
+    public function totaleGoalesPerSeason() {
         $teams = $this->teamReposetory->findAll();
         foreach ($teams as $team) {
             $averageAgeByTeam[$team->getName()] = [
@@ -236,14 +278,14 @@ class PageController extends AbstractController
     /**
      * @return array
      */
-    public function getNewMostValuesByPossition($position): array
+    public function getNewMostValuesByPossition($position,$plural): array
     {
         $mostValuesByPossition = $this->squadReposetory->findMostValueByPossition($position);
         foreach ($mostValuesByPossition as $mostValue) {
             $newMostValuesByPossition[] = [
                 'team' => $this->teamReposetory->findOneBy(["id" => $mostValue['team_id']]),
                 'value' => $mostValue['value'],
-                'position' => $mostValue['position'],
+                'position' => $plural,
                 'name' => $mostValue['firstName'] .' "'. $mostValue['figthName'] .'" '. $mostValue['name'],
             ];
         }

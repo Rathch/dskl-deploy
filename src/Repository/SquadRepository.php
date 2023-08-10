@@ -46,10 +46,9 @@ class SquadRepository extends ServiceEntityRepository
 
         $sql = '
             SELECT SUM(value) value,s.team_id FROM Squad s
-            WHERE 1
+            WHERE 1 AND s.dead = 0
             group by s.team_id
             order by value  DESC 
-            LIMIT 10
             ';
         $stmt = $conn->prepare($sql);
         $resultSet = $stmt->execute();
@@ -64,7 +63,7 @@ class SquadRepository extends ServiceEntityRepository
 
         $sql = '
             SELECT s.value,s.position,s.team_id, s.firstName,s.figthName,s.name  FROM Squad s
-            WHERE s.position = :position 
+            WHERE s.position = :position AND s.dead = 0
             order by s.value  DESC 
             LIMIT 10
             ';
@@ -80,7 +79,7 @@ class SquadRepository extends ServiceEntityRepository
 
         $sql = '
             SELECT AVG(s.birthYear) avrageAge,s.team_id  FROM Squad s
-            WHERE s.team_id = :team 
+            WHERE s.team_id = :team AND s.dead = 0
             order by avrageAge  DESC
             ';
         $stmt = $conn->prepare($sql);
@@ -96,7 +95,7 @@ class SquadRepository extends ServiceEntityRepository
 
         $sql = '
             SELECT s.methaTyp  FROM Squad s
-            WHERE 1 
+            WHERE 1 AND s.dead = 0
             group by s.methaTyp
             ';
         $stmt = $conn->prepare($sql);
@@ -112,7 +111,7 @@ class SquadRepository extends ServiceEntityRepository
 
         $sql = '
             SELECT s.team_id, count(s.methaTyp) methaTypAmount,methaTyp  FROM Squad s
-            WHERE s.methaTyp = :methaTyp 
+            WHERE s.methaTyp = :methaTyp AND s.dead = 0
             group by s.team_id
             order by methaTypAmount  DESC 
             LIMIT 10

@@ -80,7 +80,7 @@ class SquadRepository extends ServiceEntityRepository
         $sql = '
             SELECT AVG(s.birthYear) avrageAge,s.team_id  FROM Squad s
             WHERE s.team_id = :team AND s.dead = 0
-            order by avrageAge  DESC
+            order by avrageAge  ASC
             ';
         $stmt = $conn->prepare($sql);
         $resultSet = $stmt->executeQuery(['team' => $team->getId()]);

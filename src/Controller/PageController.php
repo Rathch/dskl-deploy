@@ -144,42 +144,45 @@ class PageController extends AbstractController
         $methaTyps = $this->squadReposetory->findAllMethaTyps();
         foreach ($methaTyps as $methaTyp){
             if (
-                $methaTyp['methaTyp'] == "Fomori" ||
-                $methaTyp['methaTyp'] == "Nartaki"||
-                $methaTyp['methaTyp'] == "Hobgoblin"||
-                $methaTyp['methaTyp'] == "Oger"||
-                $methaTyp['methaTyp'] == "Oni"||
-                $methaTyp['methaTyp'] == "Satyrn"||
-                $methaTyp['methaTyp'] == "Gnom" ||
-                $methaTyp['methaTyp'] == "Querx"||
-                $methaTyp['methaTyp'] == "Nächtliche" ||
-                $methaTyp['methaTyp'] == "Xapiri Thëpë" ||
-                $methaTyp['methaTyp'] == "Wakyambi"||
-                $methaTyp['methaTyp'] == "Minotaurus" ||
-                $methaTyp['methaTyp'] == "Riese" ||
-                $methaTyp['methaTyp'] == "Zyklop"
+                $methaTyp['methaTyp'] === "Fomori" ||
+                $methaTyp['methaTyp'] === "Nartaki"||
+                $methaTyp['methaTyp'] === "Hobgoblin"||
+                $methaTyp['methaTyp'] === "Oger"||
+                $methaTyp['methaTyp'] === "Oni"||
+                $methaTyp['methaTyp'] === "Satyrn"||
+                $methaTyp['methaTyp'] === "Gnom" ||
+                $methaTyp['methaTyp'] === "Querx"||
+                $methaTyp['methaTyp'] === "Nächtliche" ||
+                $methaTyp['methaTyp'] === "Xapiri Thëpë" ||
+                $methaTyp['methaTyp'] === "Wakyambi"||
+                $methaTyp['methaTyp'] === "Minotaurus" ||
+                $methaTyp['methaTyp'] === "Riese" ||
+                $methaTyp['methaTyp'] === "Zyklop"
             ) {
                 $otherMethaTypArray [$methaTyp['methaTyp']] = $this->squadReposetory->findMostByMethaAndTeam($methaTyp['methaTyp']);
             } else {
-                if ($methaTyp['methaTyp'] == "Elf") {
+                if ($methaTyp['methaTyp'] === "Elf") {
                     $methaTypArray["Elfen"] = $this->squadReposetory->findMostByMethaAndTeam($methaTyp['methaTyp']);
                 }
-                if ($methaTyp['methaTyp'] == "Mensch") {
+                if ($methaTyp['methaTyp'] === "Mensch") {
                     $methaTypArray["Menschen"] = $this->squadReposetory->findMostByMethaAndTeam($methaTyp['methaTyp']);
                 }
-                if ($methaTyp['methaTyp'] == "Ork") {
+                if ($methaTyp['methaTyp'] === "Ork") {
                     $methaTypArray["Orks"] = $this->squadReposetory->findMostByMethaAndTeam($methaTyp['methaTyp']);
                 }
-                if ($methaTyp['methaTyp'] == "Troll") {
+                if ($methaTyp['methaTyp'] === "Troll") {
                     $methaTypArray["Trolle"] = $this->squadReposetory->findMostByMethaAndTeam($methaTyp['methaTyp']);
                 }
-                if ($methaTyp['methaTyp'] == "Zwerg") {
+                if ($methaTyp['methaTyp'] === "Zwerg") {
                     $methaTypArray["Zwerge"] = $this->squadReposetory->findMostByMethaAndTeam($methaTyp['methaTyp']);
                 }
 
             }
 
         }
+
+        $statistics = $this->teamStatisticReposetory->findAllForEndlesStatistic();
+
         $topTenKills = $this->teamStatisticReposetory->findTopTenKills();
         $mostValuesByTeam = $this->squadReposetory->findMostValueByTeam();
         $newMostValuesByTeam = $this->getNewMostValuesByTeam($mostValuesByTeam);
@@ -198,6 +201,7 @@ class PageController extends AbstractController
             'MostValuesByPossition' => $newMostValuesByPossition,
             'AverageAgeByTeam' => $averageAgeByTeam,
             'controller_name' => 'PageController',
+            'statistics'=>$statistics,
         ]);
     }
 
@@ -231,6 +235,7 @@ class PageController extends AbstractController
                 "avrageAge" => $this->squadReposetory->findAvrageAgeByTeam($team)["avrageAge"],
             ];
         }
+        array_multisort(array_column($averageAgeByTeam, 'avrageAge'), SORT_DESC, $averageAgeByTeam);
         return $averageAgeByTeam;
     }
 

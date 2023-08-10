@@ -20,6 +20,23 @@ class TeamStatisticRepository extends ServiceEntityRepository
         parent::__construct($registry, TeamStatistic::class);
     }
 
+    public function findAllForEndlesStatistic(): array
+    {
+        $conn = $this->getEntityManager()->getConnection();
+
+        $sql = '
+            SELECT * FROM TeamStatistic ts
+            WHERE 1
+            group by ts.team_id
+            order by ts.points  DESC , ts.goaleDifference  DESC,  ts.goales  DESC
+            ';
+        $stmt = $conn->prepare($sql);
+        $resultSet = $stmt->execute();
+
+        // returns an array of arrays (i.e. a raw data set)
+        return $resultSet->fetchAll();
+    }
+
     public function findTopTenKills(): array
     {
         $conn = $this->getEntityManager()->getConnection();
@@ -29,7 +46,6 @@ class TeamStatisticRepository extends ServiceEntityRepository
             WHERE 1
             group by ts.team_id
             order by kills  DESC 
-            LIMIT 10
             ';
         $stmt = $conn->prepare($sql);
         $resultSet = $stmt->execute();

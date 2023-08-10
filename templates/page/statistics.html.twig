@@ -5,12 +5,13 @@
 {% block page_contents %}
     {% set currentYear = 2082 %}
     <h2 class="text-center">Statistiken</h2>
+    {{ include('snipets/teamstatistics.html.twig') }}
     <div class="row justify-content-md-center">
         <div class="row">
             <div class="col-6">
                 <div class="card">
                     <div class="card-body">
-                        <h3 class="card-title text-center">Wertvollsten Kader</h3>
+                        <h3 class="card-title text-center">Wertvollster Kader</h3>
                         <table class="table table-hover table-responsive">
                             <tr>
                                 <th>#</th>
@@ -124,13 +125,13 @@
                                             {% for team in teams %}
                                                 {% if MethaTyp.team_id == team.id %}
                                                     <td>
-                                                    {{ MethaTyp.methaTypAmount }}
-                                                </td>
+                                                        {{ MethaTyp.methaTypAmount }}
+                                                    </td>
                                                     <td>
                                                         {{ team.name }}
-                                                </td>
-                                                        {% endif %}
-                                                    {% endfor %}
+                                                    </td>
+                                                {% endif %}
+                                            {% endfor %}
                                             </tr>
                                         {% endfor %}
                                     </tr>
@@ -164,4 +165,7 @@
             </div>
         </div>
     </div>
+
+
+
 {% endblock %}

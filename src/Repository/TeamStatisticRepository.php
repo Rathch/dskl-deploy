@@ -37,6 +37,24 @@ class TeamStatisticRepository extends ServiceEntityRepository
         return $resultSet->fetchAll();
     }
 
+    public function findByGroupedByGoeales(): array
+    {
+        $conn = $this->getEntityManager()->getConnection();
+
+        $sql = '
+            SELECT SUM(goales) goales, team_id FROM TeamStatistic ts
+            WHERE 1
+            group by ts.team_id
+            order by ts.goales  DESC
+            LIMIT 10
+            ';
+        $stmt = $conn->prepare($sql);
+        $resultSet = $stmt->execute();
+
+        // returns an array of arrays (i.e. a raw data set)
+        return $resultSet->fetchAll();
+    }
+
     public function findTopTenKills(): array
     {
         $conn = $this->getEntityManager()->getConnection();
@@ -53,6 +71,8 @@ class TeamStatisticRepository extends ServiceEntityRepository
         // returns an array of arrays (i.e. a raw data set)
         return $resultSet->fetchAll();
     }
+
+
 
     public function add(TeamStatistic $entity, bool $flush = false): void
     {

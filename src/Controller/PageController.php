@@ -132,6 +132,7 @@ class PageController extends AbstractController
     #[Route(path: '/statistics', name: 'statistics')]
     public function statistics(): Response
     {
+        $leagues = $this->ligaReposetory->findAll();
         $possitions = [
             "Brecher"=>"Brecher",
             "Jäger"=>"Jäger",
@@ -180,24 +181,29 @@ class PageController extends AbstractController
             }
 
         }
-
+        foreach ($leagues as $league) {
+            $totaleGoalesPerSeason[$league->getSeasonName()] = $this->teamStatisticReposetory->findBy(['league' => $league], ['goales'=>"DESC"], 10);
+        }
         $statistics = $this->teamStatisticReposetory->findAllForEndlesStatistic();
 
         $topTenKills = $this->teamStatisticReposetory->findTopTenKills();
         $mostValuesByTeam = $this->squadReposetory->findMostValueByTeam();
         $newMostValuesByTeam = $this->getNewMostValuesByTeam($mostValuesByTeam);
+        $mostValues = $this->squadReposetory->findByMostValue();
         $newTopTenKills = $this->getNewTopTenKills($topTenKills);
         $averageAgeByTeam = $this->averageAgeByTeam();
-        $totaleGoalesPerSeason = $this->totaleGoalesPerSeason();
         foreach ($possitions as $possition => $plural) {
             $newMostValuesByPossition[$possition] = $this->getNewMostValuesByPossition($possition,$plural);
             }
         return $this->render('page/statistics.html.twig', [
+            'totaleGoalesPerSeason' => $totaleGoalesPerSeason,
+            'totaleGoales' => $this->teamStatisticReposetory->findByGroupedByGoeales([], ['goales'=>"DESC"], 10),
             'teams' => $this->teamReposetory->findAll(),
             'TopTenMethaTyp' => $methaTypArray,
             'TopTenOtherMethaTyp' => $otherMethaTypArray,
             'TopTenKills' => $newTopTenKills,
             'MostValuesByTeam' => $newMostValuesByTeam,
+            'MostValues' => $mostValues,
             'MostValuesByPossition' => $newMostValuesByPossition,
             'AverageAgeByTeam' => $averageAgeByTeam,
             'controller_name' => 'PageController',
@@ -236,17 +242,6 @@ class PageController extends AbstractController
             ];
         }
         array_multisort(array_column($averageAgeByTeam, 'avrageAge'), SORT_DESC, $averageAgeByTeam);
-        return $averageAgeByTeam;
-    }
-
-    public function totaleGoalesPerSeason() {
-        $teams = $this->teamReposetory->findAll();
-        foreach ($teams as $team) {
-            $averageAgeByTeam[$team->getName()] = [
-                "team" => $this->teamReposetory->findOneBy(["id" => $this->squadReposetory->findAvrageAgeByTeam($team)["team_id"]]),
-                "avrageAge" => $this->squadReposetory->findAvrageAgeByTeam($team)["avrageAge"],
-            ];
-        }
         return $averageAgeByTeam;
     }
 

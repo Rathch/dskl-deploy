@@ -57,6 +57,23 @@ class SquadRepository extends ServiceEntityRepository
         return $resultSet->fetchAll();
     }
 
+    public function findByMostValue(): array
+    {
+        $conn = $this->getEntityManager()->getConnection();
+
+        $sql = '
+            SELECT s.value,s.position,s.team_id, s.firstName,s.figthName,s.name FROM Squad s
+            WHERE s.dead = 0
+            order by value  DESC 
+            LIMIT 25
+            ';
+        $stmt = $conn->prepare($sql);
+        $resultSet = $stmt->execute();
+
+        // returns an array of arrays (i.e. a raw data set)
+        return $resultSet->fetchAll();
+    }
+
     public function findMostValueByPossition($position): array
     {
         $conn = $this->getEntityManager()->getConnection();

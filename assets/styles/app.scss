@@ -109,7 +109,15 @@ h2 {
   font-size: 21px;
   margin-bottom: 1em;
 }
+.statistics {
+  h1 {
+    font-size: 1.75rem;
+  }
 
+  h3 {
+    font-size: 21px !important;
+  }
+}
 a {
   position: relative;
   color: #000;

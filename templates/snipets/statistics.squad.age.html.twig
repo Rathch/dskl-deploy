@@ -1,0 +1,16 @@
+<table class="table table-striped text-center caption-top table-hover table-sm generalStatistic">
+    <caption><h2 class="text-center">Durchschnitsalter pro Team</h2></caption>
+    <tr>
+        <th>#</th>
+        <th>Team</th>
+        <th>Durchschnitsalter</th>
+    </tr>
+    {% for AverageAge in AverageAgeByTeam %}
+        <tr>
+            <td>{{ loop.index }}</td>
+
+            <td>{{ AverageAge.team.name }}</td>
+            <td>{{ (currentYear-AverageAge.avrageAge) | format_number({fraction_digit: 1})  }}</td>
+        </tr>
+    {% endfor %}
+</table>

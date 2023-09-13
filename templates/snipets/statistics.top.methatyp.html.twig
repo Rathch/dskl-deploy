@@ -1,0 +1,21 @@
+<table class="table table-striped text-center caption-top table-hover table-sm generalStatistic">
+    <caption><h2 class="text-center">Team mit den meisten {{ key }}</h2></caption>
+    <tr>
+        <th>#</th>
+        <th>Team</th>
+        <th>Anzahl</th>
+    </tr>
+    {% for MethaTyp in MethaTyps %}
+        <tr>
+            <td>{{ loop.index }}</td>
+            <td>
+                {% for team in teams %}
+                    {% if MethaTyp.team_id == team.id %}
+                        {{ team.name }}
+                    {% endif %}
+                {% endfor %}
+            </td>
+            <td>{{ MethaTyp.methaTypAmount }}</td>
+        </tr>
+    {% endfor %}
+</table>

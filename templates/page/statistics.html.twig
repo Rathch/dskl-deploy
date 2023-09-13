@@ -4,241 +4,52 @@
 
 {% block page_contents %}
     {% set currentYear = 2082 %}
+    <div class="statistics">
     <h2 class="text-center">Statistiken</h2>
+    {# Ewige Tabelle #}
     {{ include('snipets/teamstatistics.html.twig') }}
 
-    <div class="row justify-content-md-center">
-        <div class="row">
-            <div class="col-6">
-                <div class="card">
-                    <div class="card-body">
-                        <h3 class="card-title text-center">Meisten Tore</h3>
-                        <h3>Gesamt</h3>
-                        <table class="table table-hover table-responsive">
-                            <tr>
-                                <th>#</th>
-                                <th>Tore</th>
-                                <th>Team</th>
-                            </tr>
-                            {% for goeals in totaleGoales %}
-                                <tr>
-                                    <td>{{ loop.index }}</td>
-                                    <td>{{ goeals.goales }}</td>
-                                    <td>{% for team in teams %}
-                                            {% if goeals.team_id == team.id %}
-                                                {{ team.name }}
-                                            {% endif %}
-                                        {% endfor %}</td>
-                                </tr>
-                            {% endfor %}
-                        </table>
-                            {% for key, totaleGoales in totaleGoalesPerSeason %}
-                                <h3>{{ key }}</h3>
-                                <table class="table table-hover table-responsive">
-                                    <tr>
-                                        <th>#</th>
-                                        <th>Tore</th>
-                                        <th>Team</th>
-                                    </tr>
-                                    {% for goeals in totaleGoales %}
-                                        <tr>
-                                            <td>{{ loop.index }}</td>
-                                            <td>{{ goeals.goales }}</td>
-                                            <td>{{ goeals.team.name }}</td>
-                                        </tr>
-                                    {% endfor %}
-                                </table>
-                            {% endfor %}
 
-                    </div>
-                </div>
-            </div>
-            <div class="col-6">
-                <div class="card">
-                    <div class="card-body">
-                        <h3 class="card-title text-center">Wertvollster Kader</h3>
-                        <table class="table table-hover table-responsive">
-                            <tr>
-                                <th>#</th>
-                                <th>Team</th>
-                                <th>Kaderwert</th>
-                            </tr>
-                            {% for MostValue in MostValuesByTeam %}
-                                <tr>
-                                    <td>{{ loop.index }}</td>
-                                    <td>{{ MostValue.team.name }}</td>
-                                    <td>{{ MostValue.value | format_currency('EUR', {fraction_digit: 0})  }}</td>
-                                </tr>
-                            {% endfor %}
-                        </table>
-                    </div>
-                </div>
-            </div>
-            <div class="col-6">
-                <div class="card">
-                    <div class="card-body">
-                        <h3 class="card-title text-center">Wertvollste Spieler</h3>
-                        <table class="table table-hover table-responsive">
-                            <tr>
-                                <th>#</th>
-                                <th>Spielername</th>
-                                <th>Wert</th>
-                                <th>Team</th>
-                            </tr>
-                            {% for MostValue in MostValues %}
-                                <tr>
-                                    <td>{{ loop.index }}</td>
-
-                                    <td>{{ MostValue.firstName }} "{{ MostValue.figthName }}" {{ MostValue.name }}</td>
-                                    <td>{{ MostValue.value | format_currency('EUR', {fraction_digit: 0})  }}</td>
-                                    <td>{% for team in teams %}
-                                            {% if MostValue.team_id == team.id %}
-                                                {{ team.name }}
-                                            {% endif %}
-                                        {% endfor %}</td>
-                                </tr>
-                            {% endfor %}
-                        </table>
-                    </div>
-                </div>
-            </div>
-            <div class="col-6">
-                <div class="card">
-                    <div class="card-body">
-                        <h3 class="card-title text-center">Kills seit 2080</h3>
-                        <table class="table table-hover table-responsive">
-                            <tr>
-                                <th>#</th>
-                                <th>Team</th>
-                                <th>Kills</th>
-                            </tr>
-                            {% for TopTenKill in TopTenKills %}
-                                <tr>
-                                    <td>{{ loop.index }}</td>
-                                    <td>{{ TopTenKill.team.name }}</td>
-                                    <td>{{ TopTenKill.kills  }}</td>
-                                </tr>
-                            {% endfor %}
-                        </table>
-                    </div>
-                </div>
-            </div>
-            {% for MostValueByPossition in MostValuesByPossition %}
-            <div class="col-6 mt-2 mb-2">
-                <div class="card">
-                    <div class="card-body">
-                        <h3 class="card-title text-center">Top 10 der teuersten {{ MostValueByPossition.0.position }}</h3>
-                        <table class="table table-hover table-responsive">
-                            <tr>
-                                <th>#</th>
-                                <th>Spielername</th>
-                                <th>Wert</th>
-                                <th>Team</th>
-                            </tr>
-                            {% for MostValue in MostValueByPossition %}
-                                <tr>
-                                    <td>{{ loop.index }}</td>
-                                    <td>{{ MostValue.name }}</td>
-                                    <td>{{ MostValue.value | format_currency('EUR', {fraction_digit: 0}) }}</td>
-                                    <td>{{ MostValue.team.name }}</td>
-                                </tr>
-                            {% endfor %}
-                        </table>
-                    </div>
-                </div>
-            </div>
-            {% endfor %}
-            {% for key, MethaTyps in TopTenMethaTyp %}
-            <div class="col-6 mt-2 mb-2">
-                <div class="card">
-                    <div class="card-body">
-                        <h3 class="card-title text-center">Team mit den meisten {{ key }}</h3>
-                        <table class="table table-hover table-responsive">
-                            <tr>
-                                <th>#</th>
-                                <th>Team</th>
-                                <th>Anzahl</th>
-                            </tr>
-                            {% for MethaTyp in MethaTyps %}
-                                <tr>
-                                    <td>{{ loop.index }}</td>
-                                    <td>
-                                        {% for team in teams %}
-                                            {% if MethaTyp.team_id == team.id %}
-                                                {{ team.name }}
-                                            {% endif %}
-                                        {% endfor %}
-                                    </td>
-                                    <td>{{ MethaTyp.methaTypAmount }}</td>
-                                </tr>
-                            {% endfor %}
-                        </table>
-                    </div>
-                </div>
-            </div>
-            {% endfor %}
-
-                <div class="col-6 mt-2 mb-2">
-                    <div class="card">
-                        <div class="card-body">
-                            <h3 class="card-title text-center">Team mit den meisten Metavarianten</h3>
-                            <table class="table table-hover table-responsive">
-                                {% for key, MethaTyps in TopTenOtherMethaTyp %}
-                                    <tr>
-
-                                        <td><br><h4>{{ key }}</h4></td>
-                                            <td>
-                                        <tr>
-                                        <th>Anzahl:</th>
-                                        <th>Team:</th>
-                                        </tr>
-                                        {% for MethaTyp in MethaTyps %}
-                                            <tr>
-
-                                            {% for team in teams %}
-                                                {% if MethaTyp.team_id == team.id %}
-                                                    <td>
-                                                        {{ MethaTyp.methaTypAmount }}
-                                                    </td>
-                                                    <td>
-                                                        {{ team.name }}
-                                                    </td>
-                                                {% endif %}
-                                            {% endfor %}
-                                            </tr>
-                                        {% endfor %}
-                                    </tr>
-                                {% endfor %}
-                            </table>
-                        </div>
-                    </div>
-                </div>
-
-            <div class="col-6 mt-2 mb-2">
-                <div class="card">
-                    <div class="card-body">
-                        <h3 class="card-title text-center">Durchschnitsalter pro Team</h3>
-                        <table class="table table-hover table-responsive">
-                            <tr>
-                                <th>#</th>
-                                <th>Team</th>
-                                <th>Durchschnitsalter</th>
-                            </tr>
-                            {% for AverageAge in AverageAgeByTeam %}
-                                <tr>
-                                    <td>{{ loop.index }}</td>
-
-                                    <td>{{ AverageAge.team.name }}</td>
-                                    <td>{{ (currentYear-AverageAge.avrageAge) | format_number({fraction_digit: 1})  }}</td>
-                                </tr>
-                            {% endfor %}
-                        </table>
-                    </div>
-                </div>
-            </div>
+    <div class="row">
+        {# Meisten Tore Tabelle #}
+        {{ include('snipets/statistics.goales.html.twig') }}
+        <div class="col-6">
+            {# kills Tabelle #}
+            {{ include('snipets/statistics.kills.html.twig') }}
         </div>
+        <div class="col-6">
+            {# durchschnitsalter pro team Tabelle #}
+            {{ include('snipets/statistics.squad.age.html.twig' ) }}
+        </div>
+        <div class="col-6">
+            {# wertfollster kader Tabelle #}
+            {{ include('snipets/statistics.karder.value.html.twig') }}
+        </div>
+        <div class="col-6">
+            {# wertfollster spieler Tabelle #}
+            {{ include('snipets/statistics.squad.value.html.twig') }}
+        </div>
+
+        {% for MostValueByPossition in MostValuesByPossition %}
+        <div class="col-6">
+            {# Top 10 der teuersten <position> Tabelle #}
+            {{ include('snipets/statistics.value.possition.html.twig' ) }}
+
+        </div>
+        {% endfor %}
+
+        {% for key, MethaTyps in TopTenMethaTyp %}
+
+        <div class="col-4">
+            {# Top 10 nach methatype Tabelle #}
+            {{ include('snipets/statistics.top.methatyp.html.twig' ) }}
+        </div>
+        {% endfor %}
+
+        {# meisten methavarianten Tabelle #}
+        {{ include('snipets/statistics.methatyp.variants.html.twig' ) }}
+
     </div>
-
-
+</div>
 
 {% endblock %}

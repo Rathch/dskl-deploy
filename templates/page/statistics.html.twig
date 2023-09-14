@@ -13,10 +13,23 @@
     <div class="row">
         {# Meisten Tore Tabelle #}
         {{ include('snipets/statistics.goales.html.twig') }}
+        <div class="col-8"></div>
+        <div class="col-6">
+            {# MostTeamOfTheDay Tabelle #}
+            {{ include('snipets/statistics.mostteamoftheday.html.twig') }}
+        </div>
+        <div class="col-6">
+            {# MostTeamOfTheDay Tabelle #}
+            {{ include('snipets/statistics.mostplayeroftheday.html.twig') }}
+        </div>
+
+
         <div class="col-6">
             {# kills Tabelle #}
             {{ include('snipets/statistics.kills.html.twig') }}
         </div>
+
+
         <div class="col-6">
             {# durchschnitsalter pro team Tabelle #}
             {{ include('snipets/statistics.squad.age.html.twig' ) }}

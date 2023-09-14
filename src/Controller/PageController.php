@@ -6,6 +6,7 @@ use App\Entity\Article;
 use App\Entity\Encounter;
 use App\Entity\League;
 use App\Entity\Page;
+use App\Entity\PlayDay;
 use App\Entity\Squad;
 use App\Entity\Team;
 use App\Entity\TeamStatistic;
@@ -14,7 +15,9 @@ use App\Repository\ArticleRepository;
 use App\Repository\EncounterRepository;
 use App\Repository\LeagueRepository;
 use App\Repository\PageRepository;
+use App\Repository\PlayDayRepository;
 use App\Repository\TeamRepository;
+use App\Repository\SquadRepository;
 use App\Repository\TeamStatisticRepository;
 use App\Repository\TransferHistoryRepository;
 use Doctrine\ORM\EntityManagerInterface;
@@ -32,7 +35,9 @@ class PageController extends AbstractController
     protected ArticleRepository $articleReposetory;
     protected EncounterRepository $encounterRepository;
     protected TransferHistoryRepository $transferHistoryRepository;
-    protected SquadRepository $squadRepository;
+    protected SquadRepository $squadReposetory;
+    protected PlayDayRepository $playDayRepository;
+
 
 
     public function __construct( protected EntityManagerInterface $entityManager)
@@ -44,6 +49,7 @@ class PageController extends AbstractController
         $this->ligaReposetory = $entityManager->getRepository(League::class);
         $this->articleReposetory = $entityManager->getRepository(Article::class);
         $this->encounterRepository = $entityManager->getRepository(Encounter::class);
+        $this->playDayRepository = $entityManager->getRepository(PlayDay::class);
         $this->transferHistoryRepository = $entityManager->getRepository(TransferHistory::class);
     }
 
@@ -190,6 +196,8 @@ class PageController extends AbstractController
         $mostValuesByTeam = $this->squadReposetory->findMostValueByTeam();
         $newMostValuesByTeam = $this->getNewMostValuesByTeam($mostValuesByTeam);
         $mostValues = $this->squadReposetory->findByMostValue();
+        $mostTeamOfTheDay = $this->getMostTeamOfTheDay();
+        $mostPlayerOfTheDay = $this->getMostPlayerOfTheDay();
         $newTopTenKills = $this->getNewTopTenKills($topTenKills);
         $averageAgeByTeam = $this->averageAgeByTeam();
         foreach ($possitions as $possition => $plural) {
@@ -206,6 +214,8 @@ class PageController extends AbstractController
             'MostValues' => $mostValues,
             'MostValuesByPossition' => $newMostValuesByPossition,
             'AverageAgeByTeam' => $averageAgeByTeam,
+            'MostTeamOfTheDay' => $mostTeamOfTheDay,
+            'MostPlayerOfTheDay' => $mostPlayerOfTheDay,
             'controller_name' => 'PageController',
             'statistics'=>$statistics,
         ]);
@@ -290,5 +300,32 @@ class PageController extends AbstractController
             ];
         }
         return $newMostValuesByPossition;
+    }
+
+    private function getMostTeamOfTheDay()
+    {
+        $mostTeamsOfTheDay =$this->playDayRepository->findAllMostTeamOfTheDay();
+        foreach ($mostTeamsOfTheDay as $mostTeamOfTheDay) {
+            $mostTeamsOfTheDayArray[] = [
+                'team' => $this->teamReposetory->findOneBy(["id" => $mostTeamOfTheDay['teamOfTheDay_id']]),
+                'value' => $mostTeamOfTheDay['anzahl'],
+            ];
+        }
+
+        return $mostTeamsOfTheDayArray;
+
+    }
+
+    private function getMostPlayerOfTheDay()
+    {
+        $mostPlayersOfTheDay =$this->playDayRepository->findAllMostPlayerOfTheDay();
+        foreach ($mostPlayersOfTheDay as $mostPlayerOfTheDay) {
+            $mostPlayersOfTheDayArray[] = [
+                'squad' => $this->squadReposetory->findOneBy(["id" => $mostPlayerOfTheDay['playerOfTheDay_id']]),
+                'value' => $mostPlayerOfTheDay['anzahl'],
+            ];
+        }
+
+        return $mostPlayersOfTheDayArray;
     }
 }

@@ -1,16 +1,16 @@
 <table class="table table-striped text-center caption-top table-hover table-sm generalStatistic">
-    <caption><h2 class="text-center">10 Meisten Team des Spieltages</h2></caption>
+    <caption><h2 class="text-center">10 häufigsten Spieler*innen in der Mannschaft des Spieltages</h2></caption>
     <tr>
         <th>#</th>
-        <th>Team</th>
+        <th>Spieler*innen</th>
         <th>Anzahl</th>
     </tr>
-    {% for TeamOfTheDay in MostTeamOfTheDay |slice(0, 10) %}
+    {% for PlayerOfTheDay in MostPlayerOfTheDay |slice(0, 10) %}
         <tr>
             <td>{{ loop.index }}</td>
 
-            <td>{{ TeamOfTheDay.team.name }}</td>
-            <td>{{ TeamOfTheDay.value  }}</td>
+            <td>{{ PlayerOfTheDay.squad.firstName }} "{{ PlayerOfTheDay.squad.figthName }}" {{ PlayerOfTheDay.squad.name }}</td>
+            <td>{{ PlayerOfTheDay.value  }}</td>
         </tr>
     {% endfor %}
 </table>

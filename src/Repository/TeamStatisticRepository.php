@@ -52,7 +52,7 @@ SUM(opportunitiesOpponent) AS opportunitiesOpponent FROM TeamStatistic ts
             SELECT SUM(goales) goales, team_id FROM TeamStatistic ts
             WHERE 1
             group by ts.team_id
-            order by ts.goales  DESC
+            order by SUM(goales)  DESC
             LIMIT 10
             ';
         $stmt = $conn->prepare($sql);

@@ -1,0 +1,16 @@
+<table class="table table-striped text-center caption-top table-hover table-sm generalStatistic">
+    <caption><h2 class="text-center">10 Meisten Team des Spieltages</h2></caption>
+    <tr>
+        <th>#</th>
+        <th>Team</th>
+        <th>Anzahl</th>
+    </tr>
+    {% for TeamOfTheDay in MostTeamOfTheDay |slice(0, 10) %}
+        <tr>
+            <td>{{ loop.index }}</td>
+
+            <td>{{ TeamOfTheDay.team.name }}</td>
+            <td>{{ TeamOfTheDay.value  }}</td>
+        </tr>
+    {% endfor %}
+</table>

@@ -148,48 +148,8 @@ class PageController extends AbstractController
             "Stürmer"=>"Stürmer"
         ];
 
-        $methaTyps = $this->squadReposetory->findAllMethaTyps();
-        foreach ($methaTyps as $methaTyp){
-            if (
-                $methaTyp['methaTyp'] === "Fomori" ||
-                $methaTyp['methaTyp'] === "Nartaki"||
-                $methaTyp['methaTyp'] === "Hobgoblin"||
-                $methaTyp['methaTyp'] === "Oger"||
-                $methaTyp['methaTyp'] === "Oni"||
-                $methaTyp['methaTyp'] === "Satyrn"||
-                $methaTyp['methaTyp'] === "Gnom" ||
-                $methaTyp['methaTyp'] === "Querx"||
-                $methaTyp['methaTyp'] === "Nächtliche" ||
-                $methaTyp['methaTyp'] === "Xapiri Thëpë" ||
-                $methaTyp['methaTyp'] === "Wakyambi"||
-                $methaTyp['methaTyp'] === "Minotaurus" ||
-                $methaTyp['methaTyp'] === "Riese" ||
-                $methaTyp['methaTyp'] === "Zyklop"
-            ) {
-                $otherMethaTypArray [$methaTyp['methaTyp']] = $this->squadReposetory->findMostByMethaAndTeam($methaTyp['methaTyp']);
-            } else {
-                if ($methaTyp['methaTyp'] === "Elf") {
-                    $methaTypArray["Elfen"] = $this->squadReposetory->findMostByMethaAndTeam($methaTyp['methaTyp']);
-                }
-                if ($methaTyp['methaTyp'] === "Mensch") {
-                    $methaTypArray["Menschen"] = $this->squadReposetory->findMostByMethaAndTeam($methaTyp['methaTyp']);
-                }
-                if ($methaTyp['methaTyp'] === "Ork") {
-                    $methaTypArray["Orks"] = $this->squadReposetory->findMostByMethaAndTeam($methaTyp['methaTyp']);
-                }
-                if ($methaTyp['methaTyp'] === "Troll") {
-                    $methaTypArray["Trolle"] = $this->squadReposetory->findMostByMethaAndTeam($methaTyp['methaTyp']);
-                }
-                if ($methaTyp['methaTyp'] === "Zwerg") {
-                    $methaTypArray["Zwerge"] = $this->squadReposetory->findMostByMethaAndTeam($methaTyp['methaTyp']);
-                }
-
-            }
-
-        }
-        foreach ($leagues as $league) {
-            $totaleGoalesPerSeason[$league->getSeasonName()] = $this->teamStatisticReposetory->findBy(['league' => $league], ['goales'=>"DESC"], 10);
-        }
+        list($otherMethaTypArray, $methaTypArray) = $this->getMethaTypeDatas();
+        $totaleGoalesPerSeason = $this->getTotaleGoalesPerSeason($leagues);
         $statistics = $this->teamStatisticReposetory->findAllForEndlesStatistic();
 
         $topTenKills = $this->teamStatisticReposetory->findTopTenKills();
@@ -327,5 +287,64 @@ class PageController extends AbstractController
         }
 
         return $mostPlayersOfTheDayArray;
+    }
+
+    /**
+     * @param array $leagues
+     * @return array
+     */
+    public function getTotaleGoalesPerSeason(array $leagues): array
+    {
+        foreach ($leagues as $league) {
+            $totaleGoalesPerSeason[$league->getSeasonName()] = $this->teamStatisticReposetory->findBy(['league' => $league], ['goales' => "DESC"], 10);
+        }
+        return $totaleGoalesPerSeason;
+    }
+
+    /**
+     * @return array
+     */
+    public function getMethaTypeDatas(): array
+    {
+        $methaTyps = $this->squadReposetory->findAllMethaTyps();
+        foreach ($methaTyps as $methaTyp) {
+            if (
+                $methaTyp['methaTyp'] === "Fomori" ||
+                $methaTyp['methaTyp'] === "Nartaki" ||
+                $methaTyp['methaTyp'] === "Hobgoblin" ||
+                $methaTyp['methaTyp'] === "Oger" ||
+                $methaTyp['methaTyp'] === "Oni" ||
+                $methaTyp['methaTyp'] === "Satyrn" ||
+                $methaTyp['methaTyp'] === "Gnom" ||
+                $methaTyp['methaTyp'] === "Querx" ||
+                $methaTyp['methaTyp'] === "Nächtliche" ||
+                $methaTyp['methaTyp'] === "Xapiri Thëpë" ||
+                $methaTyp['methaTyp'] === "Wakyambi" ||
+                $methaTyp['methaTyp'] === "Minotaurus" ||
+                $methaTyp['methaTyp'] === "Riese" ||
+                $methaTyp['methaTyp'] === "Zyklop"
+            ) {
+                $otherMethaTypArray [$methaTyp['methaTyp']] = $this->squadReposetory->findMostByMethaAndTeam($methaTyp['methaTyp']);
+            } else {
+                if ($methaTyp['methaTyp'] === "Elf") {
+                    $methaTypArray["Elfen"] = $this->squadReposetory->findMostByMethaAndTeam($methaTyp['methaTyp']);
+                }
+                if ($methaTyp['methaTyp'] === "Mensch") {
+                    $methaTypArray["Menschen"] = $this->squadReposetory->findMostByMethaAndTeam($methaTyp['methaTyp']);
+                }
+                if ($methaTyp['methaTyp'] === "Ork") {
+                    $methaTypArray["Orks"] = $this->squadReposetory->findMostByMethaAndTeam($methaTyp['methaTyp']);
+                }
+                if ($methaTyp['methaTyp'] === "Troll") {
+                    $methaTypArray["Trolle"] = $this->squadReposetory->findMostByMethaAndTeam($methaTyp['methaTyp']);
+                }
+                if ($methaTyp['methaTyp'] === "Zwerg") {
+                    $methaTypArray["Zwerge"] = $this->squadReposetory->findMostByMethaAndTeam($methaTyp['methaTyp']);
+                }
+
+            }
+
+        }
+        return array($otherMethaTypArray, $methaTypArray);
     }
 }

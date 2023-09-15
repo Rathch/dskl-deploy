@@ -65,7 +65,7 @@ class SquadRepository extends ServiceEntityRepository
             SELECT s.value,s.position,s.team_id, s.firstName,s.figthName,s.name FROM Squad s
             WHERE s.dead = 0
             order by value  DESC 
-            LIMIT 25
+            LIMIT 30
             ';
         $stmt = $conn->prepare($sql);
         $resultSet = $stmt->execute();

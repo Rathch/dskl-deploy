@@ -266,10 +266,13 @@ class PageController extends AbstractController
     {
         $mostTeamsOfTheDay =$this->playDayRepository->findAllMostTeamOfTheDay();
         foreach ($mostTeamsOfTheDay as $mostTeamOfTheDay) {
-            $mostTeamsOfTheDayArray[] = [
-                'team' => $this->teamReposetory->findOneBy(["id" => $mostTeamOfTheDay['teamOfTheDay_id']]),
-                'value' => $mostTeamOfTheDay['anzahl'],
-            ];
+            if ($this->teamReposetory->findOneBy(["id" => $mostTeamOfTheDay['teamOfTheDay_id']])) {
+                $mostTeamsOfTheDayArray[] = [
+                    'team' => $this->teamReposetory->findOneBy(["id" => $mostTeamOfTheDay['teamOfTheDay_id']]),
+                    'value' => $mostTeamOfTheDay['anzahl'],
+                ];
+            }
+
         }
 
         return $mostTeamsOfTheDayArray;
@@ -280,10 +283,13 @@ class PageController extends AbstractController
     {
         $mostPlayersOfTheDay =$this->playDayRepository->findAllMostPlayerOfTheDay();
         foreach ($mostPlayersOfTheDay as $mostPlayerOfTheDay) {
-            $mostPlayersOfTheDayArray[] = [
-                'squad' => $this->squadReposetory->findOneBy(["id" => $mostPlayerOfTheDay['playerOfTheDay_id']]),
-                'value' => $mostPlayerOfTheDay['anzahl'],
-            ];
+            if ($this->squadReposetory->findOneBy(["id" => $mostPlayerOfTheDay['playerOfTheDay_id']])) {
+                $mostPlayersOfTheDayArray[] = [
+                    'squad' => $this->squadReposetory->findOneBy(["id" => $mostPlayerOfTheDay['playerOfTheDay_id']]),
+                    'value' => $mostPlayerOfTheDay['anzahl'],
+                ];
+            }
+
         }
 
         return $mostPlayersOfTheDayArray;

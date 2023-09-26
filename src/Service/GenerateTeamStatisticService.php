@@ -291,6 +291,7 @@ class GenerateTeamStatisticService
             $league->removeTeamStatistic($teamStatistic);
             $this->leagueReposetory->update($league);
         }
+        $this->entityManager->persist($league);
         $this->entityManager->flush();
     }
 }

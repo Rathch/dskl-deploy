@@ -289,7 +289,6 @@ class GenerateTeamStatisticService
         foreach ($league->getTeamStatistics() as $teamStatistic) {
             $this->teamStatisticReposetory->remove($teamStatistic);
             $league->removeTeamStatistic($teamStatistic);
-            $this->leagueReposetory->update($league);
         }
         $this->entityManager->persist($league);
         $this->entityManager->flush();

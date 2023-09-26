@@ -15,15 +15,18 @@ use JetBrains\PhpStorm\NoReturn;
 class GenerateTeamStatisticService
 {
     protected $teamReposetory;
+
     protected $teamStatisticReposetory;
     protected $leagueStatisticReposetory;
     protected $encountersReposetory;
+    private $leagueReposetory;
 
     public function __construct(protected EntityManagerInterface $entityManager)
     {
         $this->teamReposetory = $entityManager->getRepository(Team::class);
         $this->teamStatisticReposetory = $entityManager->getRepository(TeamStatistic::class);
         $this->leagueStatisticReposetory = $entityManager->getRepository(LeagueStatistic::class);
+        $this->leagueReposetory = $entityManager->getRepository(League::class);
         $this->encountersReposetory = $entityManager->getRepository(Encounter::class);
     }
 
@@ -286,6 +289,7 @@ class GenerateTeamStatisticService
         foreach ($league->getTeamStatistics() as $teamStatistic) {
             $this->teamStatisticReposetory->remove($teamStatistic);
             $league->removeTeamStatistic($teamStatistic);
+            $this->leagueReposetory->update($league);
         }
         $this->entityManager->flush();
     }

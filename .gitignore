@@ -22,3 +22,7 @@ public/build
 .env
 
 public/img/teams/
+
+###> phpstan/phpstan ###
+phpstan.neon
+###< phpstan/phpstan ###

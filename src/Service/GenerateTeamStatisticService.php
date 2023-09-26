@@ -285,6 +285,7 @@ class GenerateTeamStatisticService
 
         foreach ($league->getTeamStatistics() as $teamStatistic) {
             $this->teamStatisticReposetory->remove($teamStatistic);
+            $league->removeTeamStatistic($teamStatistic);
         }
         $this->entityManager->flush();
     }

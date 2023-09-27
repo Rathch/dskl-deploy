@@ -1,0 +1,31 @@
+<div class="col-12">
+    <h2 class="text-center">Team mit den meisten Metavarianten</h2>
+</div>
+
+{% for key, MethaTyps in TopTenOtherMethaTyp %}
+<div class="col-4">
+        <table class="table table-striped table-hover table-sm generalStatistic text-center caption-top">
+            <caption><h2>{{ key }}</h2></caption>
+            <tr>
+                <th>Anzahl:</th>
+                <th>Team:</th>
+            </tr>
+            {% for MethaTyp in MethaTyps %}
+                <tr>
+
+                    {% for team in teams %}
+                        {% if MethaTyp.team_id == team.id %}
+                            <td>
+                                {{ MethaTyp.methaTypAmount }}
+                            </td>
+                            <td>
+                                {{ team.name }}
+                            </td>
+                        {% endif %}
+                    {% endfor %}
+                </tr>
+            {% endfor %}
+        </table>
+</div>
+{% endfor %}
+

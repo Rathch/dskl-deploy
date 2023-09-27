@@ -29,8 +29,8 @@ class Squad
     #[ORM\Column(type: "methaTyp")]
     private ?MethaTyp $methaTyp = null;
 
-    #[ORM\Column(length: 255, nullable: true)]
-    private ?string $value = null;
+    #[ORM\Column(nullable: true)]
+    private ?int $value = null;
 
 
     #[ORM\Column(type: Types::TEXT, nullable: true)]
@@ -120,12 +120,12 @@ class Squad
         return $this->id;
     }
 
-    public function getValue(): ?string
+    public function getValue(): ?int
     {
         return $this->value;
     }
 
-    public function setValue(?string $value): void
+    public function setValue(?int $value): void
     {
         $this->value = $value;
     }

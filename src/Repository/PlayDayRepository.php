@@ -39,6 +39,38 @@ class PlayDayRepository extends ServiceEntityRepository
         }
     }
 
+    public function findAllMostTeamOfTheDay(): array
+    {
+        $conn = $this->getEntityManager()->getConnection();
+//SELECT COUNT(`id`) as anzah,  `teamOfTheDay_id`  FROM `PlayDay` GROUP BY `teamOfTheDay_id` ORDER BY anzah DESC
+        $sql = '
+            SELECT COUNT(id) as anzahl,  teamOfTheDay_id  FROM PlayDay
+            group by teamOfTheDay_id
+            order by anzahl DESC 
+            ';
+        $stmt = $conn->prepare($sql);
+        $resultSet = $stmt->execute();
+
+        // returns an array of arrays (i.e. a raw data set)
+        return $resultSet->fetchAllAssociative();
+    }
+
+    public function findAllMostPlayerOfTheDay(): array
+    {
+        $conn = $this->getEntityManager()->getConnection();
+//SELECT COUNT(`id`) as anzah,  `teamOfTheDay_id`  FROM `PlayDay` GROUP BY `teamOfTheDay_id` ORDER BY anzah DESC
+        $sql = '
+            SELECT COUNT(id) as anzahl,  playerOfTheDay_id  FROM PlayDay
+            group by playerOfTheDay_id
+            order by anzahl DESC 
+            ';
+        $stmt = $conn->prepare($sql);
+        $resultSet = $stmt->execute();
+
+        // returns an array of arrays (i.e. a raw data set)
+        return $resultSet->fetchAllAssociative();
+    }
+
 //    /**
 //     * @return PlayDay[] Returns an array of PlayDay objects
 //     */

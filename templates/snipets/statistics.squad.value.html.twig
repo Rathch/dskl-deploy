@@ -1,0 +1,22 @@
+<table class="table table-striped text-center caption-top table-hover table-sm generalStatistic">
+    <caption><h2 class="text-center">Wertvollste Spieler</h2></caption>
+    <tr>
+        <th>#</th>
+        <th>Spielername</th>
+        <th>Wert</th>
+        <th>Team</th>
+    </tr>
+    {% for MostValue in MostValues %}
+        <tr>
+            <td>{{ loop.index }}</td>
+
+            <td>{{ MostValue.firstName }} "{{ MostValue.figthName }}" {{ MostValue.name }}</td>
+            <td>{{ MostValue.value | format_currency('EUR', {fraction_digit: 0})  }}</td>
+            <td>{% for team in teams %}
+                    {% if MostValue.team_id == team.id %}
+                        {{ team.name }}
+                    {% endif %}
+                {% endfor %}</td>
+        </tr>
+    {% endfor %}
+</table>

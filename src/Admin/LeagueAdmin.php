@@ -47,6 +47,7 @@ final class LeagueAdmin extends AbstractAdmin
         #$collection->remove("edit");
         $collection->add('generateStatistic');
         $collection->add('regenerateStatistic');
+        $collection->add('resetTeams');
     }
 
     protected function configureDatagridFilters(DatagridMapper $filter): void
@@ -72,6 +73,9 @@ final class LeagueAdmin extends AbstractAdmin
                     'show' => [],
                     'edit' => [],
                     'delete' => false,
+                    'resetTeams' => [
+                        'template' => 'CRUD/list__action_resetTeams.html.twig',
+                    ],
                     'generateStatistic' => [
                         'template' => 'CRUD/list__action_generateStatistic.html.twig',
                     ],
@@ -108,6 +112,8 @@ final class LeagueAdmin extends AbstractAdmin
         $this->generateEncounterService->generate($object);
         $this->generateTeamStatisticService->generate($object);
     }
+
+
 
     protected function preRemove(object $object): void
     {

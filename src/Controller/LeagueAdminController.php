@@ -42,4 +42,18 @@ final class LeagueAdminController extends CRUDController{
         return new RedirectResponse('/admin/app/league/list');
     }
 
+    /**
+     * @param Request $request
+     * @return Response
+     * @throws Exception
+     */
+    public function resetTeamsAction(Request $request): Response
+    {
+        $league = $this->admin->getSubject();
+
+        $this->generateTeamStatisticService->remove($league);
+        $this->generateTeamStatisticService->generate($league);
+        return new RedirectResponse('/admin/app/league/list');
+    }
+
 }

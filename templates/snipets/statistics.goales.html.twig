@@ -1,0 +1,45 @@
+<div class="col-12">
+    <h2 class="text-center">Meisten Tore</h2>
+</div>
+<div class="col-4">
+    <table class="table table-striped table-hover table-sm generalStatistic text-center caption-top">
+        <caption><h2>Gesamt</h2></caption>
+        <tr>
+            <th>#</th>
+            <th>Tore</th>
+            <th>Team</th>
+        </tr>
+        {% for goeals in totaleGoales %}
+        <tr>
+            <td>{{ loop.index }}</td>
+            <td>{{ goeals.goales }}</td>
+            <td>{% for team in teams %}
+                    {% if goeals.team_id == team.id %}
+                        {{ team.name }}
+                    {% endif %}
+                {% endfor %}</td>
+        </tr>
+        {% endfor %}
+    </table>
+</div>
+
+{% for key, totaleGoales in totaleGoalesPerSeason %}
+<div class="col-4">
+    <table class="table table-striped table-hover table-sm generalStatistic text-center caption-top">
+        <caption><h2>{{ key }}</h2></caption>
+        <tr>
+            <th>#</th>
+            <th>Tore</th>
+            <th>Team</th>
+        </tr>
+        {% for goeals in totaleGoales %}
+            <tr>
+                <td>{{ loop.index }}</td>
+                <td>{{ goeals.goales }}</td>
+                <td>{{ goeals.team.name }}</td>
+            </tr>
+        {% endfor %}
+    </table>
+</div>
+{% endfor %}
+

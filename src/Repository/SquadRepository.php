@@ -3,6 +3,7 @@
 namespace App\Repository;
 
 use App\Entity\Squad;
+use App\Entity\Team;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Persistence\ManagerRegistry;
 
@@ -37,6 +38,106 @@ class SquadRepository extends ServiceEntityRepository
         if ($flush) {
             $this->getEntityManager()->flush();
         }
+    }
+
+    public function findMostValueByTeam(): array
+    {
+        $conn = $this->getEntityManager()->getConnection();
+
+        $sql = '
+            SELECT SUM(value) value,s.team_id FROM Squad s
+            WHERE 1 AND s.dead = 0
+            group by s.team_id
+            order by value  DESC 
+            ';
+        $stmt = $conn->prepare($sql);
+        $resultSet = $stmt->execute();
+
+        // returns an array of arrays (i.e. a raw data set)
+        return $resultSet->fetchAll();
+    }
+
+    public function findByMostValue(): array
+    {
+        $conn = $this->getEntityManager()->getConnection();
+
+        $sql = '
+            SELECT s.value,s.position,s.team_id, s.firstName,s.figthName,s.name FROM Squad s
+            WHERE s.dead = 0
+            order by value  DESC 
+            LIMIT 30
+            ';
+        $stmt = $conn->prepare($sql);
+        $resultSet = $stmt->execute();
+
+        // returns an array of arrays (i.e. a raw data set)
+        return $resultSet->fetchAll();
+    }
+
+    public function findMostValueByPossition($position): array
+    {
+        $conn = $this->getEntityManager()->getConnection();
+
+        $sql = '
+            SELECT s.value,s.position,s.team_id, s.firstName,s.figthName,s.name  FROM Squad s
+            WHERE s.position = :position AND s.dead = 0
+            order by s.value  DESC 
+            LIMIT 10
+            ';
+        $stmt = $conn->prepare($sql);
+        $resultSet = $stmt->executeQuery(['position' => $position]);
+
+        // returns an array of arrays (i.e. a raw data set)
+        return $resultSet->fetchAll();
+    }
+
+    public function findAvrageAgeByTeam($team) {
+        $conn = $this->getEntityManager()->getConnection();
+
+        $sql = '
+            SELECT AVG(s.birthYear) avrageAge,s.team_id  FROM Squad s
+            WHERE s.team_id = :team AND s.dead = 0
+            order by avrageAge  ASC
+            ';
+        $stmt = $conn->prepare($sql);
+        $resultSet = $stmt->executeQuery(['team' => $team->getId()]);
+
+        // returns an array of arrays (i.e. a raw data set)
+        return $resultSet->fetchAssociative();
+    }
+
+    public function findAllMethaTyps(): array
+    {
+        $conn = $this->getEntityManager()->getConnection();
+
+        $sql = '
+            SELECT s.methaTyp  FROM Squad s
+            WHERE 1 AND s.dead = 0
+            group by s.methaTyp
+            ';
+        $stmt = $conn->prepare($sql);
+        $resultSet = $stmt->execute();
+
+        // returns an array of arrays (i.e. a raw data set)
+        return $resultSet->fetchAllAssociative();
+    }
+
+    public function findMostByMethaAndTeam($methaTyp): array
+    {
+        $conn = $this->getEntityManager()->getConnection();
+
+        $sql = '
+            SELECT s.team_id, count(s.methaTyp) methaTypAmount,methaTyp  FROM Squad s
+            WHERE s.methaTyp = :methaTyp AND s.dead = 0
+            group by s.team_id
+            order by methaTypAmount  DESC 
+            LIMIT 10
+            ';
+        $stmt = $conn->prepare($sql);
+        $resultSet = $stmt->executeQuery(['methaTyp' => $methaTyp]);
+
+        // returns an array of arrays (i.e. a raw data set)
+        return $resultSet->fetchAll();
     }
 
 //    /**

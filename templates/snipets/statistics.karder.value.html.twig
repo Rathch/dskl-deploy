@@ -1,0 +1,15 @@
+<table class="table table-striped text-center caption-top table-hover table-sm generalStatistic">
+    <caption><h2 class="text-center">Wertvollster Kader</h2></caption>
+    <tr>
+        <th>#</th>
+        <th>Team</th>
+        <th>Kaderwert</th>
+    </tr>
+    {% for MostValue in MostValuesByTeam %}
+        <tr>
+            <td>{{ loop.index }}</td>
+            <td>{{ MostValue.team.name }}</td>
+            <td>{{ MostValue.value | format_currency('EUR', {fraction_digit: 0})  }}</td>
+        </tr>
+    {% endfor %}
+</table>

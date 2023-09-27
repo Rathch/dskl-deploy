@@ -14,23 +14,8 @@
         </svg>
     </a>
     <h2 class="text-center">Team {{ team.name }}</h2>
-    {% set active = [] %}
     {% set currentYear = 2082 %}
-    {% set ersatz = [] %}
-    {% set dead = [] %}
 
-    {% for squad in team.squads %}
-
-        {% if squad.dead == 1 %}
-            {% set dead = dead|merge([squad]) %}
-        {% else %}
-            {% if squad.replacement != 1 %}
-                {% set active = active|merge([squad]) %}
-            {% else %}
-                {% set ersatz = ersatz|merge([squad]) %}
-            {% endif %}
-        {% endif %}
-    {% endfor %}
     {% set encounters = [] %}
 
     {% for encounter in team.encounters %}
@@ -147,7 +132,7 @@
                 <div class="accordion-body">
                     <div class="card-body">
                         <div class="">
-                            {{ include('snipets/squad.html.twig', {squads:active}) }}
+                            {{ include('snipets/squad.html.twig', {position:presortedSquad.active}) }}
                         </div>
                     </div>
                 </div>
@@ -163,7 +148,7 @@
                 <div class="accordion-body">
                     <div class="card-body">
                         <h2>Ersatzspieler:</h2>
-                        {{ include('snipets/squad.html.twig', {squads:ersatz}) }}
+                        {{ include('snipets/squad.html.twig', {position:presortedSquad.replacement}) }}
                     </div>
                 </div>
             </div>
@@ -178,8 +163,8 @@
                 <div class="accordion-body">
                     <div class="card-body">
                         <h2>Verstorben:</h2>
-                        {% if dead |length > 0 %}
-                        {{ include('snipets/squad.html.twig', {squads:dead}) }}
+                        {% if presortedSquad.dead |length > 0 %}
+                        {{ include('snipets/squad.html.twig', {position:presortedSquad.dead}) }}
                         {% else %}
                             <p>Keine</p>
                         {% endif %}

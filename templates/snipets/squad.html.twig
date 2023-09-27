@@ -11,24 +11,23 @@
     </tr>
     </thead>
     <tbody>
-
-    {% for squad in squads %}
-        <tr>
-            <td class="text-nowrap">{{ squad.firstName }} "{{ squad.figthName }}" {{ squad.name }}</td>
-            <td>{{ squad.position.value }}</td>
-            <td>{{ squad.methaTyp.value }}</td>
-            <td>{{ (currentYear-squad.birthYear) }}</td>
-            <td>{{ squad.value }}</td>
-            <td class="fs-6">{{ squad.comment | raw }}</td>
-            <td>
-                {% for transfer in squad.transfers %}
-                    {% if transfer.newTeam.id == squad.team.id %}
-                {{ transfer.oldteam.name }} : {{ transfer.season.seasonName }}
-                    {% endif %}
-                {% endfor %}
-
-            </td>
-        </tr>
-    {% endfor %}
+    {% if position.Scout is defined %}
+        {{ include('snipets/squad.tableRow.html.twig', {squads:position.Scout}) }}
+    {% endif %}
+    {% if position.Jaeger is defined %}
+        {{ include('snipets/squad.tableRow.html.twig', {squads:position.Jaeger}) }}
+    {% endif %}
+    {% if position.Brecher is defined %}
+        {{ include('snipets/squad.tableRow.html.twig', {squads:position.Brecher}) }}
+    {% endif %}
+    {% if position.Schuetze is defined %}
+        {{ include('snipets/squad.tableRow.html.twig', {squads:position.Schuetze}) }}
+    {% endif %}
+    {% if position.Stuermer is defined %}
+        {{ include('snipets/squad.tableRow.html.twig', {squads:position.Stuermer}) }}
+    {% endif %}
+    {% if position.Sani is defined %}
+        {{ include('snipets/squad.tableRow.html.twig', {squads:position.Sani}) }}
+    {% endif %}
     </tbody>
 </table>

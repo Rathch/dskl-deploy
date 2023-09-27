@@ -1,0 +1,18 @@
+{% for squad in squads %}
+    <tr>
+        <td class="text-nowrap">{{ squad.firstName }} "{{ squad.figthName }}" {{ squad.name }}</td>
+        <td>{{ squad.position.value }}</td>
+        <td>{{ squad.methaTyp.value }}</td>
+        <td>{{ (currentYear-squad.birthYear) }}</td>
+        <td>{{ squad.value }}</td>
+        <td class="fs-6">{{ squad.comment | raw }}</td>
+        <td class="fs-6">
+            {% for transfer in squad.transfers %}
+                {% if transfer.newTeam.id == squad.team.id %}
+            {{ transfer.oldteam.name }} : {{ transfer.season.seasonName }}
+                {% endif %}
+            {% endfor %}
+
+        </td>
+    </tr>
+{% endfor %}

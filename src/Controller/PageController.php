@@ -108,10 +108,13 @@ class PageController extends AbstractController
     {
         $team = $this->teamReposetory->findOneBy(["id"=>$id]);
         $transferHistory = $this->transferHistoryRepository->findAll();
+        $presortedSquad = $this->getSortedSquad($team);
+
         return $this->render('page/team.show.html.twig', [
             'controller_name' => 'PageController',
             'team' => $team,
             'transfers' => $transferHistory,
+            'presortedSquad' => $presortedSquad,
         ]);
     }
 
@@ -352,5 +355,59 @@ class PageController extends AbstractController
 
         }
         return array($otherMethaTypArray, $methaTypArray);
+    }
+
+    private function getSortedSquad(?Team $team): array
+    {
+        $dead = [];
+        $replacement = [];
+        $active = [];
+        $unsortedSquad = $team->getSquads();
+        /** @var Squad $squad */
+        foreach ($unsortedSquad as $squad) {
+           if ($squad->isDead() === true) {
+               $dead = $this->getPositioned($squad,$dead);
+           } elseif ($squad->isReplacement() === true) {
+               $replacement = $this->getPositioned($squad,$replacement);
+
+           } else {
+               #$active[] = $squad;
+               $active = $this->getPositioned($squad,$active);
+           }
+        }
+
+        return [
+            "dead" => $dead,
+            "replacement" => $replacement,
+            "active" => $active
+        ];
+    }
+
+    /**
+     * @param Squad $squad
+     * @param $result
+     * @return array
+     */
+    public function getPositioned(Squad $squad,$result): array
+    {
+        if ($squad->getPosition()->value === "Stürmer") {
+            $result["Stuermer"][] = $squad;
+        }
+        if ($squad->getPosition()->value === "Scout") {
+            $result["Scout"][] = $squad;
+        }
+        if ($squad->getPosition()->value === "Sani") {
+            $result["Sani"][] = $squad;
+        }
+        if ($squad->getPosition()->value === "Schütze") {
+            $result["Schuetze"][] = $squad;
+        }
+        if ($squad->getPosition()->value === "Jäger") {
+            $result["Jaeger"][] = $squad;
+        }
+        if ($squad->getPosition()->value === "Brecher") {
+            $result["Brecher"][] = $squad;
+        }
+        return $result;
     }
 }

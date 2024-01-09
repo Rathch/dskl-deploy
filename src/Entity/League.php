@@ -51,6 +51,9 @@ class League
     #[ORM\ManyToMany(targetEntity: Team::class, inversedBy: 'activeInLeagues')]
     private Collection $activeTeams;
 
+    #[ORM\OneToOne(mappedBy: 'League', cascade: ['persist', 'remove'])]
+    private ?Relegation $relegation = null;
+
     public function __construct()
     {
         $this->playdays = new ArrayCollection();
@@ -295,6 +298,28 @@ class League
     public function removeActiveTeam(Team $activeTeam): self
     {
         $this->activeTeams->removeElement($activeTeam);
+
+        return $this;
+    }
+
+    public function getRelegation(): ?Relegation
+    {
+        return $this->relegation;
+    }
+
+    public function setRelegation(?Relegation $relegation): static
+    {
+        // unset the owning side of the relation if necessary
+        if ($relegation === null && $this->relegation !== null) {
+            $this->relegation->setLeague(null);
+        }
+
+        // set the owning side of the relation if necessary
+        if ($relegation !== null && $relegation->getLeague() !== $this) {
+            $relegation->setLeague($this);
+        }
+
+        $this->relegation = $relegation;
 
         return $this;
     }

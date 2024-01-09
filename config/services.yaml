@@ -114,3 +114,8 @@ services:
         class: App\Admin\ArticleAdmin
         tags:
             - { name: sonata.admin, model_class: App\Entity\Article, controller: ~, manager_type: orm, group: Seiten., label: Wipeout!-Magazin }
+
+    admin.relegation:
+        class: App\Admin\RelegationAdmin
+        tags:
+            - { name: sonata.admin, model_class: App\Entity\Relegation, controller: App\Controller\RelegationAdminController, manager_type: orm, group: admin, label: Relegation }

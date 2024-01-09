@@ -19,6 +19,7 @@ use Sonata\AdminBundle\FieldDescription\FieldDescriptionInterface;
 use Sonata\AdminBundle\Form\FormMapper;
 use Sonata\AdminBundle\Form\Type\ModelType;
 use Sonata\AdminBundle\Show\ShowMapper;
+use Symfony\Component\Form\Extension\Core\Type\DateType;
 use Symfony\Component\Form\Extension\Core\Type\TextareaType;
 
 final class EncounterAdmin extends AbstractAdmin
@@ -60,17 +61,29 @@ final class EncounterAdmin extends AbstractAdmin
 
     protected function configureFormFields(FormMapper $form): void
     {
+            if ($this->getRequest()->getPathInfo() == "/admin/app/relegation/create") {
+                $form->with('Date', ['class' => 'col-md-12'])
+                    ->add('date', DateType::class, [
+                        "label"=>"date",
+                        "widget"=>"choice",
+                        'years' => range(2080,2099),
+                        'format' => 'd MMMM yyyy',
+                    ])
+                    ->end();
+            } else {
+                $form->with('Playday', ['class' => 'col-md-12'])
+
+                    ->add('playday',ModelType::class,
+                        [
+                            'class' => PlayDay::class,
+                            'property'=>'id',
+                            'disabled'=> true,
+                            "label" => "playday"
+                        ]
+                    )
+                    ->end();
+            }
         $form
-            ->with('Playday', ['class' => 'col-md-12'])
-                ->add('playday',ModelType::class,
-                    [
-                        'class' => PlayDay::class,
-                        'property'=>'id',
-                        'disabled'=> true,
-                        "label" => "playday"
-                    ]
-                )
-            ->end()
             ->with('Team 1', ['class' => 'col-md-6'])
                 ->add('team1',ModelType::class,
                     [
@@ -105,7 +118,7 @@ final class EncounterAdmin extends AbstractAdmin
                 ->add('injuryTeam2Tot', null, ["label" => "injuryTeam2Tot"])
                 ->add('pointsTeam2', null, ["label" => "pointsTeam2"])
             ->end()
-            ->with("", ['class' => 'col-md-12'])
+            ->with("report", ['class' => 'col-md-12'])
                 ->add('report',CKEditorType::class, [
                     "label" => "report",
                     'attr' => ["class" => "ckeditor"],

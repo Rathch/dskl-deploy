@@ -7,6 +7,7 @@ use App\Entity\Encounter;
 use App\Entity\League;
 use App\Entity\Page;
 use App\Entity\PlayDay;
+use App\Entity\Relegation;
 use App\Entity\Squad;
 use App\Entity\Team;
 use App\Entity\TeamStatistic;
@@ -16,6 +17,7 @@ use App\Repository\EncounterRepository;
 use App\Repository\LeagueRepository;
 use App\Repository\PageRepository;
 use App\Repository\PlayDayRepository;
+use App\Repository\RelegationRepository;
 use App\Repository\TeamRepository;
 use App\Repository\SquadRepository;
 use App\Repository\TeamStatisticRepository;
@@ -38,7 +40,7 @@ class PageController extends AbstractController
     protected SquadRepository $squadReposetory;
     protected PlayDayRepository $playDayRepository;
 
-
+    protected RelegationRepository $relegationRepository;
 
     public function __construct( protected EntityManagerInterface $entityManager)
     {
@@ -51,6 +53,7 @@ class PageController extends AbstractController
         $this->encounterRepository = $entityManager->getRepository(Encounter::class);
         $this->playDayRepository = $entityManager->getRepository(PlayDay::class);
         $this->transferHistoryRepository = $entityManager->getRepository(TransferHistory::class);
+        $this->relegationRepository = $this->entityManager->getRepository(Relegation::class);
     }
 
 
@@ -110,10 +113,12 @@ class PageController extends AbstractController
         $transferHistory = $this->transferHistoryRepository->findAll();
         $presortedSquad = $this->getSortedSquad($team);
 
+
         return $this->render('page/team.show.html.twig', [
             'controller_name' => 'PageController',
             'team' => $team,
             'transfers' => $transferHistory,
+
             'presortedSquad' => $presortedSquad,
         ]);
     }
@@ -122,8 +127,10 @@ class PageController extends AbstractController
     public function listLiga(): Response
     {
         $ligas = $this->ligaReposetory->findAll();
+
         return $this->render('page/liga.list.html.twig', [
             'ligas' => $ligas,
+
             'controller_name' => 'PageController',
         ]);
     }
@@ -187,6 +194,7 @@ class PageController extends AbstractController
     #[Route(path: '/liga/show/{id}', name: 'show_liga')]
     public function showLiga($id): Response
     {
+        $relegations = $this->relegationRepository->findAll();
         $liga = $this->ligaReposetory->findOneBy(["id"=>$id]);
         //find and sort teamstatistics
         $statistics = $this->teamStatisticReposetory->findBy(
@@ -202,6 +210,7 @@ class PageController extends AbstractController
         return $this->render('page/liga.show.html.twig', [
             'controller_name' => 'PageController',
             'liga' => $liga,
+            'relegations' => $relegations,
             'statistics'=>$statistics,
         ]);
     }

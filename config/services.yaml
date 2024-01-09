@@ -118,4 +118,4 @@ services:
     admin.relegation:
         class: App\Admin\RelegationAdmin
         tags:
-            - { name: sonata.admin, model_class: App\Entity\Relegation, controller: App\Controller\RelegationAdminController, manager_type: orm, group: admin, label: Relegation }
+            - { name: sonata.admin, model_class: App\Entity\Relegation, controller: App\Controller\RelegationAdminController, manager_type: orm, group: Season., label: Relegation }

@@ -76,8 +76,10 @@ class Encounter
     #[ORM\ManyToOne(inversedBy: 'encounters')]
     private ?Relegation $Relegation = null;
 
-    #[ORM\Column(length: 255, nullable: true)]
-    private ?string $date = null;
+    #[ORM\Column(type: Types::DATE_MUTABLE, nullable: true)]
+    private ?\DateTimeInterface $date = null;
+
+
 
     /**
      * @return mixed
@@ -337,17 +339,19 @@ class Encounter
         return $this;
     }
 
-    public function getDate(): ?string
+    public function getDate(): ?\DateTimeInterface
     {
         return $this->date;
     }
 
-    public function setDate(?string $date): static
+    public function setDate(?\DateTimeInterface $date): static
     {
         $this->date = $date;
 
         return $this;
     }
+
+
 
 
 

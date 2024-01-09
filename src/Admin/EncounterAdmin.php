@@ -61,7 +61,7 @@ final class EncounterAdmin extends AbstractAdmin
 
     protected function configureFormFields(FormMapper $form): void
     {
-            if ($this->getRequest()->getPathInfo() == "/admin/app/relegation/create") {
+            if (str_contains($this->getRequest()->getPathInfo(), "relegation")) {
                 $form->with('Date', ['class' => 'col-md-12'])
                     ->add('date', DateType::class, [
                         "label"=>"date",

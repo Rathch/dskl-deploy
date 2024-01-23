@@ -73,9 +73,11 @@ class Encounter
     #[ORM\ManyToOne(inversedBy: 'encounters')]
     private ?League $league = null;
 
-    #[ORM\ManyToOne(inversedBy: 'encounters')]
-    private ?Relegation $Relegation = null;
+    #[ORM\ManyToOne(inversedBy: 'encounters2')]
+    private ?Relegation $relegation2 = null;
 
+    #[ORM\ManyToOne(inversedBy: 'encounters')]
+    private ?Relegation $relegation = null;
     #[ORM\Column(type: Types::DATE_MUTABLE, nullable: true)]
     private ?\DateTimeInterface $date = null;
 
@@ -329,12 +331,24 @@ class Encounter
 
     public function getRelegation(): ?Relegation
     {
-        return $this->Relegation;
+        return $this->relegation;
     }
 
-    public function setRelegation(?Relegation $Relegation): static
+    public function setRelegation(?Relegation $relegation): static
     {
-        $this->Relegation = $Relegation;
+        $this->relegation = $relegation;
+
+        return $this;
+    }
+
+    public function getRelegation2(): ?Relegation
+    {
+        return $this->relegation2;
+    }
+
+    public function setRelegation2(?Relegation $relegation2): static
+    {
+        $this->relegation2 = $relegation2;
 
         return $this;
     }
@@ -350,11 +364,4 @@ class Encounter
 
         return $this;
     }
-
-
-
-
-
-
-
 }

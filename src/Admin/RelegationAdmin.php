@@ -8,6 +8,7 @@ use App\Entity\League;
 use Sonata\AdminBundle\Admin\AbstractAdmin;
 use Sonata\AdminBundle\Datagrid\DatagridMapper;
 use Sonata\AdminBundle\Datagrid\ListMapper;
+use Sonata\AdminBundle\FieldDescription\FieldDescriptionInterface;
 use Sonata\AdminBundle\Form\FormMapper;
 use Sonata\AdminBundle\Form\Type\ModelType;
 use Sonata\AdminBundle\Show\ShowMapper;
@@ -34,6 +35,10 @@ final class RelegationAdmin extends AbstractAdmin
     {
         $list
             ->add('id')
+            ->add('league',FieldDescriptionInterface::TYPE_MANY_TO_ONE,[
+                "associated_property"=>"seasonName",
+                "label"=>"league"
+            ])
             ->add(ListMapper::NAME_ACTIONS, null, [
                 'actions' => [
                     'show' => [],
@@ -45,12 +50,17 @@ final class RelegationAdmin extends AbstractAdmin
 
     protected function configureFormFields(FormMapper $form): void
     {
-        $form
-            ->add('league',ModelType::class,["label"=>"league","class"=>League::class,"property"=>"seasonName", 'expanded' => false, 'by_reference' => false, 'multiple' => false,"btn_add"=>false])
-            ->add('encounters',CollectionType::class,
+        $form->tab('Season')
+                ->with('', ['class' => 'col-md-12'])
+                    ->add('league',ModelType::class,["label"=>"league","class"=>League::class,"property"=>"seasonName", 'expanded' => false, 'by_reference' => false, 'multiple' => false,"btn_add"=>false])
+                ->end()
+            ->end()
+            ->tab('Hinspiele')
+                ->with('', ['class' => 'col-md-12'])
+                    ->add('encounters',CollectionType::class,
                 [
                     //'foo' => ['class' => 'tinymce'],
-                    "label"=>"encounters",
+                    "label"=>"hinspiele",
                     "btn_catalogue"=>false,
                     "btn_add"=>false,
                     'type_options' => [
@@ -60,9 +70,37 @@ final class RelegationAdmin extends AbstractAdmin
                     ]
                 ], [
                     'edit' => 'inline',
-                    'inline' => 'table'
+                    'inline' => 'natural'
+                    #'inline' => 'table'
                 ]
             )
+                ->end()
+            ->end()
+            ->tab('Rueckspiele')
+                ->with('', ['class' => 'col-md-12'])
+                    ->add('encounters2',CollectionType::class,
+                [
+                    //'foo' => ['class' => 'tinymce'],
+                    "label"=>"rückspiele",
+                    "btn_catalogue"=>false,
+                    "btn_add"=>false,
+                    'type_options' => [
+                        // Prevents the "Delete" option from being displayed
+                        'delete' => false,
+                        'btn_add' => false,
+                    ]
+                ], [
+                    'edit' => 'inline',
+                    'inline' => 'natural'
+                    #'inline' => 'table'
+                ]
+            )
+                ->end()
+            ->end()
+
+
+
+
         ;
     }
 

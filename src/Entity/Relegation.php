@@ -18,12 +18,16 @@ class Relegation
     #[ORM\OneToOne(inversedBy: 'relegation', cascade: ['persist', 'remove'])]
     private ?League $League = null;
 
-    #[ORM\OneToMany(mappedBy: 'Relegation', targetEntity: Encounter::class, cascade: ['persist', 'remove'])]
+    #[ORM\OneToMany(mappedBy: 'relegation', targetEntity: Encounter::class, cascade: ['persist'])]
     private Collection $encounters;
+
+    #[ORM\OneToMany(mappedBy: 'relegation2', targetEntity: Encounter::class, cascade: ['persist'])]
+    private Collection $encounters2;
 
     public function __construct()
     {
         $this->encounters = new ArrayCollection();
+        $this->encounters2 = new ArrayCollection();
         $this->generateEncounter();
     }
 
@@ -74,10 +78,41 @@ class Relegation
         return $this;
     }
 
+    /**
+     * @return Collection<int, Encounter>
+     */
+    public function getEncounters2(): Collection
+    {
+        return $this->encounters2;
+    }
+
+    public function addEncounter2(Encounter $encounter2): static
+    {
+        if (!$this->encounters2->contains($encounter2)) {
+            $this->encounters2->add($encounter2);
+            $encounter2->setRelegation2($this);
+        }
+
+        return $this;
+    }
+
+    public function removeEncounter2(Encounter $encounter2): static
+    {
+        if ($this->encounters2->removeElement($encounter2)) {
+            // set the owning side to null (unless already changed)
+            if ($encounter2->getRelegation2() === $this) {
+                $encounter2->setRelegation2(null);
+            }
+        }
+
+        return $this;
+    }
+
     private function generateEncounter()
     {
-        for ($x = 0; $x <= 24; $x++) {
+        for ($x = 0; $x <= 12; $x++) {
             $this->addEncounter(new Encounter());
+            $this->addEncounter2(new Encounter());
         }
     }
 }

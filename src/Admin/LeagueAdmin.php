@@ -8,6 +8,7 @@ namespace App\Admin;
 use App\Entity\Team;
 use App\Service\GenerateEncounterService;
 use App\Service\GenerateTeamStatisticService;
+use Doctrine\ORM\EntityManagerInterface;
 use Sonata\AdminBundle\Admin\AbstractAdmin;
 use Sonata\AdminBundle\Datagrid\DatagridMapper;
 use Sonata\AdminBundle\Datagrid\ListMapper;
@@ -15,9 +16,8 @@ use Sonata\AdminBundle\FieldDescription\FieldDescriptionInterface;
 use Sonata\AdminBundle\Form\FormMapper;
 use Sonata\AdminBundle\Form\Type\AdminType;
 use Sonata\AdminBundle\Form\Type\ModelType;
-use Sonata\Form\Type\CollectionType;
 use Sonata\AdminBundle\Route\RouteCollectionInterface;
-use Symfony\Component\Form\Extension\Core\Type\DateType;
+use Sonata\DoctrineORMAdminBundle\Model\ModelManager;
 use Sonata\AdminBundle\Show\ShowMapper;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 
@@ -27,15 +27,31 @@ final class LeagueAdmin extends AbstractAdmin
     private GenerateTeamStatisticService $generateTeamStatisticService;
 
 
-    /**
-     * @param GenerateEncounterService $generateEncounterService
-     * @param GenerateTeamStatisticService $generateTeamStatisticService
-     */
-    public function __construct(GenerateEncounterService $generateEncounterService, GenerateTeamStatisticService $generateTeamStatisticService)
-    {
+    private EntityManagerInterface $entityManager;
+
+    public function __construct(
+        GenerateEncounterService $generateEncounterService,
+        GenerateTeamStatisticService $generateTeamStatisticService,
+        EntityManagerInterface $entityManager
+    ) {
         $this->generateEncounterService = $generateEncounterService;
         $this->generateTeamStatisticService = $generateTeamStatisticService;
+        $this->entityManager = $entityManager;
         parent::__construct();
+    }
+
+    private function getTeamQueryBuilderByAffiliation(string $affiliation)
+    {
+        /** @var ModelManager $modelManager */
+        $modelManager = $this->getModelManager();
+
+        $teamRepository = $modelManager->getEntityManager(Team::class)->getRepository(Team::class);
+
+        $queryBuilder = $teamRepository->createQueryBuilder('t')
+            ->where('t.affiliation = :affiliation')
+            ->setParameter('affiliation', $affiliation);
+
+        return $queryBuilder;
     }
 
     /**
@@ -93,7 +109,16 @@ final class LeagueAdmin extends AbstractAdmin
                     "label"=>"seasonName"
             ]
             )
-            ->add("activeTeams",ModelType::class,["label"=>"Aktive Teams","class"=>Team::class,"property"=>"name", 'expanded' => true, 'by_reference' => false, 'multiple' => true,"btn_add"=>false])
+            ->add('activeTeams', ModelType::class, [
+                'label' => 'Aktive Teams',
+                'class' => Team::class,
+                'property' => 'name',
+                'expanded' => true,
+                'by_reference' => false,
+                'multiple' => true,
+                'btn_add' => false,
+                'query' => $this->getTeamQueryBuilderByAffiliation('1'),
+            ])
             ->add('allStars',AdminType::class,["label"=>"ADL Allstars"])
         ;
     }

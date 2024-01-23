@@ -54,6 +54,9 @@ class Team
     #[ORM\OneToMany(mappedBy: 'teamOfTheDay', targetEntity: PlayDay::class)]
     private Collection $teamOfTheDays;
 
+    #[ORM\ManyToOne(inversedBy: 'teams')]
+    private ?Affiliation $affiliation = null;
+
 
 
 
@@ -358,6 +361,18 @@ class Team
                 $teamOfTheDay->setTeamOfTheDay(null);
             }
         }
+
+        return $this;
+    }
+
+    public function getAffiliation(): ?Affiliation
+    {
+        return $this->affiliation;
+    }
+
+    public function setAffiliation(?Affiliation $affiliation): static
+    {
+        $this->affiliation = $affiliation;
 
         return $this;
     }

@@ -5,6 +5,8 @@ declare(strict_types=1);
 namespace App\Admin;
 
 use App\Doctrine\Enum\Flag;
+use App\Entity\Affiliation;
+use App\Entity\Team;
 use App\Entity\TeamAttributes;
 use App\Entity\TeamInfo;
 use FOS\CKEditorBundle\Form\Type\CKEditorType;
@@ -15,6 +17,7 @@ use Sonata\AdminBundle\Datagrid\ListMapper;
 use Sonata\AdminBundle\FieldDescription\FieldDescriptionInterface;
 use Sonata\AdminBundle\Form\FormMapper;
 use Sonata\AdminBundle\Form\Type\AdminType;
+use Sonata\AdminBundle\Form\Type\ModelType;
 use Sonata\AdminBundle\Show\ShowMapper;
 use Symfony\Component\Filesystem\Filesystem;
 use Symfony\Component\Form\Extension\Core\Type\EnumType;
@@ -52,7 +55,16 @@ final class TeamAdmin extends AbstractAdmin
                 ->with('', ['class' => 'col-md-12'])
                     ->add('name', null, ["label" => "name"])
                     ->add('description', CKEditorType::class, ["label" => "description", "required"=>false])
-            ->add('active', EnumType::class, ["class"=>Flag::class,"label" => "active"])
+                    ->add('active', EnumType::class, ["class"=>Flag::class,"label" => "active"])
+                    ->add('affiliation',ModelType::class,
+                        [
+                            'class' => Affiliation::class,
+                            'property'=>'name',
+                            #'disabled'=>true,
+                            'btn_add'=>false,
+                            "label" => "Zugehörigkeit"
+                        ]
+                    )
                 ->end()
             ->end()
             ->tab('information')

@@ -3,6 +3,7 @@ version: 1.0
 deploy:
   # configuration part, which is taken at the FIRST deployment of each branch
   bootstrap:
+    force: recurring
     # folders that are not copied to IONOS webspace
     excludes:
       - tests
@@ -19,6 +20,9 @@ deploy:
       - APP_ENV=prod APP_DEBUG=0 php bin/console cache:clear
       - php bin/console assets:install
       - APP_ENV=prod APP_DEBUG=0 php bin/console cache:warmup
+      - php bin/console doctrine:schema:update --force
+      - php bin/console cache:clear
+      - php bin/console cache:warmup
 
   # configuration part, which is taken at ALL FURTHER deployments of this branch
   recurring:

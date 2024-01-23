@@ -18,10 +18,10 @@ class Relegation
     #[ORM\OneToOne(inversedBy: 'relegation', cascade: ['persist', 'remove'])]
     private ?League $League = null;
 
-    #[ORM\OneToMany(mappedBy: 'relegation', targetEntity: Encounter::class, cascade: ['persist'])]
+    #[ORM\OneToMany(mappedBy: 'relegation', targetEntity: Encounter::class, cascade: ['persist', 'remove'])]
     private Collection $encounters;
 
-    #[ORM\OneToMany(mappedBy: 'relegation2', targetEntity: Encounter::class, cascade: ['persist'])]
+    #[ORM\OneToMany(mappedBy: 'relegation2', targetEntity: Encounter::class, cascade: ['persist', 'remove'])]
     private Collection $encounters2;
 
     public function __construct()

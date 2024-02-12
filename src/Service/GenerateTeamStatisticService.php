@@ -170,7 +170,7 @@ class GenerateTeamStatisticService
                         $statistic->setInjuriesDoneLeich($statistic->getInjuriesDoneLeich()+$encounter->getInjuryTeam2Leicht());
                         $statistic->setInjurysDoneSchwer($statistic->getInjurysDoneSchwer()+$encounter->getInjuryTeam2Schwer());
                         $statistic->setInjurysDoneKritisch($statistic->getInjurysDoneKritisch()+$encounter->getInjuryTeam2Kritisch());
-                        $statistic->setKills($statistic->getDeaths()+$encounter->getInjuryTeam2Tot());
+                        $statistic->setKills($statistic->getKills()+$encounter->getInjuryTeam2Tot());
 
                     }
                     elseif($encounter->getTeam2() === $statistic->getTeam()) {

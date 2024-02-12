@@ -18,10 +18,10 @@ class Relegation
     #[ORM\OneToOne(inversedBy: 'relegation', cascade: ['persist', 'remove'])]
     private ?League $League = null;
 
-    #[ORM\OneToMany(mappedBy: 'relegation', targetEntity: Encounter::class, cascade: ['persist', 'remove'])]
+    #[ORM\OneToMany(mappedBy: 'relegation', targetEntity: RelegationEncounter::class, cascade: ['persist', 'remove'])]
     private Collection $encounters;
 
-    #[ORM\OneToMany(mappedBy: 'relegation2', targetEntity: Encounter::class, cascade: ['persist', 'remove'])]
+    #[ORM\OneToMany(mappedBy: 'relegation2', targetEntity: RelegationEncounter::class, cascade: ['persist', 'remove'])]
     private Collection $encounters2;
 
     public function __construct()
@@ -56,7 +56,7 @@ class Relegation
         return $this->encounters;
     }
 
-    public function addEncounter(Encounter $encounter): static
+    public function addEncounter(RelegationEncounter $encounter): static
     {
         if (!$this->encounters->contains($encounter)) {
             $this->encounters->add($encounter);
@@ -66,7 +66,7 @@ class Relegation
         return $this;
     }
 
-    public function removeEncounter(Encounter $encounter): static
+    public function removeEncounter(RelegationEncounter $encounter): static
     {
         if ($this->encounters->removeElement($encounter)) {
             // set the owning side to null (unless already changed)
@@ -79,14 +79,14 @@ class Relegation
     }
 
     /**
-     * @return Collection<int, Encounter>
+     * @return Collection<int, RelegationEncounter>
      */
     public function getEncounters2(): Collection
     {
         return $this->encounters2;
     }
 
-    public function addEncounter2(Encounter $encounter2): static
+    public function addEncounter2(RelegationEncounter $encounter2): static
     {
         if (!$this->encounters2->contains($encounter2)) {
             $this->encounters2->add($encounter2);
@@ -96,7 +96,7 @@ class Relegation
         return $this;
     }
 
-    public function removeEncounter2(Encounter $encounter2): static
+    public function removeEncounter2(RelegationEncounter $encounter2): static
     {
         if ($this->encounters2->removeElement($encounter2)) {
             // set the owning side to null (unless already changed)
@@ -108,11 +108,11 @@ class Relegation
         return $this;
     }
 
-    private function generateEncounter()
+    private function generateEncounter(): void
     {
         for ($x = 0; $x <= 12; $x++) {
-            $this->addEncounter(new Encounter());
-            $this->addEncounter2(new Encounter());
+            $this->addEncounter(new RelegationEncounter());
+            $this->addEncounter2(new RelegationEncounter());
         }
     }
 }

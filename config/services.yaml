@@ -38,6 +38,10 @@ services:
         class: App\Admin\EncounterAdmin
         tags:
             - { name: sonata.admin, model_class: App\Entity\Encounter, controller: App\Controller\EncounterAdminController, manager_type: orm, group: Season., label: Begegnungen }
+    admin.relegation_encounter:
+        class: App\Admin\RelegationEncounterAdmin
+        tags:
+            - { name: sonata.admin, model_class: App\Entity\RelegationEncounter, controller: App\Controller\EncounterAdminController, manager_type: orm, group: admin., label: Relegations Begegnungen }
 
     admin.play_day:
         class: App\Admin\PlayDayAdmin

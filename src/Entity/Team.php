@@ -57,11 +57,6 @@ class Team
     #[ORM\ManyToOne(inversedBy: 'teams')]
     private ?Affiliation $affiliation = null;
 
-
-
-
-
-
     public function __construct()
     {
         $this->encounters = new ArrayCollection();
@@ -71,6 +66,7 @@ class Team
         $this->transferHistories = new ArrayCollection();
         $this->activeInLeagues = new ArrayCollection();
         $this->teamOfTheDays = new ArrayCollection();
+        $this->teamInfo = new TeamInfo();
     }
 
     public function getId(): int

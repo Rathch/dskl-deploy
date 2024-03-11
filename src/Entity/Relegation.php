@@ -15,7 +15,7 @@ class Relegation
     #[ORM\Column]
     private ?int $id = null;
 
-    #[ORM\OneToOne(inversedBy: 'relegation', cascade: ['persist', 'remove'])]
+    #[ORM\OneToOne(inversedBy: 'relegation', cascade: ['persist'])]
     private ?League $League = null;
 
     #[ORM\OneToMany(mappedBy: 'relegation', targetEntity: RelegationEncounter::class, cascade: ['persist', 'remove'])]

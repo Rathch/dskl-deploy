@@ -32,7 +32,7 @@ class Team
     #[ORM\Column(type: "flag")]
     private ?Flag $active = null;
 
-    #[ORM\OneToMany(mappedBy: 'teams', targetEntity: TeamStatistic::class, cascade: ['persist', 'remove'])]
+    #[ORM\OneToMany(mappedBy: 'team', targetEntity: TeamStatistic::class, cascade: ['persist', 'remove'])]
     private $teamStatistics;
 
     #[ORM\OneToOne(inversedBy: 'team', targetEntity: TeamInfo::class, cascade: ['persist', 'remove'])]

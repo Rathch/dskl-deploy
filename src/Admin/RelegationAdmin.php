@@ -5,6 +5,8 @@ declare(strict_types=1);
 namespace App\Admin;
 
 use App\Entity\League;
+use App\Entity\TeamAttributes;
+use App\Entity\TeamInfo;
 use Sonata\AdminBundle\Admin\AbstractAdmin;
 use Sonata\AdminBundle\Datagrid\DatagridMapper;
 use Sonata\AdminBundle\Datagrid\ListMapper;
@@ -14,6 +16,7 @@ use Sonata\AdminBundle\Form\Type\ModelType;
 use Sonata\AdminBundle\Show\ShowMapper;
 use Sonata\Form\Type\CollectionType;
 use Sonata\AdminBundle\Form\Type\AdminType;
+use Symfony\Component\Filesystem\Filesystem;
 
 final class RelegationAdmin extends AbstractAdmin
 {
@@ -75,39 +78,58 @@ final class RelegationAdmin extends AbstractAdmin
                 ]
             )
                 ->end()
-            ->end()
-            ->tab('Rueckspiele')
+            ->end();
+
+        if ($this->getRequest()->getPathInfo() !== "/admin/app/relegation/create") {
+            $form->tab('Rueckspiele')
                 ->with('', ['class' => 'col-md-12'])
-                    ->add('encounters2',CollectionType::class,
-                [
-                    //'foo' => ['class' => 'tinymce'],
-                    "label"=>"rückspiele",
-                    "btn_catalogue"=>false,
-                    "btn_add"=>false,
-                    'type_options' => [
-                        // Prevents the "Delete" option from being displayed
-                        'delete' => false,
-                        'btn_add' => false,
+                ->add('encounters2', CollectionType::class,
+                    [
+                        "label" => "rückspiele",
+                        "btn_catalogue" => false,
+                        "btn_add" => false,
+                        'type_options' => [
+                            // Prevents the "Delete" option from being displayed
+                            'delete' => false,
+                            'btn_add' => false,
+                        ]
+                    ], [
+                        'edit' => 'inline',
+                        #'inline' => 'natural'
+                        'inline' => 'table'
                     ]
-                ], [
-                    'edit' => 'inline',
-                    'inline' => 'natural'
-                    #'inline' => 'table'
-                ]
-            )
+                )
                 ->end()
-            ->end()
-
-
-
-
-        ;
+                ->end();
+        }
     }
+
 
     protected function configureShowFields(ShowMapper $show): void
     {
         $show
             ->add('id')
         ;
+    }
+
+    protected function prePersist(object $object): void
+    {
+        $this->generateOpositGames($object);
+    }
+
+    protected function preUpdate(object $object): void
+    {
+
+    }
+
+
+    private function generateOpositGames(object $object)
+    {
+        $firstLegs = $object->getEncounters();
+        $secondLegs = $object->getEncounters2();
+        foreach ($firstLegs as $position => $firstLegs) {
+            $secondLegs[$position]->setTeam1($firstLegs->getTeam2());
+            $secondLegs[$position]->setTeam2($firstLegs->getTeam1());
+        }
     }
 }

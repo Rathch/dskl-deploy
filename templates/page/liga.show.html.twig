@@ -210,6 +210,6 @@
     {% endfor %}
     {% if liga.relegation %}
     <h2>Relegationsspiele:</h2>
-        {{ include('snipets/relegationTable.html.twig', {encounters:liga.relegation.encounters}) }}
+        {{ include('snipets/relegationTable.html.twig', {encounters:liga.relegation.encounters, encounters2:liga.relegation.encounters2}) }}
     {% endif %}
 {% endblock %}

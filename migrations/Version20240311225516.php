@@ -20,12 +20,12 @@ final class Version20240311225516 extends AbstractMigration
     public function up(Schema $schema): void
     {
         // this up() migration is auto-generated, please modify it to your needs
-        $this->addSql('ALTER TABLE TeamInfo DROP team_id');
+        #$this->addSql('ALTER TABLE TeamInfo DROP team_id');
     }
 
     public function down(Schema $schema): void
     {
         // this down() migration is auto-generated, please modify it to your needs
-        $this->addSql('ALTER TABLE TeamInfo ADD team_id INT NOT NULL');
+        #$this->addSql('ALTER TABLE TeamInfo ADD team_id INT NOT NULL');
     }
 }

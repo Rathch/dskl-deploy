@@ -42,6 +42,12 @@ file that was distributed with this source code.
 
 {% block form %}
 
+    <script>
+        ClassicEditor.create( document.querySelector( '#editor' ), {
+            licenseKey: 'YWCKGF832.LHL163IIR185',
+        } )
+        console.log("foo")
+    </script>
     {{ block('parentForm') }}
 
 {% endblock %}

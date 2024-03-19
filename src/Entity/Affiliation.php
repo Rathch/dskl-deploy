@@ -18,8 +18,10 @@ class Affiliation
     #[ORM\Column(length: 255)]
     private ?string $name = null;
 
-    #[ORM\OneToMany(mappedBy: 'affiliation', targetEntity: Team::class)]
+    #[ORM\ManyToMany(mappedBy: 'affiliation', targetEntity: Team::class)]
     private Collection $teams;
+
+
 
     public function __construct()
     {
@@ -55,7 +57,7 @@ class Affiliation
     {
         if (!$this->teams->contains($team)) {
             $this->teams->add($team);
-            $team->setAffiliation($this);
+            $team->addAffiliation($this);
         }
 
         return $this;
@@ -64,10 +66,7 @@ class Affiliation
     public function removeTeam(Team $team): static
     {
         if ($this->teams->removeElement($team)) {
-            // set the owning side to null (unless already changed)
-            if ($team->getAffiliation() === $this) {
-                $team->setAffiliation(null);
-            }
+            $team->removeAffiliation($this);
         }
 
         return $this;

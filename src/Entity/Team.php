@@ -54,8 +54,8 @@ class Team
     #[ORM\OneToMany(mappedBy: 'teamOfTheDay', targetEntity: PlayDay::class)]
     private Collection $teamOfTheDays;
 
-    #[ORM\ManyToOne(inversedBy: 'teams')]
-    private ?Affiliation $affiliation = null;
+    #[ORM\ManyToMany(targetEntity: Affiliation::class, inversedBy: 'teams')]
+    private Collection $affiliations;
 
     public function __construct()
     {
@@ -67,6 +67,7 @@ class Team
         $this->activeInLeagues = new ArrayCollection();
         $this->teamOfTheDays = new ArrayCollection();
         $this->teamInfo = new TeamInfo();
+        $this->affiliations = new ArrayCollection();
     }
 
     public function getId(): int
@@ -360,15 +361,26 @@ class Team
 
         return $this;
     }
-
-    public function getAffiliation(): ?Affiliation
+    /**
+     * @return Collection<int, Affiliation>
+     */
+    public function getAffiliations(): Collection
     {
-        return $this->affiliation;
+        return $this->affiliations;
     }
 
-    public function setAffiliation(?Affiliation $affiliation): static
+    public function addAffiliation(Affiliation $affiliation): static
     {
-        $this->affiliation = $affiliation;
+        if (!$this->affiliations->contains($affiliation)) {
+            $this->affiliations->add($affiliation);
+        }
+
+        return $this;
+    }
+
+    public function removeAffiliation(Affiliation $affiliation): static
+    {
+        $this->affiliations->removeElement($affiliation);
 
         return $this;
     }

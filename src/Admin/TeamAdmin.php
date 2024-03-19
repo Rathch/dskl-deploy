@@ -9,6 +9,7 @@ use App\Entity\Affiliation;
 use App\Entity\Team;
 use App\Entity\TeamAttributes;
 use App\Entity\TeamInfo;
+use Doctrine\ORM\EntityManagerInterface;
 use FOS\CKEditorBundle\Form\Type\CKEditorType;
 use ReflectionProperty;
 use Sonata\AdminBundle\Admin\AbstractAdmin;
@@ -18,16 +19,23 @@ use Sonata\AdminBundle\FieldDescription\FieldDescriptionInterface;
 use Sonata\AdminBundle\Form\FormMapper;
 use Sonata\AdminBundle\Form\Type\AdminType;
 use Sonata\AdminBundle\Form\Type\ModelType;
+use Sonata\Form\Type\CollectionType;
 use Sonata\AdminBundle\Show\ShowMapper;
 use Symfony\Component\Filesystem\Filesystem;
 use Symfony\Component\Form\Extension\Core\Type\EnumType;
-use Symfony\Component\Form\Extension\Core\Type\TextareaType;
 use function Webmozart\Assert\Tests\StaticAnalysis\null;
 
 
 final class TeamAdmin extends AbstractAdmin
 {
+    private EntityManagerInterface $entityManager;
 
+    public function __construct(
+        EntityManagerInterface $entityManager
+    ) {
+        $this->entityManager = $entityManager;
+        parent::__construct();
+    }
     protected function configureDatagridFilters(DatagridMapper $filter): void
     {
         $filter->add('id', null, ["label" => "id"]);
@@ -38,7 +46,7 @@ final class TeamAdmin extends AbstractAdmin
         $list->add('id', null, ["label" => "id"])
             ->add('name', null, ["label" => "name"])
             ->add('description', FieldDescriptionInterface::TYPE_HTML, ["label" => "description"])
-            ->add('affiliation', FieldDescriptionInterface::TYPE_ONE_TO_ONE, ["associated_property" => "name", "label" => "Zugehörigkeit"])
+            ->add('affiliations', FieldDescriptionInterface::TYPE_MANY_TO_MANY, ["associated_property" => "name", "label" => "Zugehörigkeit"])
             ->add(ListMapper::NAME_ACTIONS, null, [
                 'actions' => [
                     'show' => [],
@@ -56,15 +64,15 @@ final class TeamAdmin extends AbstractAdmin
                     ->add('name', null, ["label" => "name"])
                     ->add('description', CKEditorType::class, ["label" => "description", "required"=>true])
                     ->add('active', EnumType::class, ["class"=>Flag::class,"label" => "active"])
-                    ->add('affiliation',ModelType::class,
-                        [
-                            'class' => Affiliation::class,
-                            'property'=>'name',
-                            #'disabled'=>true,
-                            'btn_add'=>false,
-                            "label" => "Zugehörigkeit"
-                        ]
-                    )
+                    ->add('affiliations', ModelType::class, [
+                        'label' => 'Zugehörigkeit',
+                        'class' => Affiliation::class,
+                        'property' => 'name',
+                        'expanded' => true,
+                        'by_reference' => false,
+                        'multiple' => true,
+                        'btn_add' => false,
+                    ])
                 ->end()
             ->end()
 

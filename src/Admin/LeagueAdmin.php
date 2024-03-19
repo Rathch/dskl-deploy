@@ -48,7 +48,8 @@ final class LeagueAdmin extends AbstractAdmin
         $teamRepository = $modelManager->getEntityManager(Team::class)->getRepository(Team::class);
 
         $queryBuilder = $teamRepository->createQueryBuilder('t')
-            ->where('t.affiliation = :affiliation')
+            ->innerJoin('t.affiliations', 'a')
+            ->where('a.id = :affiliation')
             ->setParameter('affiliation', $affiliation);
 
         return $queryBuilder;

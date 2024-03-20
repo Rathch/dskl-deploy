@@ -12,7 +12,6 @@
         "doctrine/doctrine-bundle": "^2.6",
         "doctrine/doctrine-migrations-bundle": "^3.2",
         "doctrine/orm": "^2.11",
-        "friendsofsymfony/ckeditor-bundle": "^2.4",
         "knplabs/knp-menu-bundle": "^3.2",
         "mnito/round-robin": "^2.2",
         "phpdocumentor/reflection-docblock": "^5.3",
@@ -104,5 +103,10 @@
         "symfony/maker-bundle": "^1.46",
         "symfony/stopwatch": "6.0.*",
         "symfony/web-profiler-bundle": "6.0.*"
+    },
+    "scripts": {
+        "auto-scripts": {
+
+        }
     }
 }

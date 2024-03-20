@@ -4,12 +4,12 @@ declare(strict_types=1);
 
 namespace App\Admin;
 
-use FOS\CKEditorBundle\Form\Type\CKEditorType;
 use Sonata\AdminBundle\Admin\AbstractAdmin;
 use Sonata\AdminBundle\Datagrid\DatagridMapper;
 use Sonata\AdminBundle\Datagrid\ListMapper;
 use Sonata\AdminBundle\Form\FormMapper;
 use Sonata\AdminBundle\Show\ShowMapper;
+use Symfony\Component\Form\Extension\Core\Type\TextareaType;
 
 final class ArticleAdmin extends AbstractAdmin
 {
@@ -42,7 +42,7 @@ final class ArticleAdmin extends AbstractAdmin
     {
         $form
             ->add('title')
-            ->add('description',CKEditorType::class)
+            ->add('description',TextareaType::class,['attr' => ["class" => "summernote"]])
             ;
     }
 

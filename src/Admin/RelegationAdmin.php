@@ -5,8 +5,6 @@ declare(strict_types=1);
 namespace App\Admin;
 
 use App\Entity\League;
-use App\Entity\TeamAttributes;
-use App\Entity\TeamInfo;
 use Sonata\AdminBundle\Admin\AbstractAdmin;
 use Sonata\AdminBundle\Datagrid\DatagridMapper;
 use Sonata\AdminBundle\Datagrid\ListMapper;
@@ -15,8 +13,6 @@ use Sonata\AdminBundle\Form\FormMapper;
 use Sonata\AdminBundle\Form\Type\ModelType;
 use Sonata\AdminBundle\Show\ShowMapper;
 use Sonata\Form\Type\CollectionType;
-use Sonata\AdminBundle\Form\Type\AdminType;
-use Symfony\Component\Filesystem\Filesystem;
 
 final class RelegationAdmin extends AbstractAdmin
 {
@@ -62,7 +58,6 @@ final class RelegationAdmin extends AbstractAdmin
                 ->with('', ['class' => 'col-md-12'])
                     ->add('encounters',CollectionType::class,
                 [
-                    //'foo' => ['class' => 'tinymce'],
                     "label"=>"hinspiele",
                     "btn_catalogue"=>false,
                     "btn_add"=>false,
@@ -72,9 +67,9 @@ final class RelegationAdmin extends AbstractAdmin
                         'btn_add' => false,
                     ]
                 ], [
-                    'edit' => 'inline',
-                    'inline' => 'natural'
-                    #'inline' => 'table'
+                        'edit' => 'inline',
+                        #'inline' => 'natural'
+                        'inline' => 'table'
                 ]
             )
                 ->end()

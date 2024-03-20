@@ -26,8 +26,5 @@
     },
     "engines": {
         "node": "16"
-    },
-    "dependencies": {
-        "ckeditor4": "^4.20.0"
     }
 }

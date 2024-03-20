@@ -4,12 +4,9 @@ declare(strict_types=1);
 
 namespace App\Admin;
 
-use App\Doctrine\Enum\Flag;
 use App\Doctrine\Enum\MethaTyp;
 use App\Doctrine\Enum\Position;
 use App\Entity\Team;
-use App\Entity\TeamInfo;
-use FOS\CKEditorBundle\Form\Type\CKEditorType;
 use Sonata\AdminBundle\Admin\AbstractAdmin;
 use Sonata\AdminBundle\Datagrid\DatagridMapper;
 use Sonata\AdminBundle\Datagrid\ListMapper;
@@ -20,6 +17,7 @@ use Sonata\AdminBundle\Show\ShowMapper;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Form\Extension\Core\Type\EnumType;
 use Sonata\AdminBundle\Route\RouteCollectionInterface;
+use Symfony\Component\Form\Extension\Core\Type\TextareaType;
 
 final class SquadAdmin extends AbstractAdmin
 {
@@ -97,7 +95,7 @@ final class SquadAdmin extends AbstractAdmin
             ->add('birthYear', null, ["label" => "birthYear"])
             ->add('gender', ChoiceType::class, ["choices"=>["M"=>"M","W"=>"W","D"=>"D"],"label" => "gender"])
             ->add('value', null, ["label" => "value"])
-            ->add('comment', CKEditorType::class, ["label" => "comment", "required"=>false])
+            ->add('comment', TextareaType::class, ["label" => "comment", "required"=>false, 'attr' => ["class" => "summernote"]])
             ->add('replacement', null, ["label" => "replacement"])
             ->add('dead', null, ["label" => "Verstorben"])
             ;

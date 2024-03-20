@@ -5,10 +5,8 @@ declare(strict_types=1);
 namespace App\Admin;
 
 use App\Entity\RelegationEncounter;
-use App\Entity\PlayDay;
 use App\Entity\Team;
 use App\Service\GenerateTeamStatisticService;
-use FOS\CKEditorBundle\Form\Type\CKEditorType;
 use JetBrains\PhpStorm\NoReturn;
 use Sonata\AdminBundle\Admin\AbstractAdmin;
 use Sonata\AdminBundle\Datagrid\DatagridMapper;
@@ -17,6 +15,7 @@ use Sonata\AdminBundle\FieldDescription\FieldDescriptionInterface;
 use Sonata\AdminBundle\Form\FormMapper;
 use Sonata\AdminBundle\Form\Type\ModelType;
 use Symfony\Component\Form\Extension\Core\Type\DateType;
+use Symfony\Component\Form\Extension\Core\Type\TextareaType;
 
 final class RelegationEncounterAdmin extends AbstractAdmin
 {
@@ -100,9 +99,9 @@ final class RelegationEncounterAdmin extends AbstractAdmin
                 ->add('pointsTeam2', null, ["label" => "pointsTeam2"])
             ->end()
             ->with("report", ['class' => 'col-md-12'])
-                ->add('report',CKEditorType::class, [
+                ->add('report',TextareaType::class, [
                     "label" => "report",
-                    'attr' => ["class" => "ckeditor"],
+                    'attr' => ["class" => "summernote"],
                 ])
             ->end()
 

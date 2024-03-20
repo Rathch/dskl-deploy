@@ -9,8 +9,6 @@ use App\Entity\PlayDay;
 use App\Entity\Team;
 use App\Service\GenerateEncounterService;
 use App\Service\GenerateTeamStatisticService;
-
-use FOS\CKEditorBundle\Form\Type\CKEditorType;
 use JetBrains\PhpStorm\NoReturn;
 use Sonata\AdminBundle\Admin\AbstractAdmin;
 use Sonata\AdminBundle\Datagrid\DatagridMapper;
@@ -119,9 +117,10 @@ final class EncounterAdmin extends AbstractAdmin
                 ->add('pointsTeam2', null, ["label" => "pointsTeam2"])
             ->end()
             ->with("report", ['class' => 'col-md-12'])
-                ->add('report',CKEditorType::class, [
+                ->add('report',TextareaType::class, [
                     "label" => "report",
-                    'attr' => ["class" => "ckeditor"],
+                    'attr' => ["class" => "summernote"],
+
                 ])
             ->end()
 

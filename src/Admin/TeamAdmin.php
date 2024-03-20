@@ -6,11 +6,9 @@ namespace App\Admin;
 
 use App\Doctrine\Enum\Flag;
 use App\Entity\Affiliation;
-use App\Entity\Team;
 use App\Entity\TeamAttributes;
 use App\Entity\TeamInfo;
 use Doctrine\ORM\EntityManagerInterface;
-use FOS\CKEditorBundle\Form\Type\CKEditorType;
 use ReflectionProperty;
 use Sonata\AdminBundle\Admin\AbstractAdmin;
 use Sonata\AdminBundle\Datagrid\DatagridMapper;
@@ -19,10 +17,10 @@ use Sonata\AdminBundle\FieldDescription\FieldDescriptionInterface;
 use Sonata\AdminBundle\Form\FormMapper;
 use Sonata\AdminBundle\Form\Type\AdminType;
 use Sonata\AdminBundle\Form\Type\ModelType;
-use Sonata\Form\Type\CollectionType;
 use Sonata\AdminBundle\Show\ShowMapper;
 use Symfony\Component\Filesystem\Filesystem;
 use Symfony\Component\Form\Extension\Core\Type\EnumType;
+use Symfony\Component\Form\Extension\Core\Type\TextareaType;
 use function Webmozart\Assert\Tests\StaticAnalysis\null;
 
 
@@ -62,7 +60,7 @@ final class TeamAdmin extends AbstractAdmin
             ->tab('team')
                 ->with('', ['class' => 'col-md-12'])
                     ->add('name', null, ["label" => "name"])
-                    ->add('description', CKEditorType::class, ["label" => "description", "required"=>true])
+                    ->add('description', TextareaType::class, ["label" => "description", "required"=>true,'attr' => ["class" => "summernote"]])
                     ->add('active', EnumType::class, ["class"=>Flag::class,"label" => "active"])
                     ->add('affiliations', ModelType::class, [
                         'label' => 'Zugehörigkeit',

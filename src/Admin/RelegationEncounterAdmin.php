@@ -59,9 +59,10 @@ final class RelegationEncounterAdmin extends AbstractAdmin
         $form->with('Date', ['class' => 'col-md-12'])
         ->add('date', DateType::class, [
             "label"=>"date",
-            "widget"=>"choice",
-            'years' => range(2080,2099),
-            'format' => 'd MMMM yyyy',
+            'widget' => 'single_text',
+            #"widget"=>"choice",
+            'years' => range(2080, 2090),
+            #'format' => 'd MMMM yyyy',
         ])
         ->end()
             ->with('Team 1', ['class' => 'col-md-6'])

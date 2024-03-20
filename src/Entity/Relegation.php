@@ -111,7 +111,7 @@ class Relegation
     private function generateEncounter(): void
     {
         //todo fix number to 12
-        for ($x = 0; $x <= 1; $x++) {
+        for ($x = 0; $x <= 12; $x++) {
             $this->addEncounter(new RelegationEncounter());
             $this->addEncounter2(new RelegationEncounter());
         }

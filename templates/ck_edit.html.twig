@@ -41,7 +41,6 @@ file that was distributed with this source code.
             alert("Welcome to the javaTpoint.com");
         }
     </script>
-    <button onclick = "fun()">Click me</button>
 {%- endblock -%}
 
 {% use '@SonataAdmin/CRUD/base_edit_form.html.twig' with form as parentForm %}
@@ -50,12 +49,4 @@ file that was distributed with this source code.
 
     {{ block('parentForm') }}
 
-    <script src="https://cdn.ckeditor.com/ckeditor5/35.2.0/classic/ckeditor.js"></script>
-    <script>
-        document.querySelector( '.sonata-ba-actin' ).onclick = function() {
-            const elements = document.querySelectorAll( '.ckeditor' )
-            elements.forEach(console.log("foo"))
-        }
-
-    </script>
 {% endblock %}

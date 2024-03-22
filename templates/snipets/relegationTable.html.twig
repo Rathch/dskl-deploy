@@ -1,0 +1,16 @@
+<div class="accordion accordion-flush" id="relegations">
+    <div class="accordion-item">
+        <h2 class="accordion-header" id="flush-header-relegations">
+            <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#flush-relegations" aria-expanded="false" aria-controls="flush-relegations">
+                <h2 class="mb-0">Relegationsspiele</h2>
+            </button>
+        </h2>
+        <div id="flush-relegations" class="accordion-collapse collapse" aria-labelledby="flush-relegations" data-bs-parent="#accordionFlushRelegations">
+            <div class="accordion-body">
+{% for key, encounter in encounters %}
+    {{ include('snipets/relegationEncounterTable.html.twig', {encounter:encounter, encounter2:encounters2[key]}) }}
+{% endfor %}
+            </div>
+        </div>
+    </div>
+</div>

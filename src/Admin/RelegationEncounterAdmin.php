@@ -4,10 +4,8 @@ declare(strict_types=1);
 
 namespace App\Admin;
 
-use App\Entity\Encounter;
-use App\Entity\PlayDay;
+use App\Entity\RelegationEncounter;
 use App\Entity\Team;
-use App\Service\GenerateEncounterService;
 use App\Service\GenerateTeamStatisticService;
 use JetBrains\PhpStorm\NoReturn;
 use Sonata\AdminBundle\Admin\AbstractAdmin;
@@ -16,11 +14,10 @@ use Sonata\AdminBundle\Datagrid\ListMapper;
 use Sonata\AdminBundle\FieldDescription\FieldDescriptionInterface;
 use Sonata\AdminBundle\Form\FormMapper;
 use Sonata\AdminBundle\Form\Type\ModelType;
-use Sonata\AdminBundle\Show\ShowMapper;
 use Symfony\Component\Form\Extension\Core\Type\DateType;
 use Symfony\Component\Form\Extension\Core\Type\TextareaType;
 
-final class EncounterAdmin extends AbstractAdmin
+final class RelegationEncounterAdmin extends AbstractAdmin
 {
     /**
      *
@@ -59,29 +56,15 @@ final class EncounterAdmin extends AbstractAdmin
 
     protected function configureFormFields(FormMapper $form): void
     {
-            if (str_contains($this->getRequest()->getPathInfo(), "relegation")) {
-                $form->with('Date', ['class' => 'col-md-12'])
-                    ->add('date', DateType::class, [
-                        "label"=>"date",
-                        "widget"=>"choice",
-                        'years' => range(2080,2099),
-                        'format' => 'd MMMM yyyy',
-                    ])
-                    ->end();
-            } else {
-                $form->with('Playday', ['class' => 'col-md-12'])
-
-                    ->add('playday',ModelType::class,
-                        [
-                            'class' => PlayDay::class,
-                            'property'=>'id',
-                            'disabled'=> true,
-                            "label" => "playday"
-                        ]
-                    )
-                    ->end();
-            }
-        $form
+        $form->with('Date', ['class' => 'col-md-12'])
+        ->add('date', DateType::class, [
+            "label"=>"date",
+            'widget' => 'single_text',
+            #"widget"=>"choice",
+            'years' => range(2080, 2090),
+            #'format' => 'd MMMM yyyy',
+        ])
+        ->end()
             ->with('Team 1', ['class' => 'col-md-6'])
                 ->add('team1',ModelType::class,
                     [
@@ -120,7 +103,6 @@ final class EncounterAdmin extends AbstractAdmin
                 ->add('report',TextareaType::class, [
                     "label" => "report",
                     'attr' => ["class" => "summernote"],
-
                 ])
             ->end()
 
@@ -130,7 +112,7 @@ final class EncounterAdmin extends AbstractAdmin
 
     #[NoReturn] protected function postUpdate(object $object): void
     {
-        /** @var Encounter $object */
+        /** @var RelegationEncounter $object */
         $this->generateTeamStatisticService->update($object);
     }
 }

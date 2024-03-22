@@ -38,6 +38,10 @@ services:
         class: App\Admin\EncounterAdmin
         tags:
             - { name: sonata.admin, model_class: App\Entity\Encounter, controller: App\Controller\EncounterAdminController, manager_type: orm, group: Season., label: Begegnungen }
+    admin.relegation_encounter:
+        class: App\Admin\RelegationEncounterAdmin
+        tags:
+            - { name: sonata.admin, model_class: App\Entity\RelegationEncounter, controller: App\Controller\EncounterAdminController, manager_type: orm, group: admin., label: Relegations Begegnungen }
 
     admin.play_day:
         class: App\Admin\PlayDayAdmin
@@ -108,9 +112,19 @@ services:
     admin.retrospective:
         class: App\Admin\RetrospectiveAdmin
         tags:
-            - { name: sonata.admin, model_class: App\Entity\Retrospective, controller: ~, manager_type: orm, group: admin, label: Retrospective }
+            - { name: sonata.admin, model_class: App\Entity\Retrospective, controller: ~, manager_type: orm, group: admin, label: "Saisonrückblicke" }
 
     admin.article:
         class: App\Admin\ArticleAdmin
         tags:
             - { name: sonata.admin, model_class: App\Entity\Article, controller: ~, manager_type: orm, group: Seiten., label: Wipeout!-Magazin }
+
+    admin.relegation:
+        class: App\Admin\RelegationAdmin
+        tags:
+            - { name: sonata.admin, model_class: App\Entity\Relegation, controller: App\Controller\RelegationAdminController, manager_type: orm, group: Season., label: Relegation }
+
+    admin.affiliation:
+        class: App\Admin\AffiliationAdmin
+        tags:
+            - { name: sonata.admin, model_class: App\Entity\Affiliation, controller: ~, manager_type: orm, group: admin, label: "Zugehörigkeit" }

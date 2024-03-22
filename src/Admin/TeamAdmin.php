@@ -5,9 +5,10 @@ declare(strict_types=1);
 namespace App\Admin;
 
 use App\Doctrine\Enum\Flag;
+use App\Entity\Affiliation;
 use App\Entity\TeamAttributes;
 use App\Entity\TeamInfo;
-use FOS\CKEditorBundle\Form\Type\CKEditorType;
+use Doctrine\ORM\EntityManagerInterface;
 use ReflectionProperty;
 use Sonata\AdminBundle\Admin\AbstractAdmin;
 use Sonata\AdminBundle\Datagrid\DatagridMapper;
@@ -15,6 +16,7 @@ use Sonata\AdminBundle\Datagrid\ListMapper;
 use Sonata\AdminBundle\FieldDescription\FieldDescriptionInterface;
 use Sonata\AdminBundle\Form\FormMapper;
 use Sonata\AdminBundle\Form\Type\AdminType;
+use Sonata\AdminBundle\Form\Type\ModelType;
 use Sonata\AdminBundle\Show\ShowMapper;
 use Symfony\Component\Filesystem\Filesystem;
 use Symfony\Component\Form\Extension\Core\Type\EnumType;
@@ -24,7 +26,14 @@ use function Webmozart\Assert\Tests\StaticAnalysis\null;
 
 final class TeamAdmin extends AbstractAdmin
 {
+    private EntityManagerInterface $entityManager;
 
+    public function __construct(
+        EntityManagerInterface $entityManager
+    ) {
+        $this->entityManager = $entityManager;
+        parent::__construct();
+    }
     protected function configureDatagridFilters(DatagridMapper $filter): void
     {
         $filter->add('id', null, ["label" => "id"]);
@@ -35,7 +44,7 @@ final class TeamAdmin extends AbstractAdmin
         $list->add('id', null, ["label" => "id"])
             ->add('name', null, ["label" => "name"])
             ->add('description', FieldDescriptionInterface::TYPE_HTML, ["label" => "description"])
-            ->add('active', FieldDescriptionInterface::TYPE_ENUM, ["label" => "active"])
+            ->add('affiliations', FieldDescriptionInterface::TYPE_MANY_TO_MANY, ["associated_property" => "name", "label" => "Zugehörigkeit"])
             ->add(ListMapper::NAME_ACTIONS, null, [
                 'actions' => [
                     'show' => [],
@@ -51,19 +60,20 @@ final class TeamAdmin extends AbstractAdmin
             ->tab('team')
                 ->with('', ['class' => 'col-md-12'])
                     ->add('name', null, ["label" => "name"])
-                    ->add('description', CKEditorType::class, ["label" => "description", "required"=>false])
-            ->add('active', EnumType::class, ["class"=>Flag::class,"label" => "active"])
+                    ->add('description', TextareaType::class, ["label" => "description", "required"=>true,'attr' => ["class" => "summernote"]])
+                    ->add('active', EnumType::class, ["class"=>Flag::class,"label" => "active"])
+                    ->add('affiliations', ModelType::class, [
+                        'label' => 'Zugehörigkeit',
+                        'class' => Affiliation::class,
+                        'property' => 'name',
+                        'expanded' => true,
+                        'by_reference' => false,
+                        'multiple' => true,
+                        'btn_add' => false,
+                    ])
                 ->end()
             ->end()
-            ->tab('information')
-            ->with('', ['class' => 'col-md-12'])
-            ->add('teamInfo', AdminType::class,
-                [
-                    "label"=>"teamInfo",
-                ]
-            )
-            ->end()
-            ->end()
+
             ->tab('attributes')
                 ->with('', ['class' => 'col-md-12'])
                     ->add('teamAttributes', AdminType::class,
@@ -75,7 +85,17 @@ final class TeamAdmin extends AbstractAdmin
             ->end()
         ;
         if ($this->getRequest()->getPathInfo() != "/admin/app/team/create") {
-            $form ->tab('squad')
+            $form
+                ->tab('information')
+                ->with('', ['class' => 'col-md-12'])
+                ->add('teamInfo', AdminType::class,
+                    [
+                        "label"=>"teamInfo",
+                    ]
+                )
+                ->end()
+                ->end()
+                ->tab('squad')
                 ->with('', ['class' => 'col-md-12'])
                 ->add('squads', \Sonata\Form\Type\CollectionType::class, [
                     "label"=>"squads",
@@ -112,8 +132,6 @@ final class TeamAdmin extends AbstractAdmin
         $teamInfo->setTeam($team);
         $teamAttributs = new TeamAttributes();
         $teamAttributs->setTeam($team);
-
-
     }
 
     protected function preUpdate(object $object): void
@@ -121,15 +139,15 @@ final class TeamAdmin extends AbstractAdmin
         $reflectionProperty = new ReflectionProperty(\App\Entity\TeamInfo::class, 'image');
         $teaminfo = $object->getTeamInfo();
         if ($reflectionProperty->isInitialized($teaminfo)) {
-            $thumbnailName = $teaminfo->getTeam()->getName();
+            $thumbnailName = $object->getName();
             $thumbnailName = strtolower((string) $thumbnailName);
             $thumbnailName = trim($thumbnailName);
             if ($object->getTeamInfo()->getImage() !== null) {
                 $teaminfo->setImageName($thumbnailName . "." . $teaminfo->getImage()->guessExtension());
                 $filesystem= new Filesystem();
-                $filesystem->mkdir($_ENV['IMG_PATH']."/teams/".$teaminfo->getTeam()->getId());
+                $filesystem->mkdir($_ENV['IMG_PATH']."/teams/".$object->getId());
 
-                file_put_contents(  $_ENV['IMG_PATH']."/teams/".$teaminfo->getTeam()->getId()."/". $thumbnailName .  "." . $teaminfo->getImage()->guessExtension(), $teaminfo->getImage()->getContent());
+                file_put_contents(  $_ENV['IMG_PATH']."/teams/".$object->getId()."/". $thumbnailName .  "." . $teaminfo->getImage()->guessExtension(), $teaminfo->getImage()->getContent());
             }
 
         }

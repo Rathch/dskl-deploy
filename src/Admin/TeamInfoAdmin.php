@@ -4,19 +4,16 @@ declare(strict_types=1);
 
 namespace App\Admin;
 
-use App\Entity\Retrospective;
-use App\Entity\Squad;
-use FOS\CKEditorBundle\Form\Type\CKEditorType;
+
 use Sonata\AdminBundle\Admin\AbstractAdmin;
 use Sonata\AdminBundle\Datagrid\DatagridMapper;
 use Sonata\AdminBundle\Datagrid\ListMapper;
 use Sonata\AdminBundle\Form\FormMapper;
 use Sonata\Form\Type\CollectionType;
-use Sonata\AdminBundle\Form\Type\ModelType;
 use Sonata\AdminBundle\Show\ShowMapper;
-use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Filesystem\Filesystem;
 use Symfony\Component\Form\Extension\Core\Type\FileType;
+use Symfony\Component\Form\Extension\Core\Type\TextareaType;
 
 final class TeamInfoAdmin extends AbstractAdmin
 {
@@ -58,19 +55,18 @@ final class TeamInfoAdmin extends AbstractAdmin
     protected function configureFormFields(FormMapper $form): void
     {
         $form
-            //->add('team',null,["choice_label"=>"name","label"=>"team","disabled"=>true])
             ->add(
                 'image',
                 FileType::class,
-                $this->addPrieview($this->getSubject(),["label"=>"image",'required' => false]))
+                $this->addPrieview($this->getSubject(),["label"=>"image",'required' => false,'mapped' => false]))
             ->add('city',null,["label"=>"city"])
             ->add('color',null,["label"=>"color"])
             ->add('foundingYear',null,["label"=>"foundingYear"])
             ->add('sponsor',null,["label"=>"sponsor"])
             ->add('president',null,["label"=>"president"])
             ->add('trainer',null,["label"=>"trainer"])
-            ->add('successes',CKEditorType::class,["label"=>"successes", "required"=>false])
-            ->add('info',CKEditorType::class,["label"=>"info", "required"=>false])
+            ->add('successes',TextareaType::class,["label"=>"successes", "required"=>false, 'attr' => ["class" => "summernote"]])
+            ->add('info',TextareaType::class,["label"=>"info", "required"=>false, 'attr' => ["class" => "summernote"]])
             ->add('retrospectives',CollectionType::class,[
                 "label"=>"Rückblick",
                 "required"=>false,
@@ -106,7 +102,6 @@ final class TeamInfoAdmin extends AbstractAdmin
     }
     protected function prePersist(object $object): void
     {
-
         $this->manageFileUpload($object);
     }
 

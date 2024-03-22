@@ -4,12 +4,12 @@ declare(strict_types=1);
 
 namespace App\Admin;
 
-use FOS\CKEditorBundle\Form\Type\CKEditorType;
 use Sonata\AdminBundle\Admin\AbstractAdmin;
 use Sonata\AdminBundle\Datagrid\DatagridMapper;
 use Sonata\AdminBundle\Datagrid\ListMapper;
 use Sonata\AdminBundle\Form\FormMapper;
 use Sonata\AdminBundle\Show\ShowMapper;
+use Symfony\Component\Form\Extension\Core\Type\TextareaType;
 
 final class RetrospectiveAdmin extends AbstractAdmin
 {
@@ -41,7 +41,7 @@ final class RetrospectiveAdmin extends AbstractAdmin
     {
         $form
             ->add('title',null,["label"=>"Titel"])
-            ->add('report',CKEditorType::class,["label"=>"Rückblick"])
+            ->add('report',TextareaType::class,["label"=>"Rückblick",'attr' => ["class" => "summernote"]])
             ;
     }
 

@@ -32,7 +32,7 @@ class Team
     #[ORM\Column(type: "flag")]
     private ?Flag $active = null;
 
-    #[ORM\OneToMany(mappedBy: 'teams', targetEntity: TeamStatistic::class, cascade: ['persist', 'remove'])]
+    #[ORM\OneToMany(mappedBy: 'team', targetEntity: TeamStatistic::class, cascade: ['persist', 'remove'])]
     private $teamStatistics;
 
     #[ORM\OneToOne(inversedBy: 'team', targetEntity: TeamInfo::class, cascade: ['persist', 'remove'])]
@@ -54,10 +54,8 @@ class Team
     #[ORM\OneToMany(mappedBy: 'teamOfTheDay', targetEntity: PlayDay::class)]
     private Collection $teamOfTheDays;
 
-
-
-
-
+    #[ORM\ManyToMany(targetEntity: Affiliation::class, inversedBy: 'teams')]
+    private Collection $affiliations;
 
     public function __construct()
     {
@@ -68,6 +66,8 @@ class Team
         $this->transferHistories = new ArrayCollection();
         $this->activeInLeagues = new ArrayCollection();
         $this->teamOfTheDays = new ArrayCollection();
+        $this->teamInfo = new TeamInfo();
+        $this->affiliations = new ArrayCollection();
     }
 
     public function getId(): int
@@ -358,6 +358,29 @@ class Team
                 $teamOfTheDay->setTeamOfTheDay(null);
             }
         }
+
+        return $this;
+    }
+    /**
+     * @return Collection<int, Affiliation>
+     */
+    public function getAffiliations(): Collection
+    {
+        return $this->affiliations;
+    }
+
+    public function addAffiliation(Affiliation $affiliation): static
+    {
+        if (!$this->affiliations->contains($affiliation)) {
+            $this->affiliations->add($affiliation);
+        }
+
+        return $this;
+    }
+
+    public function removeAffiliation(Affiliation $affiliation): static
+    {
+        $this->affiliations->removeElement($affiliation);
 
         return $this;
     }

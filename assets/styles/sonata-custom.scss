@@ -1,0 +1,9 @@
+$ionosBlue: #145b68;
+
+.nav-tabs-custom {
+  border: solid 1px $ionosBlue
+}
+.nav-tabs-custom > .nav-tabs {
+  border-bottom-color: $ionosBlue;
+  border-bottom: 2px solid;
+}

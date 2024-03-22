@@ -55,11 +55,10 @@ final class TeamInfoAdmin extends AbstractAdmin
     protected function configureFormFields(FormMapper $form): void
     {
         $form
-            //->add('team',null,["choice_label"=>"name","label"=>"team","disabled"=>true])
             ->add(
                 'image',
                 FileType::class,
-                $this->addPrieview($this->getSubject(),["label"=>"image",'required' => false]))
+                $this->addPrieview($this->getSubject(),["label"=>"image",'required' => false,'mapped' => false]))
             ->add('city',null,["label"=>"city"])
             ->add('color',null,["label"=>"color"])
             ->add('foundingYear',null,["label"=>"foundingYear"])
@@ -103,7 +102,6 @@ final class TeamInfoAdmin extends AbstractAdmin
     }
     protected function prePersist(object $object): void
     {
-
         $this->manageFileUpload($object);
     }
 

@@ -112,7 +112,7 @@ services:
     admin.retrospective:
         class: App\Admin\RetrospectiveAdmin
         tags:
-            - { name: sonata.admin, model_class: App\Entity\Retrospective, controller: ~, manager_type: orm, group: admin, label: Retrospective }
+            - { name: sonata.admin, model_class: App\Entity\Retrospective, controller: ~, manager_type: orm, group: admin, label: "Saisonrückblicke" }
 
     admin.article:
         class: App\Admin\ArticleAdmin
@@ -127,4 +127,4 @@ services:
     admin.affiliation:
         class: App\Admin\AffiliationAdmin
         tags:
-            - { name: sonata.admin, model_class: App\Entity\Affiliation, controller: ~, manager_type: orm, group: admin, label: Affiliation }
+            - { name: sonata.admin, model_class: App\Entity\Affiliation, controller: ~, manager_type: orm, group: admin, label: "Zugehörigkeit" }

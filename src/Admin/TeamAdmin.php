@@ -91,6 +91,7 @@ final class TeamAdmin extends AbstractAdmin
                 ->add('teamInfo', AdminType::class,
                     [
                         "label"=>"teamInfo",
+                        'mapped'   => true
                     ]
                 )
                 ->end()
@@ -138,19 +139,30 @@ final class TeamAdmin extends AbstractAdmin
     {
         $reflectionProperty = new ReflectionProperty(\App\Entity\TeamInfo::class, 'image');
         $teaminfo = $object->getTeamInfo();
-        if ($reflectionProperty->isInitialized($teaminfo)) {
-            $thumbnailName = $object->getName();
-            $thumbnailName = strtolower((string) $thumbnailName);
-            $thumbnailName = trim($thumbnailName);
-            if ($object->getTeamInfo()->getImage() !== null) {
-                $teaminfo->setImageName($thumbnailName . "." . $teaminfo->getImage()->guessExtension());
-                $filesystem= new Filesystem();
-                $filesystem->mkdir($_ENV['IMG_PATH']."/teams/".$object->getId());
 
-                file_put_contents(  $_ENV['IMG_PATH']."/teams/".$object->getId()."/". $thumbnailName .  "." . $teaminfo->getImage()->guessExtension(), $teaminfo->getImage()->getContent());
-            }
+        if ($reflectionProperty->isInitialized($teaminfo)) {
+            $this->manageFileUpload($teaminfo);
 
         }
 
+    }
+
+    private function manageFileUpload(object $object): void
+    {
+        $filesystem= new Filesystem();
+        $filesystem->mkdir("/var/www/html/public/img/teams/".$object->getTeam()->getId());
+
+
+        if (
+            move_uploaded_file(
+                $_FILES[
+                $_REQUEST['uniqid']
+                ]['tmp_name']['teamInfo']['image'],
+                "/var/www/html/public/img/teams/".$object->getTeam()->getId()."/". $_FILES[$_REQUEST['uniqid']]['name']['teamInfo']['image']
+            )
+        ) {
+            $object->setImageName($_FILES[$_REQUEST['uniqid']]['name']['teamInfo']['image']);
+
+        }
     }
 }

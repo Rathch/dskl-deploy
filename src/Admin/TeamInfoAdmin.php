@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace App\Admin;
 
 
+use App\Entity\TeamInfo;
 use Sonata\AdminBundle\Admin\AbstractAdmin;
 use Sonata\AdminBundle\Datagrid\DatagridMapper;
 use Sonata\AdminBundle\Datagrid\ListMapper;
@@ -14,6 +15,7 @@ use Sonata\AdminBundle\Show\ShowMapper;
 use Symfony\Component\Filesystem\Filesystem;
 use Symfony\Component\Form\Extension\Core\Type\FileType;
 use Symfony\Component\Form\Extension\Core\Type\TextareaType;
+use Symfony\Component\Validator\Constraints\File;
 
 final class TeamInfoAdmin extends AbstractAdmin
 {
@@ -58,7 +60,28 @@ final class TeamInfoAdmin extends AbstractAdmin
             ->add(
                 'image',
                 FileType::class,
-                $this->addPrieview($this->getSubject(),["label"=>"image",'required' => false,'mapped' => false]))
+                $this->addPrieview($this->getSubject(),
+                    [
+                        "label"=>"image",
+                        'required' => false,
+                        'mapped' => false,
+                        'data_class'=>TeamInfo::class,
+                        'constraints' => [
+                            new File([
+                                'maxSize' => '1024k',
+                                'mimeTypes' => [
+                                    'image/apng',
+                                    'image/avif',
+                                    'image/gif',
+                                    'image/jpeg',
+                                    'image/png',
+                                    'image/svg+xml',
+                                    'image/webp',
+                                ],
+                                'mimeTypesMessage' => 'Please upload a valid image document',
+                            ])
+    ],
+                        ] ))
             ->add('city',null,["label"=>"city"])
             ->add('color',null,["label"=>"color"])
             ->add('foundingYear',null,["label"=>"foundingYear"])
@@ -107,25 +130,25 @@ final class TeamInfoAdmin extends AbstractAdmin
 
     protected function preUpdate(object $object): void
     {
-
         $this->manageFileUpload($object);
     }
 
 
     private function manageFileUpload(object $object): void
     {
-        if ($object->getImage() !== null) {
-            $thumbnailName = $object->getTeam()->getName();
-            $thumbnailName = strtolower((string) $thumbnailName);
-            $thumbnailName = trim($thumbnailName);
-            $thumbnailName = str_replace(" ", "-", $thumbnailName);
+        $filesystem= new Filesystem();
+        $filesystem->mkdir("/var/www/html/public/img/teams/".$object->getTeam()->getId());
 
-            $object->setImageName($thumbnailName .  "." . $object->getImage()->guessExtension());
+        if (
+            move_uploaded_file(
+                $_FILES[
+                    $_REQUEST['uniqid']
+                ]['tmp_name']['image'],
+                "/var/www/html/public/img/teams/".$object->getTeam()->getId()."/". $_FILES[$_REQUEST['uniqid']]['name']['image']
+            )
+        ) {
+            $object->setImageName($_FILES[$_REQUEST['uniqid']]['name']['image']);
 
-            $filesystem= new Filesystem();
-            $filesystem->mkdir("/var/www/html/DsklAdministration/public/img/teams/".$object->getTeam()->getId());
-
-            file_put_contents(  "/var/www/html/DsklAdministration/public/img/teams/".$object->getTeam()->getId()."/". $thumbnailName .  "." . $object->getImage()->guessExtension(), $object->getImage()->getContent());
         }
     }
 }

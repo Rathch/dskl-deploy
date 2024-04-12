@@ -149,9 +149,8 @@ final class TeamAdmin extends AbstractAdmin
 
     private function manageFileUpload(object $object): void
     {
-        //$filesystem= new Filesystem();
-        //$filesystem->mkdir("/var/www/html/DsklAdministration/img/teams/".$object->getTeam()->getId());
-
+        $filesystem= new Filesystem();
+        $filesystem->mkdir("/var/www/html/public/img/teams/".$object->getTeam()->getId());
 
         if (
             move_uploaded_file(

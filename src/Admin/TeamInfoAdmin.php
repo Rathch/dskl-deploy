@@ -131,7 +131,7 @@ final class TeamInfoAdmin extends AbstractAdmin
 
     protected function preUpdate(object $object): void
     {
-        $this->manageFileUpload($object);
+        //$this->manageFileUpload($object);
     }
 
 

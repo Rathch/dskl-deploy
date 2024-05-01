@@ -64,6 +64,7 @@ final class TeamInfoAdmin extends AbstractAdmin
                     [
                         "label"=>"image",
                         'required' => false,
+                        'disabled' => true,
                         'mapped' => false,
                         'data_class'=>TeamInfo::class,
                         'constraints' => [

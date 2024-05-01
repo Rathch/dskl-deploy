@@ -30,4 +30,4 @@ sync:
         # composer operations may fail if they use dev versions/git.
         # vcs: true
     symlink:
-      mode: "posix-raw"
+      mode: "portable"

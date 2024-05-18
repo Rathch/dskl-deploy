@@ -6,6 +6,7 @@ use App\Entity\Encounter;
 use App\Entity\League;
 use App\Entity\LeagueStatistic;
 use App\Entity\PlayDay;
+use App\Entity\RelegationEncounter;
 use App\Entity\Team;
 use App\Entity\TeamStatistic;
 use App\Repository\TeamRepository;
@@ -68,7 +69,7 @@ class GenerateTeamStatisticService
         $this->entityManager->flush();
     }
 
-    #[NoReturn] public function update(Encounter $encounter): void
+    public function update(Encounter | RelegationEncounter $encounter): void
     {
         $league = $encounter->getPlayDay()->getLeague();
 

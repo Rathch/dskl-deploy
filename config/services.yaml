@@ -41,7 +41,12 @@ services:
     admin.relegation_encounter:
         class: App\Admin\RelegationEncounterAdmin
         tags:
-            - { name: sonata.admin, model_class: App\Entity\RelegationEncounter, controller: App\Controller\EncounterAdminController, manager_type: orm, group: Admin., label: "Relegations Begegnungen" }
+            - { name: sonata.admin, model_class: App\Entity\RelegationEncounter, controller: ~, manager_type: orm, group: Admin., label: "Relegations Begegnungen" }
+
+    admin.tournament_encounter:
+        class: App\Admin\TournemantEncounterAdmin
+        tags:
+            - { name: sonata.admin, model_class: App\Entity\TournamentEncounter, controller: ~, manager_type: orm, group: Turnier, label: "Turnier Begegnungen" }
 
     admin.play_day:
         class: App\Admin\PlayDayAdmin
@@ -128,3 +133,8 @@ services:
         class: App\Admin\AffiliationAdmin
         tags:
             - { name: sonata.admin, model_class: App\Entity\Affiliation, controller: ~, manager_type: orm, group: Admin., label: "Zugehörigkeit" }
+
+    admin.tournament:
+        class: App\Admin\TournamentAdmin
+        tags:
+            - { name: sonata.admin, model_class: App\Entity\Tournament, controller: ~, manager_type: orm, group: Turnier, label: Turnier }

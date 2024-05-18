@@ -27,6 +27,7 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use Doctrine\Common\Collections\Criteria;
+use Symfony\Component\ErrorHandler\Debug;
 
 class PageController extends AbstractController
 {

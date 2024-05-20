@@ -56,7 +56,7 @@ final class PageAdmin extends AbstractAdmin
                 "required"=>false
             ])
             ->add('tournament', ModelType::class, [
-                'label' => 'Aktive Teams',
+                'label' => 'Turnier',
                 'class' => Tournament::class,
                 'property' => 'name',
                 'expanded' => true,

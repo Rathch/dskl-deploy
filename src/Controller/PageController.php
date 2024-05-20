@@ -91,12 +91,13 @@ class PageController extends AbstractController
     public function page($title): Response
     {
         $page = $this->pageReposetory->findOneBy(["slag"=>$title]);
-
+         
         return $this->render('page/content.html.twig', [
             'page' => $page,
             'controller_name' => 'PageController',
         ]);
     }
+
     #[Route(path: '/team/list', name: 'list_teams')]
     public function listTeam(): Response
     {

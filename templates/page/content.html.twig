@@ -4,7 +4,10 @@
 
 {% block page_contents %}
     {{ page.html | raw }}
-
+    {% set gruen ="#6eb493"  %}
+    {% set rot ="#cb5858"  %}
+    {% set gelb ="#e2b007"  %}
+    {% set weis ="#fff"  %}
     <ul class="list-group">
         {% for teaser in page.contentElementsTeaser %}
             <li class="list-group-item d-flex justify-content-between align-items-start">
@@ -13,7 +16,6 @@
                     {{ teaser.text | raw }}
                 </div>
                 <div class="col-1 col-offset-1">
-
                     <a href="{{ teaser.link }}" type="button" class="btn btn-primary">Downloade</a>
                 </div>
             </li>
@@ -21,5 +23,55 @@
 
 
     </ul>
+    {% for tournament in page.tournament %}
+        <h2>{{tournament.name}}</h2>
+        {% if tournament.encounterRound1.0 is defined %}
+        <div style="">
+           <h3>Finale</h3>
+        {% endif %}
+        {% for encounterRound in tournament.encounterRound1 %}
+            {{ include('snipets/tournamentEncounterTable.html.twig', {encounter:encounterRound}) }}
+        {% endfor %}
+        {% if tournament.encounterRound1.0 is defined %}
+            </div>
+        {% endif %}
+        
+        {% if tournament.encounterRound2.0 is defined %}
+           <h3>Halbfinale</h3>
+        {% endif %}
+        {% for encounterRound in tournament.encounterRound2 %}
+            {{ include('snipets/tournamentEncounterTable.html.twig', {encounter:encounterRound}) }}
+        {% endfor %}
+        
+        {% if tournament.encounterRound3.0 is defined %}
+           <h3>Viertelfinale</h3>
+        {% endif %}
+        {% for encounterRound in tournament.encounterRound3 %}
+            {{ include('snipets/tournamentEncounterTable.html.twig', {encounter:encounterRound}) }}
+        {% endfor %}
+        
+
+        {% if tournament.encounterRoun43.0 is defined %}
+           <h3>Achtelfinale</h3>
+        {% endif %}
+        {% for encounterRound in tournament.encounterRound4 %}
+            {{ include('snipets/tournamentEncounterTable.html.twig', {encounter:encounterRound}) }}
+        {% endfor %}
+
+        
+        {% if tournament.encounterRound5.0 is defined %}
+           <h3>Runde 5</h3>
+        {% endif %}
+        {% for encounterRound in tournament.encounterRound5 %}
+            {{ include('snipets/tournamentEncounterTable.html.twig', {encounter:encounterRound}) }}
+        {% endfor %}
+
+        {% if tournament.encounterRound6.0 is defined %}
+           <h3>Runde 6</h3>
+        {% endif %}
+        {% for encounterRound in tournament.encounterRound6 %}
+            {{ include('snipets/tournamentEncounterTable.html.twig', {encounter:encounterRound}) }}
+        {% endfor %}
+    {% endfor %}
 
 {% endblock %}

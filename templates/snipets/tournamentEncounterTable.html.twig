@@ -1,0 +1,49 @@
+    {% if encounter.team1.name is defined %}
+
+        {% set team2color =gelb  %}
+        {% set team1color =gelb  %}
+        {% if encounter.pointsTeam1 < encounter.pointsTeam2 %}
+            {% set team2color =gruen  %}
+            {% set team1color =rot  %}
+        {% endif %}
+        {% if encounter.pointsTeam1 > encounter.pointsTeam2 %}
+            {% set team2color =rot  %}
+            {% set team1color =gruen  %}
+        {% endif %}
+
+        <table  class="table table-striped-columns table-sm generalStatistic text-center justify-content-center">
+            <tr>
+                <td class="spacialtd"></td>
+                <td class="spacialtd">Datum: ({{ encounter.date|date('d-M-Y') }})</td>
+                <td class="spacialtd"></td>
+            </tr>
+            <tr>
+                <td class="spacialtd" style="background-color:{{ team1color }}"><b class="fs-2">{{ encounter.team1.name }}</b></td>
+                <td class="spacialtd" class="fs-2"> {{ encounter.pointsTeam1 }} : {{ encounter.pointsTeam2 }} </td>
+                <td class="spacialtd" style="background-color:{{ team2color }}"><b class="fs-2">{{ encounter.team2.name }}</b></td>
+            </tr>
+            <tr>
+                <td class="spacialtd">
+                    {% if  encounter.injuryTeam1Leicht %} Leicht {{ encounter.injuryTeam1Leicht }}<br>{% endif %}
+                    {% if  encounter.injuryTeam1Schwer %} Schwer {{ encounter.injuryTeam1Schwer }}<br>{% endif %}
+                    {% if  encounter.injuryTeam1Kritisch %} Kritisch {{ encounter.injuryTeam1Kritisch }}<br>{% endif %}
+                    {% if  encounter.injuryTeam1Tot %} Tot {{ encounter.injuryTeam1Tot }}<br>{% endif %}
+                </td>
+                <td class="spacialtd"> Verletzte </td>
+                <td class="spacialtd">
+                    {% if  encounter.injuryTeam2Leicht %} Leicht {{ encounter.injuryTeam2Leicht }}<br>{% endif %}
+                    {% if  encounter.injuryTeam2Schwer %} Schwer {{ encounter.injuryTeam2Schwer }}<br>{% endif %}
+                    {% if  encounter.injuryTeam2Kritisch %} Kritisch {{ encounter.injuryTeam2Kritisch }}<br>{% endif %}
+                    {% if  encounter.injuryTeam2Tot %} Tot {{ encounter.injuryTeam2Tot }}<br>{% endif %}
+                </td>
+            </tr>
+            <tr>
+                <td class="spacialtd">{{ encounter.chanceTeam1 }}</td>
+                <td class="spacialtd"> Chancen </td>
+                <td class="spacialtd">{{ encounter.chanceTeam2 }}</td>
+            </tr>
+            <tr>
+                <td colspan="3" class="report-text"><p class="fs-6 report-text">{{ encounter.report | raw }}</p></td>
+            </tr>
+        </table>
+{% endif %}

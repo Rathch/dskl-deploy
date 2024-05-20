@@ -73,7 +73,7 @@ final class TournamentAdmin extends AbstractAdmin
                 ->end()
             ->end();
 
-            if ($this->getRequest()->getPathInfo() !== "/admin/app/tournament/create" && count($this->getSubject()->getEncounterRound1()) > 1 ) {
+            if ($this->getRequest()->getPathInfo() !== "/admin/app/tournament/create" && count($this->getSubject()->getEncounterRound1()) >= 1 ) {
                 $form->tab('Finale')
                     ->with('', ['class' => 'col-md-12'])
                     ->add('encounterRound1', CollectionType::class,
@@ -224,8 +224,8 @@ final class TournamentAdmin extends AbstractAdmin
 
     protected function preUpdate(object $object): void
     {
-        //$this->generateGamesMissing($object);
-        //$this->deleteAdditionalGames($object);
+        $this->generateGames($object);
+        $this->deleteAdditionalGames($object);
     }
 
     private function getRoundsFromTeamAmound(int $teamAmount)
@@ -236,35 +236,32 @@ final class TournamentAdmin extends AbstractAdmin
 
     private function generateGames(object $object)
     {
-        $matches = [];
         $teamAmount = $object->getTeamAmount();
-        $rounds =$this->getRoundsFromTeamAmound($teamAmount);
-        //generate finaly
-        $object->addEncounterRound1(new TournamentEncounter());
-        array_push($matches, $rounds);
+        $rounds = $this->getRoundsFromTeamAmound($teamAmount);
+
+        if($rounds > 0 && count($object->getEncounterRound1()) == 0) {
+            //generate finaly
+            $object->addEncounterRound1(new TournamentEncounter());
+       }
+       $rounds--;
+
+        if($rounds > 0 && count($object->getEncounterRound2()) == 0) {
+             //generate halffinaly
+            $object->addEncounterRound2(new TournamentEncounter());
+            $object->addEncounterRound2(new TournamentEncounter());
+        }
         $rounds--;
 
-         //generate halffinaly
-        $object->addEncounterRound2(new TournamentEncounter());
-        $object->addEncounterRound2(new TournamentEncounter());
-        $object->addEncounterRound2(new TournamentEncounter());
-        $object->addEncounterRound2(new TournamentEncounter());
-        $rounds--;
-
-        if($rounds > 0) {
+        if($rounds > 0 && count($object->getEncounterRound3()) == 0) {
             //generate quarterfinaly
             $object->addEncounterRound3(new TournamentEncounter());
             $object->addEncounterRound3(new TournamentEncounter());
             $object->addEncounterRound3(new TournamentEncounter());
             $object->addEncounterRound3(new TournamentEncounter());
-            $object->addEncounterRound3(new TournamentEncounter());
-            $object->addEncounterRound3(new TournamentEncounter());
-            $object->addEncounterRound3(new TournamentEncounter());
-            $object->addEncounterRound3(new TournamentEncounter());
-            $rounds--;
         }
+        $rounds--;
 
-        if($rounds > 0) {
+        if($rounds > 0 && count($object->getEncounterRound4()) == 0) {
             //generate octafinaly
             $object->addEncounterRound4(new TournamentEncounter());
             $object->addEncounterRound4(new TournamentEncounter());
@@ -274,18 +271,10 @@ final class TournamentAdmin extends AbstractAdmin
             $object->addEncounterRound4(new TournamentEncounter());
             $object->addEncounterRound4(new TournamentEncounter());
             $object->addEncounterRound4(new TournamentEncounter());
-            $object->addEncounterRound4(new TournamentEncounter());
-            $object->addEncounterRound4(new TournamentEncounter());
-            $object->addEncounterRound4(new TournamentEncounter());
-            $object->addEncounterRound4(new TournamentEncounter());
-            $object->addEncounterRound4(new TournamentEncounter());
-            $object->addEncounterRound4(new TournamentEncounter());
-            $object->addEncounterRound4(new TournamentEncounter());
-            $object->addEncounterRound4(new TournamentEncounter());
-            $rounds--;
         }
+        $rounds--;
 
-        if($rounds > 0) {
+        if($rounds > 0 && count($object->getEncounterRound5()) == 0) {
             //generate round five
             $object->addEncounterRound5(new TournamentEncounter());
             $object->addEncounterRound5(new TournamentEncounter());
@@ -303,22 +292,85 @@ final class TournamentAdmin extends AbstractAdmin
             $object->addEncounterRound5(new TournamentEncounter());
             $object->addEncounterRound5(new TournamentEncounter());
             $object->addEncounterRound5(new TournamentEncounter());
-            $object->addEncounterRound5(new TournamentEncounter());
-            $object->addEncounterRound5(new TournamentEncounter());
-            $object->addEncounterRound5(new TournamentEncounter());
-            $object->addEncounterRound5(new TournamentEncounter());
-            $object->addEncounterRound5(new TournamentEncounter());
-            $object->addEncounterRound5(new TournamentEncounter());
-            $object->addEncounterRound5(new TournamentEncounter());
-            $object->addEncounterRound5(new TournamentEncounter());
-            $object->addEncounterRound5(new TournamentEncounter());
-            $object->addEncounterRound5(new TournamentEncounter());
-            $object->addEncounterRound5(new TournamentEncounter());
-            $object->addEncounterRound5(new TournamentEncounter());
-            $object->addEncounterRound5(new TournamentEncounter());
-            $object->addEncounterRound5(new TournamentEncounter());
-            $object->addEncounterRound5(new TournamentEncounter());
-            $object->addEncounterRound5(new TournamentEncounter());
+        }
+        $rounds--;
+
+        if($rounds > 0 && count($object->getEncounterRound6()) == 0) {
+            //generate round five
+            $object->addEncounterRound6(new TournamentEncounter());
+            $object->addEncounterRound6(new TournamentEncounter());
+            $object->addEncounterRound6(new TournamentEncounter());
+            $object->addEncounterRound6(new TournamentEncounter());
+            $object->addEncounterRound6(new TournamentEncounter());
+            $object->addEncounterRound6(new TournamentEncounter());
+            $object->addEncounterRound6(new TournamentEncounter());
+            $object->addEncounterRound6(new TournamentEncounter());
+            $object->addEncounterRound6(new TournamentEncounter());
+            $object->addEncounterRound6(new TournamentEncounter());
+            $object->addEncounterRound6(new TournamentEncounter());
+            $object->addEncounterRound6(new TournamentEncounter());
+            $object->addEncounterRound6(new TournamentEncounter());
+            $object->addEncounterRound6(new TournamentEncounter());
+            $object->addEncounterRound6(new TournamentEncounter());
+            $object->addEncounterRound6(new TournamentEncounter());
+            $object->addEncounterRound6(new TournamentEncounter());
+            $object->addEncounterRound6(new TournamentEncounter());
+            $object->addEncounterRound6(new TournamentEncounter());
+            $object->addEncounterRound6(new TournamentEncounter());
+            $object->addEncounterRound6(new TournamentEncounter());
+            $object->addEncounterRound6(new TournamentEncounter());
+            $object->addEncounterRound6(new TournamentEncounter());
+            $object->addEncounterRound6(new TournamentEncounter());
+            $object->addEncounterRound6(new TournamentEncounter());
+            $object->addEncounterRound6(new TournamentEncounter());
+            $object->addEncounterRound6(new TournamentEncounter());
+            $object->addEncounterRound6(new TournamentEncounter());
+            $object->addEncounterRound6(new TournamentEncounter());
+            $object->addEncounterRound6(new TournamentEncounter());
+            $object->addEncounterRound6(new TournamentEncounter());
+            $object->addEncounterRound6(new TournamentEncounter());
+        }
+        $rounds--;
+        
+        //https://github.com/fletchto99/SEG2105-Final/blob/master/web/cgi-bin/entities/Tournament.php
+    }
+
+    private function deleteAdditionalGames(object $object)
+    {
+        $teamAmount = $object->getTeamAmount();
+        $rounds =$this->getRoundsFromTeamAmound($teamAmount);
+        // subtract finaly and halffinaly
+        $rounds--;
+        $rounds--;
+        if($rounds == 0 && count($object->getEncounterRound3()) != 0) {
+            $encountersToRemove = $object->getEncounterRound3();
+            foreach ($encountersToRemove as $encounterToRemove) {
+                $object->removeEncounterRound3($encounterToRemove);
+            };
+            $rounds--;
+        }
+
+        if($rounds == 0 && count($object->getEncounterRound4()) != 0) {
+            $encountersToRemove = $object->getEncounterRound4();
+            foreach ($encountersToRemove as $encounterToRemove) {
+                $object->removeEncounterRound4($encounterToRemove);
+            };
+            $rounds--;
+        }
+
+        if($rounds == 0 && count($object->getEncounterRound5()) != 0) {
+            $encountersToRemove = $object->getEncounterRound5();
+            foreach ($encountersToRemove as $encounterToRemove) {
+                $object->removeEncounterRound5($encounterToRemove);
+            };
+            $rounds--;
+        }
+
+        if($rounds == 0 && count($object->getEncounterRound6()) != 0) {
+            $encountersToRemove = $object->getEncounterRound6();
+            foreach ($encountersToRemove as $encounterToRemove) {
+                $object->removeEncounterRound6($encounterToRemove);
+            };
             $rounds--;
         }
         

@@ -40,6 +40,9 @@ class Tournament
     #[ORM\OneToMany(mappedBy: 'tournamentRound6', targetEntity: TournamentEncounter::class, cascade: ['persist', 'remove'])]
     private Collection $encounterRound6;
 
+    #[ORM\ManyToOne(inversedBy: 'tournament')]
+    private ?Page $page = null;
+
     public function __construct()
     {
         $this->encounterRound1 = new ArrayCollection();
@@ -261,6 +264,18 @@ class Tournament
                 $encounterRound6->setTournamentRound6(null);
             }
         }
+
+        return $this;
+    }
+
+    public function getPage(): ?Page
+    {
+        return $this->page;
+    }
+
+    public function setPage(?Page $page): static
+    {
+        $this->page = $page;
 
         return $this;
     }

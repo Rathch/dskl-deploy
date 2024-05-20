@@ -166,7 +166,7 @@ final class TournamentAdmin extends AbstractAdmin
                     ->with('', ['class' => 'col-md-12'])
                     ->add('encounterRound5', CollectionType::class,
                     [
-                        "label" => "Runde 5",
+                        "label" => "Runde mit 32",
                         "btn_catalogue" => false,
                         "btn_add" => false,
                         'type_options' => [
@@ -189,7 +189,7 @@ final class TournamentAdmin extends AbstractAdmin
                     ->with('', ['class' => 'col-md-12'])
                     ->add('encounterRound6', CollectionType::class,
                     [
-                        "label" => "Runde 6",
+                        "label" => "Runde mit 64",
                         "btn_catalogue" => false,
                         "btn_add" => false,
                         'type_options' => [

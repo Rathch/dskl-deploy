@@ -25,6 +25,9 @@
     </ul>
     {% for tournament in page.tournament %}
         <h2>{{tournament.name}}</h2>
+
+        {{ include('snipets/tournamentChard.html.twig', {tournament:tournament}) }}
+
         {% if tournament.encounterRound1.0 is defined %}
         <div style="">
            <h3>Finale</h3>
@@ -60,14 +63,14 @@
 
         
         {% if tournament.encounterRound5.0 is defined %}
-           <h3>Runde 5</h3>
+           <h3>Runde mit 32</h3>
         {% endif %}
         {% for encounterRound in tournament.encounterRound5 %}
             {{ include('snipets/tournamentEncounterTable.html.twig', {encounter:encounterRound}) }}
         {% endfor %}
 
         {% if tournament.encounterRound6.0 is defined %}
-           <h3>Runde 6</h3>
+           <h3>Runde mit 64</h3>
         {% endif %}
         {% for encounterRound in tournament.encounterRound6 %}
             {{ include('snipets/tournamentEncounterTable.html.twig', {encounter:encounterRound}) }}

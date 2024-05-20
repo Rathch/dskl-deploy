@@ -1,0 +1,139 @@
+
+<div class="tournament-container">
+  <div class="tournament-headers">
+    {% if tournament.encounterRound6.0 is defined %}
+      <h4>Runde mit 64</h4>
+    {% endif %} 
+
+    {% if tournament.encounterRound5.0 is defined %}
+      <h4>Runde mit 32</h4>
+    {% endif %} 
+
+    {% if tournament.encounterRound4.0 is defined %}
+      <h4>Achtelfinale</h4>
+    {% endif %} 
+
+    {% if tournament.encounterRound3.0 is defined %}
+      <h4>Viertelfinale</h4>
+    {% endif %} 
+
+    {% if tournament.encounterRound2.0 is defined %}
+      <h4>Halbfinale</h4>
+    {% endif %}
+    
+    <h4>Finale</h4>
+    
+    <h4>Gewinner</h4>
+  </div>
+
+  <div class="tournament-brackets">
+  {% if tournament.encounterRound6.0 is defined %}
+    <ul class="bracket bracket--1">
+      {% for encounterRound in tournament.encounterRound6 %}
+        {% set team2color =gelb  %}
+        {% set team1color =gelb  %}
+        {% if encounterRound.pointsTeam1 < encounterRound.pointsTeam2 %}
+            {% set team2color =gruen  %}
+            {% set team1color =rot  %}
+        {% endif %}
+        {% if encounterRound.pointsTeam1 > encounterRound.pointsTeam2 %}
+            {% set team2color =rot  %}
+            {% set team1color =gruen  %}
+        {% endif %}
+        <li class="team-item fs-6"><span class="p-1" style="background-color:{{ team1color }}">{{ encounterRound.team1.name }}</span> <br>VS <br> <span class="p-1" style="background-color:{{ team2color }}">{{ encounterRound.team2.name }}</span></li>
+      {% endfor %}
+    </ul>
+  {% endif %}
+  {% if tournament.encounterRound5.0 is defined %}
+    <ul class="bracket bracket-0">
+      {% for encounterRound in tournament.encounterRound5 %}
+         {% set team2color =gelb  %}
+        {% set team1color =gelb  %}
+        {% if encounterRound.pointsTeam1 < encounterRound.pointsTeam2 %}
+            {% set team2color =gruen  %}
+            {% set team1color =rot  %}
+        {% endif %}
+        {% if encounterRound.pointsTeam1 > encounterRound.pointsTeam2 %}
+            {% set team2color =rot  %}
+            {% set team1color =gruen  %}
+        {% endif %}
+        <li class="team-item fs-6"><span class="p-1" style="background-color:{{ team1color }}">{{ encounterRound.team1.name }}</span> <br>VS <br> <span class="p-1" style="background-color:{{ team2color }}">{{ encounterRound.team2.name }}</span></li>
+      {% endfor %}
+    </ul> 
+  {% endif %}
+  {% if tournament.encounterRound4.0 is defined %} 
+    <ul class="bracket bracket-1">
+      {% for encounterRound in tournament.encounterRound4 %}
+         {% set team2color =gelb  %}
+        {% set team1color =gelb  %}
+        {% if encounterRound.pointsTeam1 < encounterRound.pointsTeam2 %}
+            {% set team2color =gruen  %}
+            {% set team1color =rot  %}
+        {% endif %}
+        {% if encounterRound.pointsTeam1 > encounterRound.pointsTeam2 %}
+            {% set team2color =rot  %}
+            {% set team1color =gruen  %}
+        {% endif %}
+        <li class="team-item fs-6"><span class="p-1" style="background-color:{{ team1color }}">{{ encounterRound.team1.name }}</span> <br>VS <br> <span class="p-1" style="background-color:{{ team2color }}">{{ encounterRound.team2.name }}</span></li>
+      {% endfor %}
+    </ul>
+  {% endif %}
+  {% if tournament.encounterRound3.0 is defined %}
+    <ul class="bracket bracket-2">
+      {% for encounterRound in tournament.encounterRound3 %}
+         {% set team2color =gelb  %}
+        {% set team1color =gelb  %}
+        {% if encounterRound.pointsTeam1 < encounterRound.pointsTeam2 %}
+            {% set team2color =gruen  %}
+            {% set team1color =rot  %}
+        {% endif %}
+        {% if encounterRound.pointsTeam1 > encounterRound.pointsTeam2 %}
+            {% set team2color =rot  %}
+            {% set team1color =gruen  %}
+        {% endif %}
+        <li class="team-item fs-6"><span class="p-1" style="background-color:{{ team1color }}">{{ encounterRound.team1.name }}</span> <br>VS <br> <span class="p-1" style="background-color:{{ team2color }}">{{ encounterRound.team2.name }}</span></li>
+      {% endfor %}
+    </ul>  
+  {% endif %}
+  {% if tournament.encounterRound2.0 is defined %}
+    <ul class="bracket bracket-3">
+      {% for encounterRound in tournament.encounterRound2 %}
+        {% set team2color =gelb  %}
+        {% set team1color =gelb  %}
+        {% if encounterRound.pointsTeam1 < encounterRound.pointsTeam2 %}
+            {% set team2color =gruen  %}
+            {% set team1color =rot  %}
+        {% endif %}
+        {% if encounterRound.pointsTeam1 > encounterRound.pointsTeam2 %}
+            {% set team2color =rot  %}
+            {% set team1color =gruen  %}
+        {% endif %}
+        <li class="team-item fs-6"><span class="p-1" style="background-color:{{ team1color }}">{{ encounterRound.team1.name }}</span> <br>VS <br> <span class="p-1" style="background-color:{{ team2color }}">{{ encounterRound.team2.name }}</span></li>
+      {% endfor %}
+    </ul>
+  {% endif %}
+  <ul class="bracket bracket-4">
+    {% for encounterRound in tournament.encounterRound1 %}
+      {% set team2color =gelb  %}
+      {% set team1color =gelb  %}
+      {% if encounterRound.pointsTeam1 < encounterRound.pointsTeam2 %}
+          {% set team2color =gruen  %}
+          {% set team1color =rot  %}
+      {% endif %}
+      {% if encounterRound.pointsTeam1 > encounterRound.pointsTeam2 %}
+          {% set team2color =rot  %}
+          {% set team1color =gruen  %}
+      {% endif %}
+      <li class="team-item fs-6"><span class="p-1" style="background-color:{{ team1color }}">{{ encounterRound.team1.name }}</span> <br>VS <br> <span class="p-1" style="background-color:{{ team2color }}">{{ encounterRound.team2.name }}</span></li>
+    {% endfor %}
+  </ul>  
+
+  <ul class="bracket bracket-5">
+  {% if tournament.encounterRound1.0.pointsTeam1 > tournament.encounterRound1.0.pointsTeam2  %}
+    <li class="team-item fs-6"><span class="p-1 finale" style="background-color:{{ gruen }}">{{ tournament.encounterRound1.0.team1.name }}</span></li>
+  {% else %}
+  <li class="team-item fs-6"><span class="p-1 finale" style="background-color:{{ gruen }}">{{ tournament.encounterRound1.0.team2.name }}</span></li>
+  {% endif %}
+  </ul>  
+  </div>
+</div>

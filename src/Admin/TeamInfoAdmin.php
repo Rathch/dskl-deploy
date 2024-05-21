@@ -118,11 +118,12 @@ final class TeamInfoAdmin extends AbstractAdmin
     }
 
     private function addPrieview($object, $fileFormOptions) {
-        $image = stream_get_contents($object->getImageblob());
-        dump($image);
         if ($object->getTeam()) {
-            $fileFormOptions['help'] = '<img src="data:image/jpeg;base64,'.$image.'" with=100px height=100px class="admin-preview" />';
-            $fileFormOptions['help_html'] = true;
+            if ($object->getImageblob() != null) {
+                $image = stream_get_contents($object->getImageblob());
+                $fileFormOptions['help'] = '<img src="data:image/jpeg;base64,'.$image.'" with=100px height=100px class="admin-preview" />';
+                $fileFormOptions['help_html'] = true;
+            }
         }
         return $fileFormOptions;
     }

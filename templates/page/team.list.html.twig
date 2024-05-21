@@ -10,8 +10,8 @@
             <div class="card p-2">
                 <div class="card-body">
                     <a href="/team/show/{{ team.id }}" >
-                        {% if team.teaminfo.imageName %}
-                            <img src="/img/teams/{{ team.id }}/{{ team.teamInfo.imageName }}" class="card-img-top"  alt="{{ team.name }}">
+                        {% if teamImages[team.id] is defined%}
+                            <img src="data:image/jpeg;base64,{{ teamImages[team.id] }}" class="card-img-top"  alt="Logo von {{ team.name }}" />
                         {% else %}
                             <img src="https://placeholder.pics/svg/200" class="card-img-top" alt="{{ team.name }}">
                         {% endif %}

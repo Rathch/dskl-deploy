@@ -5,6 +5,7 @@ namespace App\Entity;
 use App\Repository\TeamInfoRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
+use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\HttpFoundation\File\UploadedFile;
 
@@ -56,6 +57,9 @@ class TeamInfo
 
     #[ORM\OneToMany(mappedBy: 'teamInfo', targetEntity: Retrospective::class, cascade: ['persist', 'remove'])]
     private Collection $retrospectives;
+
+    #[ORM\Column(type: Types::BLOB, nullable: true)]
+    private $imageBlob = null;
 
     public function __construct()
     {
@@ -274,6 +278,18 @@ class TeamInfo
                 $retrospective->setTeamInfo(null);
             }
         }
+
+        return $this;
+    }
+
+    public function getImageBlob()
+    {
+        return $this->imageBlob;
+    }
+
+    public function setImageBlob($imageBlob): static
+    {
+        $this->imageBlob = $imageBlob;
 
         return $this;
     }

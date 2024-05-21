@@ -7,9 +7,12 @@
         </h2>
         <div id="flush-relegations" class="accordion-collapse collapse" aria-labelledby="flush-relegations" data-bs-parent="#accordionFlushRelegations">
             <div class="accordion-body">
-{% for key, encounter in encounters %}
-    {{ include('snipets/relegationEncounterTable.html.twig', {encounter:encounter, encounter2:encounters2[key]}) }}
-{% endfor %}
+                {% for key, encounter in encounters %}
+                    {% if encounters2[key] is defined and encounters2[key] is not null %} 
+                                {{ include('snipets/relegationEncounterTable.html.twig', {encounter:encounter, encounter2:encounters2[key]}) }}
+                    {% endif %}
+                    
+                {% endfor %}
             </div>
         </div>
     </div>

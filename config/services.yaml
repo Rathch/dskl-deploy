@@ -138,3 +138,13 @@ services:
         class: App\Admin\TournamentAdmin
         tags:
             - { name: sonata.admin, model_class: App\Entity\Tournament, controller: ~, manager_type: orm, group: Turnier, label: Turnier }
+
+    admin.championship:
+        class: App\Admin\ChampionshipAdmin
+        tags:
+            - { name: sonata.admin, model_class: App\Entity\Championship, controller: ~, manager_type: orm, group: admin, label: Championship }
+
+    admin.championship_encounter:
+        class: App\Admin\ChampionshipEncounterAdmin
+        tags:
+            - { name: sonata.admin, model_class: App\Entity\ChampionshipEncounter, controller: ~, manager_type: orm, group: admin, label: ChampionshipEncounter }

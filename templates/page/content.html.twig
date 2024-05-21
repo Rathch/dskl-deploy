@@ -26,55 +26,79 @@
     {% for tournament in page.tournament %}
         <h2>{{tournament.name}}</h2>
 
+        
         {{ include('snipets/tournamentChard.html.twig', {tournament:tournament}) }}
 
-        {% if tournament.encounterRound1.0 is defined %}
-        <div style="">
-           <h3>Finale</h3>
-        {% endif %}
-        {% for encounterRound in tournament.encounterRound1 %}
-            {{ include('snipets/tournamentEncounterTable.html.twig', {encounter:encounterRound}) }}
-        {% endfor %}
-        {% if tournament.encounterRound1.0 is defined %}
-            </div>
-        {% endif %}
-        
-        {% if tournament.encounterRound2.0 is defined %}
-           <h3>Halbfinale</h3>
-        {% endif %}
-        {% for encounterRound in tournament.encounterRound2 %}
-            {{ include('snipets/tournamentEncounterTable.html.twig', {encounter:encounterRound}) }}
-        {% endfor %}
-        
-        {% if tournament.encounterRound3.0 is defined %}
-           <h3>Viertelfinale</h3>
-        {% endif %}
-        {% for encounterRound in tournament.encounterRound3 %}
-            {{ include('snipets/tournamentEncounterTable.html.twig', {encounter:encounterRound}) }}
-        {% endfor %}
+        <div class="accordion" id="accordionExample-{{tournament.name}}">
+            {% if tournament.encounterRound1.0 is defined %}
+                {{ include('snipets/tournamentEncounterAccordeon.html.twig', {headline:"Finale", groupeNr:1, encounterRound:tournament.encounterRound1}) }}
+            {% endif %}
+            
+            {% if tournament.encounterRound2.0 is defined %}
+                {{ include('snipets/tournamentEncounterAccordeon.html.twig', {headline:"Halbfinale", groupeNr:2, encounterRound:tournament.encounterRound2}) }}
+            {% endif %}
+           
+            {% if tournament.encounterRound3.0 is defined %}
+                {{ include('snipets/tournamentEncounterAccordeon.html.twig', {headline:"Viertelfinale", groupeNr:3, encounterRound:tournament.encounterRound3}) }}
+            {% endif %}
+            
+            {% if tournament.encounterRound4.0 is defined %}
+                {{ include('snipets/tournamentEncounterAccordeon.html.twig', {headline:"Achtelfinale", groupeNr:4, encounterRound:tournament.encounterRound4}) }}
+            {% endif %}
+            
+            {% if tournament.encounterRound5.0 is defined %}
+                {{ include('snipets/tournamentEncounterAccordeon.html.twig', {headline:"Runde mit 32", groupeNr:5, encounterRound:tournament.encounterRound5}) }}
+            {% endif %}
+            
+            {% if tournament.encounterRound6.0 is defined %}
+                {{ include('snipets/tournamentEncounterAccordeon.html.twig', {headline:"Runde mit 64", groupeNr:6, encounterRound:tournament.encounterRound6}) }}
+            {% endif %}
+        </div
+    {% endfor %}
+
+    {% for championship in page.championship %}
+        <h2>{{championship.name}}</h2>
+        <div class="accordion" id="accordionExample-{{championship.name}}">
+
+            {% if championship.championshipEncounterGroupe1.0 is defined and championship.championshipEncounterGroupe1.0.team1 is not null %} 
+                {{ include('snipets/championshipEncounterAccordeon.html.twig', {headline:"Gruppe 1",groupeNr:1,championshipEncounterGroupe:championship.championshipEncounterGroupe1}) }}
+            {% endif %}
         
 
-        {% if tournament.encounterRoun4.0 is defined %}
-           <h3>Achtelfinale</h3>
-        {% endif %}
-        {% for encounterRound in tournament.encounterRound4 %}
-            {{ include('snipets/tournamentEncounterTable.html.twig', {encounter:encounterRound}) }}
-        {% endfor %}
-
+            {% if championship.championshipEncounterGroupe2.0 is defined and championship.championshipEncounterGroupe2.0.team1 is not null %}
+                {{ include('snipets/championshipEncounterAccordeon.html.twig', {headline:"Gruppe 2",groupeNr:2,championshipEncounterGroupe:championship.championshipEncounterGroupe2}) }}
+            {% endif %}
         
-        {% if tournament.encounterRound5.0 is defined %}
-           <h3>Runde mit 32</h3>
-        {% endif %}
-        {% for encounterRound in tournament.encounterRound5 %}
-            {{ include('snipets/tournamentEncounterTable.html.twig', {encounter:encounterRound}) }}
-        {% endfor %}
+            
+            {% if championship.championshipEncounterGroupe3.0 is defined and championship.championshipEncounterGroupe3.0.team1 is not null %}
+                {{ include('snipets/championshipEncounterAccordeon.html.twig', {headline:"Gruppe 3",groupeNr:3,championshipEncounterGroupe:championship.championshipEncounterGroupe3}) }}
+            {% endif %}
+        
 
-        {% if tournament.encounterRound6.0 is defined %}
-           <h3>Runde mit 64</h3>
-        {% endif %}
-        {% for encounterRound in tournament.encounterRound6 %}
-            {{ include('snipets/tournamentEncounterTable.html.twig', {encounter:encounterRound}) }}
-        {% endfor %}
+            {% if championship.championshipEncounterGroupe4.0 is defined and championship.championshipEncounterGroupe4.0.team1 is not null %}
+                {{ include('snipets/championshipEncounterAccordeon.html.twig', {headline:"Gruppe 4",groupeNr:4,championshipEncounterGroupe:championship.championshipEncounterGroupe4}) }}
+            {% endif %}
+        
+            {% if championship.championshipEncounterGroupe5.0 is defined and championship.championshipEncounterGroupe5.0.team1 is not null %}
+                {{ include('snipets/championshipEncounterAccordeon.html.twig', {headline:"Gruppe 5",groupeNr:5,championshipEncounterGroupe:championship.championshipEncounterGroupe5}) }}
+            {% endif %}
+            
+
+            {% if championship.championshipEncounterGroupe6.0 is defined and championship.championshipEncounterGroupe6.0.team1 is not null %}
+                {{ include('snipets/championshipEncounterAccordeon.html.twig', {headline:"Gruppe 6",groupeNr:6,championshipEncounterGroupe:championship.championshipEncounterGroupe6}) }}
+            {% endif %}
+            
+
+            {% if championship.championshipEncounterGroupe7.0 is defined and championship.championshipEncounterGroupe7.0.team1 is not null %}
+                {{ include('snipets/championshipEncounterAccordeon.html.twig', {headline:"Gruppe 7",groupeNr:7,championshipEncounterGroupe:championship.championshipEncounterGroupe7}) }}
+            {% endif %}
+            
+
+            {% if championship.championshipEncounterGroupe8.0 is defined and championship.championshipEncounterGroupe8.0.team1 is not null %}
+                {{ include('snipets/championshipEncounterAccordeon.html.twig', {headline:"Gruppe 8",groupeNr:8,championshipEncounterGroupe:championship.championshipEncounterGroupe8}) }}
+            {% endif %}
+        </div>
+        {{ include('snipets/tournamentChard.html.twig', {tournament:championship.tournament}) }}
     {% endfor %}
 
 {% endblock %}

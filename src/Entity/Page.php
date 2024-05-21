@@ -31,10 +31,14 @@ class Page
     #[ORM\OneToMany(mappedBy: 'page', targetEntity: Tournament::class)]
     private Collection $tournament;
 
+    #[ORM\OneToMany(mappedBy: 'page', targetEntity: Championship::class)]
+    private Collection $championship;
+
     public function __construct()
     {
         $this->contentElementsTeaser = new ArrayCollection();
         $this->tournament = new ArrayCollection();
+        $this->championship = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -132,6 +136,36 @@ class Page
             // set the owning side to null (unless already changed)
             if ($tournament->getPage() === $this) {
                 $tournament->setPage(null);
+            }
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, Championship>
+     */
+    public function getChampionship(): Collection
+    {
+        return $this->championship;
+    }
+
+    public function addChampionship(Championship $championship): static
+    {
+        if (!$this->championship->contains($championship)) {
+            $this->championship->add($championship);
+            $championship->setPage($this);
+        }
+
+        return $this;
+    }
+
+    public function removeChampionship(Championship $championship): static
+    {
+        if ($this->championship->removeElement($championship)) {
+            // set the owning side to null (unless already changed)
+            if ($championship->getPage() === $this) {
+                $championship->setPage(null);
             }
         }
 

@@ -30,27 +30,27 @@
         {{ include('snipets/tournamentChard.html.twig', {tournament:tournament}) }}
 
         <div class="accordion" id="accordionExample-{{tournament.name}}">
-            {% if tournament.encounterRound1.0 is defined %}
+            {% if  tournament.encounterRound1.0 is defined and tournament.encounterRound1.0 is not null %}
                 {{ include('snipets/tournamentEncounterAccordeon.html.twig', {headline:"Finale", groupeNr:1, encounterRound:tournament.encounterRound1}) }}
             {% endif %}
             
-            {% if tournament.encounterRound2.0 is defined %}
+            {% if tournament.encounterRound2.0 is defined  and tournament.encounterRound2.0 is not null %}
                 {{ include('snipets/tournamentEncounterAccordeon.html.twig', {headline:"Halbfinale", groupeNr:2, encounterRound:tournament.encounterRound2}) }}
             {% endif %}
            
-            {% if tournament.encounterRound3.0 is defined %}
+            {% if tournament.encounterRound3.0 is defined  and tournament.encounterRound3.0 is not null%}
                 {{ include('snipets/tournamentEncounterAccordeon.html.twig', {headline:"Viertelfinale", groupeNr:3, encounterRound:tournament.encounterRound3}) }}
             {% endif %}
             
-            {% if tournament.encounterRound4.0 is defined %}
+            {% if tournament.encounterRound4.0 is defined  and tournament.encounterRound4.0 is not null%}
                 {{ include('snipets/tournamentEncounterAccordeon.html.twig', {headline:"Achtelfinale", groupeNr:4, encounterRound:tournament.encounterRound4}) }}
             {% endif %}
             
-            {% if tournament.encounterRound5.0 is defined %}
+            {% if tournament.encounterRound5.0 is defined  and tournament.encounterRound5.0 is not null%}
                 {{ include('snipets/tournamentEncounterAccordeon.html.twig', {headline:"Runde mit 32", groupeNr:5, encounterRound:tournament.encounterRound5}) }}
             {% endif %}
             
-            {% if tournament.encounterRound6.0 is defined %}
+            {% if tournament.encounterRound6.0 is defined  and tournament.encounterRound6.0 is not null%}
                 {{ include('snipets/tournamentEncounterAccordeon.html.twig', {headline:"Runde mit 64", groupeNr:6, encounterRound:tournament.encounterRound6}) }}
             {% endif %}
         </div

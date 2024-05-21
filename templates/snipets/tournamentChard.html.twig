@@ -1,36 +1,40 @@
 {% if tournament.encounterRound4.0.team1 is not null %} 
 <div class="tournament-container">
   <div class="tournament-headers">
-    {% if tournament.encounterRound6.0 is defined %}
+    {% if tournament.encounterRound6.0 is defined and tournament.encounterRound6.0.team1 is not null%}
       <h4>Runde mit 64</h4>
     {% endif %} 
 
-    {% if tournament.encounterRound5.0 is defined %}
+    {% if tournament.encounterRound5.0 is defined and tournament.encounterRound5.0.team1 is not null%}
       <h4>Runde mit 32</h4>
     {% endif %} 
 
-    {% if tournament.encounterRound4.0 is defined %}
+    {% if tournament.encounterRound4.0 is defined and tournament.encounterRound4.0.team1 is not null%}
       <h4>Achtelfinale</h4>
     {% endif %} 
 
-    {% if tournament.encounterRound3.0 is defined %}
+    {% if tournament.encounterRound3.0 is defined and tournament.encounterRound3.0.team1 is not null%}
       <h4>Viertelfinale</h4>
     {% endif %} 
 
-    {% if tournament.encounterRound2.0 is defined %}
+    {% if tournament.encounterRound2.0 is defined and tournament.encounterRound2.0.team1 is not null %}
       <h4>Halbfinale</h4>
     {% endif %}
     
-    <h4>Finale</h4>
-    
-    <h4>Gewinner</h4>
+    {% if tournament.encounterRound1.0 is defined and tournament.encounterRound1.0.team1 is not null %}
+       <h4>Finale</h4>
+    {% endif %}
+
+    {% if tournament.encounterRound1.0 is defined and tournament.encounterRound1.0.team1 is not null %}
+      <h4>Gewinner</h4>
+    {% endif %}
   </div>
 
   
 
 
   <div class="tournament-brackets">
-  {% if tournament.encounterRound6.0.team1 is not null %}
+  {% if tournament.encounterRound6.0 is defined and tournament.encounterRound6.0.team1 is not null %}
     <ul class="bracket bracket--1">
       {% for encounterRound in tournament.encounterRound6 %}
         {% set team2color =gelb  %}
@@ -47,7 +51,7 @@
       {% endfor %}
     </ul>
   {% endif %}
-  {% if tournament.encounterRound5.0.team1 is not null %}
+  {% if tournament.encounterRound5.0 is defined and tournament.encounterRound5.0.team1 is not null %}
     <ul class="bracket bracket-0">
       {% for encounterRound in tournament.encounterRound5 %}
          {% set team2color =gelb  %}
@@ -64,7 +68,7 @@
       {% endfor %}
     </ul> 
   {% endif %}
-  {% if tournament.encounterRound4.0.team1 is not null %} 
+  {% if tournament.encounterRound4.0 is defined and tournament.encounterRound4.0.team1 is not null %} 
     <ul class="bracket bracket-1">
       {% for encounterRound in tournament.encounterRound4 %}
          {% set team2color =gelb  %}
@@ -81,7 +85,7 @@
       {% endfor %}
     </ul>
   {% endif %}
-  {% if tournament.encounterRound3.0.team1 is not null %}
+  {% if tournament.encounterRound3.0 is defined and tournament.encounterRound3.0.team1 is not null %}
     <ul class="bracket bracket-2">
       {% for encounterRound in tournament.encounterRound3 %}
          {% set team2color =gelb  %}
@@ -98,7 +102,7 @@
       {% endfor %}
     </ul>  
   {% endif %}
-  {% if tournament.encounterRound2.0.team1 is not null %}
+  {% if tournament.encounterRound2.0 is defined and tournament.encounterRound2.0.team1 is not null %}
     <ul class="bracket bracket-3">
       {% for encounterRound in tournament.encounterRound2 %}
         {% set team2color =gelb  %}
@@ -115,7 +119,7 @@
       {% endfor %}
     </ul>
   {% endif %}
-  {% if tournament.encounterRound1.0.team1 is not null %}
+  {% if tournament.encounterRound1.0 is defined and tournament.encounterRound1.0.team1 is not null %}
   <ul class="bracket bracket-4">
     {% for encounterRound in tournament.encounterRound1 %}
       {% set team2color =gelb  %}
@@ -132,7 +136,7 @@
     {% endfor %}
   </ul>
   {% endif %}  
-{% if tournament.encounterRound1.0.team1 is not null %}
+{% if tournament.encounterRound1.0 is defined and tournament.encounterRound1.0.team1 is not null %}
   <ul class="bracket bracket-5">
   {% if tournament.encounterRound1.0.pointsTeam1 > tournament.encounterRound1.0.pointsTeam2  %}
     <li class="team-item fs-6"><span class="p-1 finale" style="background-color:{{ gruen }}">{{ tournament.encounterRound1.0.team1.name }}</span></li>

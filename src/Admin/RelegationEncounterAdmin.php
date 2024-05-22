@@ -113,6 +113,6 @@ final class RelegationEncounterAdmin extends AbstractAdmin
     #[NoReturn] protected function postUpdate(object $object): void
     {
         /** @var RelegationEncounter $object */
-        $this->generateTeamStatisticService->update($object);
+        //$this->generateTeamStatisticService->update($object);
     }
 }

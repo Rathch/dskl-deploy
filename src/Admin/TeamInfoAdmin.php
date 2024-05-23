@@ -141,8 +141,10 @@ final class TeamInfoAdmin extends AbstractAdmin
 
     private function manageFileUpload(object $object): void
     {
-        $content = base64_encode(file_get_contents($_FILES[$_REQUEST['uniqid']]['tmp_name']['teamInfo']['image']));
-        $object->setImageBlob($content);
-        $object->setImageName($_FILES[$_REQUEST['uniqid']]['name']['teamInfo']['image']);
+        if ($_FILES[$_REQUEST['uniqid']]['tmp_name']['teamInfo']['image'] != ""){
+            $content = base64_encode(file_get_contents($_FILES[$_REQUEST['uniqid']]['tmp_name']['teamInfo']['image']));
+            $object->setImageBlob($content);
+            $object->setImageName($_FILES[$_REQUEST['uniqid']]['name']['teamInfo']['image']);
+        }
     }
 }

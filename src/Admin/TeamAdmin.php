@@ -141,7 +141,7 @@ final class TeamAdmin extends AbstractAdmin
         $teaminfo = $object->getTeamInfo();
 
         if ($reflectionProperty->isInitialized($teaminfo)) {
-            //$this->manageFileUpload($teaminfo);
+            $this->manageFileUpload($teaminfo);
 
         }
 

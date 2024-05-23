@@ -4,50 +4,57 @@ declare(strict_types=1);
 
 namespace App\Admin;
 
-use App\Entity\RelegationEncounter;
 use App\Entity\Team;
-use App\Service\GenerateTeamStatisticService;
-use JetBrains\PhpStorm\NoReturn;
 use Sonata\AdminBundle\Admin\AbstractAdmin;
 use Sonata\AdminBundle\Datagrid\DatagridMapper;
 use Sonata\AdminBundle\Datagrid\ListMapper;
-use Sonata\AdminBundle\FieldDescription\FieldDescriptionInterface;
 use Sonata\AdminBundle\Form\FormMapper;
 use Sonata\AdminBundle\Form\Type\ModelType;
 use Symfony\Component\Form\Extension\Core\Type\DateType;
 use Symfony\Component\Form\Extension\Core\Type\TextareaType;
 
-final class RelegationEncounterAdmin extends AbstractAdmin
+final class ChampionshipEncounterAdmin extends AbstractAdmin
 {
-    /**
-     *
-     * @param GenerateTeamStatisticService $generateTeamStatisticService
-     */
-    public function __construct( private readonly GenerateTeamStatisticService $generateTeamStatisticService)
-    {
-        parent::__construct();
-    }
-
     protected function configureDatagridFilters(DatagridMapper $filter): void
     {
         $filter
-            ->add('id', null, ["label" => "id"])
-            ->add('report', null, ["label" => "report"])
-            ;
+            ->add('id')
+            ->add('chanceTeam1')
+            ->add('chanceTeam2')
+            ->add('pointsTeam1')
+            ->add('pointsTeam2')
+            ->add('report')
+            ->add('injuryTeam1Leicht')
+            ->add('injuryTeam1Schwer')
+            ->add('injuryTeam1Kritisch')
+            ->add('injuryTeam1Tot')
+            ->add('injuryTeam2Leicht')
+            ->add('injuryTeam2Schwer')
+            ->add('injuryTeam2Kritisch')
+            ->add('injuryTeam2Tot')
+        ;
     }
 
     protected function configureListFields(ListMapper $list): void
     {
         $list
             ->add('id')
-            ->add('team1',FieldDescriptionInterface::TYPE_MANY_TO_ONE,["associated_property"=>"name","label" => "team1"])
-            ->add('pointsTeam1',FieldDescriptionInterface::TYPE_INTEGER,["label" => "pointsTeam1"])
-            ->add('team2',FieldDescriptionInterface::TYPE_MANY_TO_ONE,["associated_property"=>"name","label" => "Team 2"])
-            ->add('pointsTeam2',FieldDescriptionInterface::TYPE_INTEGER,["label" => "pointsTeam2"])
-            ->add('report',FieldDescriptionInterface::TYPE_HTML,["label" => "report"])
+            ->add('chanceTeam1')
+            ->add('chanceTeam2')
+            ->add('pointsTeam1')
+            ->add('pointsTeam2')
+            ->add('report')
+            ->add('injuryTeam1Leicht')
+            ->add('injuryTeam1Schwer')
+            ->add('injuryTeam1Kritisch')
+            ->add('injuryTeam1Tot')
+            ->add('injuryTeam2Leicht')
+            ->add('injuryTeam2Schwer')
+            ->add('injuryTeam2Kritisch')
+            ->add('injuryTeam2Tot')
             ->add(ListMapper::NAME_ACTIONS, null, [
                 'actions' => [
-                    'show' => false,
+                    'show' => [],
                     'edit' => [],
                     'delete' => [],
                 ],
@@ -56,20 +63,14 @@ final class RelegationEncounterAdmin extends AbstractAdmin
 
     protected function configureFormFields(FormMapper $form): void
     {
-        $form->with('Date', ['class' => 'col-md-12'])
-        ->add('date', DateType::class, [
-            "label"=>"date",
-            'widget' => 'single_text',
-            #"widget"=>"choice",
-            'years' => range(2080, 2090),
-            #'format' => 'd MMMM yyyy',
-        ])
+        $form->with('general', ['class' => 'col-md-12'])
         ->end()
             ->with('Team 1', ['class' => 'col-md-6'])
                 ->add('team1',ModelType::class,
                     [
                         'class' => Team::class,
                         'property'=>'name',
+                        'required' => false,
                         #'disabled'=>true,
                         'btn_add'=>false,
                         "label" => "Team 1"
@@ -87,6 +88,7 @@ final class RelegationEncounterAdmin extends AbstractAdmin
                     [
                         'class' => Team::class,
                         'property'=>'name',
+                        'required' => false,
                         #'disabled'=>true,
                         'btn_add'=>false,
                         "label" => "Team 2"
@@ -102,17 +104,11 @@ final class RelegationEncounterAdmin extends AbstractAdmin
             ->with("report", ['class' => 'col-md-12'])
                 ->add('report',TextareaType::class, [
                     "label" => "report",
+                    'required' => false,
                     'attr' => ["class" => "summernote"],
                 ])
             ->end()
 
             ;
-    }
-
-
-    #[NoReturn] protected function postUpdate(object $object): void
-    {
-        /** @var RelegationEncounter $object */
-        //$this->generateTeamStatisticService->update($object);
     }
 }

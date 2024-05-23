@@ -17,7 +17,7 @@ use Sonata\AdminBundle\Form\Type\ModelType;
 use Symfony\Component\Form\Extension\Core\Type\DateType;
 use Symfony\Component\Form\Extension\Core\Type\TextareaType;
 
-final class RelegationEncounterAdmin extends AbstractAdmin
+final class TournemantEncounterAdmin extends AbstractAdmin
 {
     /**
      *
@@ -56,10 +56,11 @@ final class RelegationEncounterAdmin extends AbstractAdmin
 
     protected function configureFormFields(FormMapper $form): void
     {
-        $form->with('Date', ['class' => 'col-md-12'])
+        $form->with('general', ['class' => 'col-md-12'])
         ->add('date', DateType::class, [
             "label"=>"date",
             'widget' => 'single_text',
+            'required' => false,
             #"widget"=>"choice",
             'years' => range(2080, 2090),
             #'format' => 'd MMMM yyyy',
@@ -70,6 +71,7 @@ final class RelegationEncounterAdmin extends AbstractAdmin
                     [
                         'class' => Team::class,
                         'property'=>'name',
+                        'required' => false,
                         #'disabled'=>true,
                         'btn_add'=>false,
                         "label" => "Team 1"
@@ -87,6 +89,7 @@ final class RelegationEncounterAdmin extends AbstractAdmin
                     [
                         'class' => Team::class,
                         'property'=>'name',
+                        'required' => false,
                         #'disabled'=>true,
                         'btn_add'=>false,
                         "label" => "Team 2"
@@ -102,6 +105,7 @@ final class RelegationEncounterAdmin extends AbstractAdmin
             ->with("report", ['class' => 'col-md-12'])
                 ->add('report',TextareaType::class, [
                     "label" => "report",
+                    'required' => false,
                     'attr' => ["class" => "summernote"],
                 ])
             ->end()
@@ -110,9 +114,9 @@ final class RelegationEncounterAdmin extends AbstractAdmin
     }
 
 
-    #[NoReturn] protected function postUpdate(object $object): void
+    protected function postUpdate(object $object): void
     {
         /** @var RelegationEncounter $object */
-        //$this->generateTeamStatisticService->update($object);
+        $this->generateTeamStatisticService->update($object);
     }
 }

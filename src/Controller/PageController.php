@@ -27,6 +27,7 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use Doctrine\Common\Collections\Criteria;
+use Symfony\Component\ErrorHandler\Debug;
 
 class PageController extends AbstractController
 {
@@ -90,18 +91,25 @@ class PageController extends AbstractController
     public function page($title): Response
     {
         $page = $this->pageReposetory->findOneBy(["slag"=>$title]);
-
+         
         return $this->render('page/content.html.twig', [
             'page' => $page,
             'controller_name' => 'PageController',
         ]);
     }
+
     #[Route(path: '/team/list', name: 'list_teams')]
     public function listTeam(): Response
     {
         $teams = $this->teamReposetory->findAll();
+        foreach ($teams as $key => $team) {
+            if ($team->getTeamInfo()->getImageBlob() != null) {
+                $images[$team->getId()] = stream_get_contents($team->getTeamInfo()->getImageBlob());
+            }
+        }
         return $this->render('page/team.list.html.twig', [
             'teams' => $teams,
+            'teamImages'=> $images,
             'controller_name' => 'PageController',
         ]);
     }
@@ -112,15 +120,29 @@ class PageController extends AbstractController
         $team = $this->teamReposetory->findOneBy(["id"=>$id]);
         $transferHistory = $this->transferHistoryRepository->findAll();
         $presortedSquad = $this->getSortedSquad($team);
+        if ($team->getTeamInfo()->getImageBlob() != null) {
+            $image = stream_get_contents($team->getTeamInfo()->getImageBlob());
+        }
 
 
         return $this->render('page/team.show.html.twig', [
             'controller_name' => 'PageController',
             'team' => $team,
+            'teamImage'=>$image,
             'transfers' => $transferHistory,
 
             'presortedSquad' => $presortedSquad,
         ]);
+    }
+
+
+    #[Route(path: '/fooo/12758983646569487265', name: 'serve_images')]
+    public function serveImagees()
+    {
+        $teams = $this->teamReposetory->findAll();
+        foreach ($teams as $key => $team) {
+            $this->putImageToDb($team);
+        }
     }
 
     #[Route(path: '/liga/list', name: 'list_liga')]
@@ -418,5 +440,14 @@ class PageController extends AbstractController
             $result["Brecher"][] = $squad;
         }
         return $result;
+    }
+
+    private function putImageToDb(Team $team) {
+        
+        // /img/teams/2/anarchie wien.png
+        $filePath = "/public/img/teams/".$team->getId()."/".$team->getTeamInfo()->getImageName();
+        $content = base64_encode(file_get_contents($this->getParameter('kernel.project_dir').$filePath));
+        $team->getTeamInfo()->setImageBlob($content);
+        $this->teamReposetory->update($team);
     }
 }

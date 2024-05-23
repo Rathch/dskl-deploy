@@ -15,6 +15,7 @@ use Sonata\AdminBundle\Show\ShowMapper;
 use Symfony\Component\Filesystem\Filesystem;
 use Symfony\Component\Form\Extension\Core\Type\FileType;
 use Symfony\Component\Form\Extension\Core\Type\TextareaType;
+use Symfony\Component\HttpFoundation\BinaryFileResponse;
 use Symfony\Component\Validator\Constraints\File;
 
 final class TeamInfoAdmin extends AbstractAdmin
@@ -119,8 +120,11 @@ final class TeamInfoAdmin extends AbstractAdmin
 
     private function addPrieview($object, $fileFormOptions) {
         if ($object->getTeam()) {
-            $fileFormOptions['help'] = '<img src="/img/teams/'.$object->getTeam()->getId()."/" .$object->getImageName(). '" with=100px height=100px class="admin-preview"/>';
-            $fileFormOptions['help_html'] = true;
+            if ($object->getImageblob() != null) {
+                $image = stream_get_contents($object->getImageblob());
+                $fileFormOptions['help'] = '<img src="data:image/jpeg;base64,'.$image.'" with=100px height=100px class="admin-preview" />';
+                $fileFormOptions['help_html'] = true;
+            }
         }
         return $fileFormOptions;
     }
@@ -137,19 +141,8 @@ final class TeamInfoAdmin extends AbstractAdmin
 
     private function manageFileUpload(object $object): void
     {
-        $filesystem= new Filesystem();
-        $filesystem->mkdir("/var/www/html/public/img/teams/".$object->getTeam()->getId());
-
-        if (
-            move_uploaded_file(
-                $_FILES[
-                    $_REQUEST['uniqid']
-                ]['tmp_name']['image'],
-                "/var/www/html/public/img/teams/".$object->getTeam()->getId()."/". $_FILES[$_REQUEST['uniqid']]['name']['image']
-            )
-        ) {
-            $object->setImageName($_FILES[$_REQUEST['uniqid']]['name']['image']);
-
-        }
+        $content = base64_encode(file_get_contents($_FILES[$_REQUEST['uniqid']]['tmp_name']['teamInfo']['image']));
+        $object->setImageBlob($content);
+        $object->setImageName($_FILES[$_REQUEST['uniqid']]['name']['teamInfo']['image']);
     }
 }

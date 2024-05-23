@@ -32,40 +32,45 @@ services:
         calls:
             - [ setTemplate, [ 'show', 'TeamAdmin/show.html.twig' ] ]
         tags:
-            - { name: sonata.admin, model_class: App\Entity\Team, controller: ~, manager_type: orm, group: Team., label: "Team" }
+            - { name: sonata.admin, model_class: App\Entity\Team, controller: ~, manager_type: orm, group: Team, label: "Team" }
 
     admin.encounter:
         class: App\Admin\EncounterAdmin
         tags:
-            - { name: sonata.admin, model_class: App\Entity\Encounter, controller: App\Controller\EncounterAdminController, manager_type: orm, group: Season., label: "Begegnungen" }
+            - { name: sonata.admin, model_class: App\Entity\Encounter, controller: App\Controller\EncounterAdminController, manager_type: orm, group: Season, label: "Begegnungen" }
     admin.relegation_encounter:
         class: App\Admin\RelegationEncounterAdmin
         tags:
-            - { name: sonata.admin, model_class: App\Entity\RelegationEncounter, controller: App\Controller\EncounterAdminController, manager_type: orm, group: Admin., label: "Relegations Begegnungen" }
+            - { name: sonata.admin, model_class: App\Entity\RelegationEncounter, controller: ~, manager_type: orm, group: Admin, label: "Relegations Begegnungen" }
+
+    admin.tournament_encounter:
+        class: App\Admin\TournemantEncounterAdmin
+        tags:
+            - { name: sonata.admin, model_class: App\Entity\TournamentEncounter, controller: ~, manager_type: orm, group: Turnier, label: "Turnier Begegnungen" }
 
     admin.play_day:
         class: App\Admin\PlayDayAdmin
         tags:
-            - { name: sonata.admin, model_class: App\Entity\PlayDay, controller: App\Controller\PlayDayAdminController, manager_type: orm, group: Season., label: "Spieltage" }
+            - { name: sonata.admin, model_class: App\Entity\PlayDay, controller: App\Controller\PlayDayAdminController, manager_type: orm, group: Season, label: "Spieltage" }
 
     admin.team_info:
         class: App\Admin\TeamInfoAdmin
         tags:
-            - { name: sonata.admin, model_class: App\Entity\TeamInfo, controller: ~, manager_type: orm, group: Team., label: "Team Informationen" }
+            - { name: sonata.admin, model_class: App\Entity\TeamInfo, controller: ~, manager_type: orm, group: Team, label: "Team Informationen" }
 
     admin.squad:
         class: App\Admin\SquadAdmin
         tags:
-            - { name: sonata.admin, model_class: App\Entity\Squad, controller: App\Controller\SquadAdminController, manager_type: orm, group: Team., label: "Spielerschafft" }
+            - { name: sonata.admin, model_class: App\Entity\Squad, controller: App\Controller\SquadAdminController, manager_type: orm, group: Team, label: "Spielerschafft" }
     admin.league:
         class: App\Admin\LeagueAdmin
         tags:
-            - { name: sonata.admin, model_class: App\Entity\League, controller: App\Controller\LeagueAdminController, manager_type: orm, group: Season., label: "Seasons" }
+            - { name: sonata.admin, model_class: App\Entity\League, controller: App\Controller\LeagueAdminController, manager_type: orm, group: Season, label: "Seasons" }
 
     admin.team_attributes:
         class: App\Admin\TeamAttributesAdmin
         tags:
-            - { name: sonata.admin, model_class: App\Entity\TeamAttributes, controller: ~, manager_type: orm, group: Team., label: "Team Attribute" }
+            - { name: sonata.admin, model_class: App\Entity\TeamAttributes, controller: ~, manager_type: orm, group: Team, label: "Team Attribute" }
 
     app.menu_builder:
         class: App\Menu\Builder
@@ -95,36 +100,51 @@ services:
         class: App\Admin\PageAdmin
 
         tags:
-            - { name: sonata.admin, model_class: App\Entity\Page, controller: ~, manager_type: orm, group: Seiten., label: "Seiten" }
+            - { name: sonata.admin, model_class: App\Entity\Page, controller: ~, manager_type: orm, group: Seite, label: "Seiten" }
 
     admin.teaser:
         class: App\Admin\TeaserAdmin
         calls:
             - [ setTemplate, [ 'edit', 'ck_edit.html.twig' ] ]
         tags:
-            - { name: sonata.admin, model_class: App\Entity\ContentElements\Teaser, controller: ~, manager_type: orm, group: Seiten., label: "Teaser" }
+            - { name: sonata.admin, model_class: App\Entity\ContentElements\Teaser, controller: ~, manager_type: orm, group: Seiten, label: "Teaser" }
 
     admin.all_star:
         class: App\Admin\AllStarAdmin
         tags:
-            - { name: sonata.admin, model_class: App\Entity\AllStar, controller: ~, manager_type: orm, group: Season., label: "ADL Allstars" }
+            - { name: sonata.admin, model_class: App\Entity\AllStar, controller: ~, manager_type: orm, group: Season, label: "ADL Allstars" }
 
     admin.retrospective:
         class: App\Admin\RetrospectiveAdmin
         tags:
-            - { name: sonata.admin, model_class: App\Entity\Retrospective, controller: ~, manager_type: orm, group: Admin., label: "Saisonrückblicke" }
+            - { name: sonata.admin, model_class: App\Entity\Retrospective, controller: ~, manager_type: orm, group: Admin, label: "Saisonrückblicke" }
 
     admin.article:
         class: App\Admin\ArticleAdmin
         tags:
-            - { name: sonata.admin, model_class: App\Entity\Article, controller: ~, manager_type: orm, group: Seiten., label: Wipeout!-Magazin }
+            - { name: sonata.admin, model_class: App\Entity\Article, controller: ~, manager_type: orm, group: Seiten, label: Wipeout!-Magazin }
 
     admin.relegation:
         class: App\Admin\RelegationAdmin
         tags:
-            - { name: sonata.admin, model_class: App\Entity\Relegation, controller: App\Controller\RelegationAdminController, manager_type: orm, group: Season., label: Relegation }
+            - { name: sonata.admin, model_class: App\Entity\Relegation, controller: App\Controller\RelegationAdminController, manager_type: orm, group: Season, label: Relegation }
 
     admin.affiliation:
         class: App\Admin\AffiliationAdmin
         tags:
-            - { name: sonata.admin, model_class: App\Entity\Affiliation, controller: ~, manager_type: orm, group: Admin., label: "Zugehörigkeit" }
+            - { name: sonata.admin, model_class: App\Entity\Affiliation, controller: ~, manager_type: orm, group: Admin, label: "Zugehörigkeit" }
+
+    admin.tournament:
+        class: App\Admin\TournamentAdmin
+        tags:
+            - { name: sonata.admin, model_class: App\Entity\Tournament, controller: ~, manager_type: orm, group: Turnier, label: Turnier }
+
+    admin.championship:
+        class: App\Admin\ChampionshipAdmin
+        tags:
+            - { name: sonata.admin, model_class: App\Entity\Championship, controller: ~, manager_type: orm, group: Meisterschaften, label: Meisterschaften }
+
+    admin.championship_encounter:
+        class: App\Admin\ChampionshipEncounterAdmin
+        tags:
+            - { name: sonata.admin, model_class: App\Entity\ChampionshipEncounter, controller: ~, manager_type: orm, group: Meisterschaften, label: "Meisterschafts Begegnungen" }

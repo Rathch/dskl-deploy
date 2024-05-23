@@ -4,7 +4,9 @@ declare(strict_types=1);
 
 namespace App\Admin;
 
+use App\Entity\Championship;
 use App\Entity\ContentElements\Teaser;
+use App\Entity\Tournament;
 use App\Utility\StringUtility;
 use Sonata\AdminBundle\Admin\AbstractAdmin;
 use Sonata\AdminBundle\Datagrid\DatagridMapper;
@@ -53,6 +55,24 @@ final class PageAdmin extends AbstractAdmin
             ->add('html',TextareaType::class,[
                 'attr' => ["class" => "summernote"],
                 "required"=>false
+            ])
+            ->add('tournament', ModelType::class, [
+                'label' => 'Turnier',
+                'class' => Tournament::class,
+                'property' => 'name',
+                'expanded' => true,
+                'by_reference' => false,
+                'multiple' => true,
+                'btn_add' => false,
+            ])
+            ->add('championship', ModelType::class, [
+                'label' => 'Meisterschaft',
+                'class' => Championship::class,
+                'property' => 'name',
+                'expanded' => true,
+                'by_reference' => false,
+                'multiple' => true,
+                'btn_add' => false,
             ])
             ->add('contentElementsTeaser',CollectionType::class,
                 [
